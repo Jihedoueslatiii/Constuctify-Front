@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Full CSS is included below */
+  </style>
+</head>
+<body>
+  <div class="main-content">
+    <div class="container">
+      
+      <!-- Header -->
+      <div class="header">
+        <h2 class="text-3xl font-semibold">📁 Project Management</h2>
+        <button (click)="createProject()" class="btn btn-add">
+          ➕ Add New Project
+        </button>
+      </div>
+
+      <!-- Project Form (Conditional) -->
+      <div *ngIf="isEditing && selectedProject" class="project-form">
+        <h3 class="form-title">{{ selectedProject.idProjet ? 'Edit Project' : 'Add New Project' }}</h3>
+        <form (ngSubmit)="saveProject()">
+          <div class="form-group">
+            <label for="nomProjet">Project Name</label>
+            <input
+              type="text"
+              id="nomProjet"
+              [(ngModel)]="selectedProject.nomProjet"
+              name="nomProjet"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="descriptionProjet">Description</label>
+            <textarea
+              id="descriptionProjet"
+              [(ngModel)]="selectedProject.descriptionProjet"
+              name="descriptionProjet"
+              required
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="dateDebut">Start Date</label>
+            <input
+              type="date"
+              id="dateDebut"
+              [(ngModel)]="selectedProject.dateDebut"
+              name="dateDebut"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="dateFin">End Date</label>
+            <input
+              type="date"
+              id="dateFin"
+              [(ngModel)]="selectedProject.dateFin"
+              name="dateFin"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="etatProjet">Status</label>
+            <select
+              id="etatProjet"
+              [(ngModel)]="selectedProject.etatProjet"
+              name="etatProjet"
+              required
+            >
+              <option value="PLANIFIE">Planned</option>
+              <option value="EN_COURS">In Progress</option>
+              <option value="TERMINE">Completed</option>
+            </select>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-save">💾 Save</button>
+            <button type="button" (click)="cancelEdit()" class="btn btn-cancel">❌ Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Project Cards Grid -->
+      <div class="project-grid">
+        <div *ngFor="let project of projects" class="card">
+          <div class="card-header">
+            {{ project.nomProjet }}
+          </div>
+          <div class="card-body">
+            <p class="text-gray-600">{{ project.descriptionProjet }}</p>
+            <p><strong>Start:</strong> {{ project.dateDebut }}</p>
+            <p><strong>End:</strong> {{ project.dateFin }}</p>
+            <div class="mt-4">
+              <button (click)="viewProjectTasks(project.idProjet)" class="btn-action">
+                📋 View Tasks
+              </button>
+              <span [ngClass]="{
+                'badge-plan': project.etatProjet === 'PLANIFIE',
+                'badge-progress': project.etatProjet === 'EN_COURS',
+                'badge-complete': project.etatProjet === 'TERMINE'
+              }" class="badge">
+                {{ project.etatProjet === 'PLANIFIE' ? '📅 Planned' : '' }}
+                {{ project.etatProjet === 'EN_COURS' ? '🚧 In Progress' : '' }}
+                {{ project.etatProjet === 'TERMINE' ? '✅ Completed' : '' }}
+              </span>
+            </div>
+            <div class="mt-4">
+              <button (click)="selectProject(project)" class="btn-action btn-edit">
+                ✏️ Edit
+              </button>
+              <button (click)="deleteProject(project.idProjet)" class="btn-action btn-delete">
+                🗑️ Delete
+              </button>
+              <button routerLink="/gantt" class="btn btn-gantt">
+                📊 View Gantt Chart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

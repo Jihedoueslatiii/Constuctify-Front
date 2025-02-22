@@ -1,0 +1,6 @@
+/* Ensure Gantt chart container takes up full space */
+#gantt-container {
+    width: 100%;
+    height: 500px;
+  }
+  

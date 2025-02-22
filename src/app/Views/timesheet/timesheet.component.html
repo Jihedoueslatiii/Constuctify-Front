@@ -1,0 +1,17 @@
+<div class="timesheet-form">
+    <h3>Log Timesheet</h3>
+  
+    <form (ngSubmit)="logTimesheet()">
+      <label for="date">Date:</label>
+      <input type="date" id="date" [(ngModel)]="timesheet.date" name="date" required>
+  
+      <label for="hoursWorked">Hours Worked:</label>
+      <input type="number" id="hoursWorked" [(ngModel)]="timesheet.hoursWorked" name="hoursWorked" required min="0">
+  
+      <label for="description">Description:</label>
+      <textarea id="description" [(ngModel)]="timesheet.description" name="description" required></textarea>
+  
+      <button type="submit">Log Time</button>
+    </form>
+  </div>
+  
