@@ -1,17 +1,60 @@
-<div class="timesheet-form">
+<div class="timesheet-container">
+  <div class="timesheet-form">
     <h3>Log Timesheet</h3>
-  
+    <button (click)="exportToPDF()">Export to PDF</button> <!-- Add this button -->
+
     <form (ngSubmit)="logTimesheet()">
+      <label for="project">Project:</label>
+      <select id="project" [(ngModel)]="selectedProjectId" name="project" required>
+        <option *ngFor="let project of projects" [value]="project.idProjet">
+          {{ project.nomProjet }}
+        </option>
+      </select>
+
       <label for="date">Date:</label>
-      <input type="date" id="date" [(ngModel)]="timesheet.date" name="date" required>
-  
+      <input type="date" id="date" [(ngModel)]="timesheet.date" name="date" required />
+
       <label for="hoursWorked">Hours Worked:</label>
-      <input type="number" id="hoursWorked" [(ngModel)]="timesheet.hoursWorked" name="hoursWorked" required min="0">
-  
+      <input
+        type="number"
+        id="hoursWorked"
+        [(ngModel)]="timesheet.hoursWorked"
+        name="hoursWorked"
+        required
+        min="0"
+      />
+
       <label for="description">Description:</label>
-      <textarea id="description" [(ngModel)]="timesheet.description" name="description" required></textarea>
-  
+      <textarea
+        id="description"
+        [(ngModel)]="timesheet.description"
+        name="description"
+        required
+      ></textarea>
+
       <button type="submit">Log Time</button>
     </form>
   </div>
-  
+
+  <div class="timesheet-list">
+    <h3>Logged Timesheets</h3>
+    <table id="timesheet-table"> <!-- Add the ID here -->
+      <thead>
+        <tr>
+          <th>Project</th>
+          <th>Date</th>
+          <th>Hours Worked</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ts of timesheets">
+          <td>{{ getProjectName(ts.projectId) }}</td>
+          <td>{{ ts.date }}</td>
+          <td>{{ ts.hoursWorked }}</td>
+          <td>{{ ts.description }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

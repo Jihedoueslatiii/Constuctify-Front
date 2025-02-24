@@ -1,9 +1,17 @@
 <div class="task-list" style="margin-left: 250px; padding: 20px; max-width: calc(100% - 300px);">
   <h2 style="color: #333; margin-bottom: 20px;">Task List</h2>
-  <button (click)="openModal(false)" class="add-button" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-bottom: 20px;">
-    + Add Task
-  </button>
 
+  <!-- Add Task and Gantt Chart Buttons -->
+  <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+    <button (click)="openModal(false)" class="add-button" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+      + Add Task
+    </button>
+    <button routerLink="/gantt" class="btn btn-gantt" style="background-color: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+      📊 View Gantt Chart
+    </button>
+  </div>
+
+  <!-- Task Columns -->
   <div style="display: flex; gap: 20px; overflow-x: auto;">
     <!-- Not Started Column -->
     <div style="flex: 1; min-width: 300px; background: #f4f5f7; border-radius: 8px; padding: 16px;">
@@ -135,6 +143,14 @@
         <select id="project" [(ngModel)]="newTask.project" name="project" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
           <option [ngValue]="null">No Project</option>
           <option *ngFor="let project of projects" [ngValue]="project">{{ project.nomProjet }}</option>
+        </select>
+      </div>
+      <div>
+        <label for="dependencies" style="display: block; margin-bottom: 5px; color: #666;">Dependencies:</label>
+        <select id="dependencies" [(ngModel)]="newTask.dependencies" name="dependencies" multiple style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+          <option *ngFor="let task of tasks" [value]="task.idTask">
+            {{ task.title }}
+          </option>
         </select>
       </div>
       <div style="display: flex; justify-content: space-between; margin-top: 15px;">

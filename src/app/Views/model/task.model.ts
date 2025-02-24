@@ -9,4 +9,6 @@ export interface Task {
       idProjet: number;
       nomProjet: string;
     };
+      dependencies?: number[]; // Array of task IDs this task depends on
+
   }

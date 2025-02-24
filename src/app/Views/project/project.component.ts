@@ -3,6 +3,7 @@ import { ProjectService } from 'src/app/Views/service/project.service';
 import { Project } from 'src/app/Views/model/project';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Chart, registerables } from 'chart.js';
 
 @Component({
   selector: 'app-project',
@@ -14,18 +15,63 @@ export class ProjectComponent implements OnInit {
   selectedProject: Project | null = null;
   isEditing: boolean = false;
 
-  constructor(private projectService: ProjectService, private router: Router) {}
+  public chart: any;
+
+  // Key metrics
+  totalProjects: number = 0;
+  completedProjects: number = 0;
+  overdueProjects: number = 0;
+
+  constructor(private projectService: ProjectService, private router: Router) {Chart.register(...registerables)}
 
   ngOnInit(): void {
     this.loadProjects();
   }
+  calculateMetrics(): void {
+    this.totalProjects = this.projects.length;
+    this.completedProjects = this.projects.filter(p => p.etatProjet === 'TERMINE').length;
+    this.overdueProjects = this.projects.filter(p => {
+      const endDate = new Date(p.dateFin);
+      const today = new Date();
+      return p.etatProjet !== 'TERMINE' && endDate < today;
+    }).length;
+  }
+
+  createChart(): void {
+    const planned = this.projects.filter(p => p.etatProjet === 'PLANIFIE').length;
+    const inProgress = this.projects.filter(p => p.etatProjet === 'EN_COURS').length;
+    const completed = this.projects.filter(p => p.etatProjet === 'TERMINE').length;
+
+    this.chart = new Chart('MyChart', {
+      type: 'pie', // Pie chart
+      data: {
+        labels: ['Planned', 'In Progress', 'Completed'],
+        datasets: [{
+          label: 'Project Status',
+          data: [planned, inProgress, completed],
+          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'] // Colors for each segment
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'top' }
+        }
+      }
+    });
+  }
 
   loadProjects(): void {
     this.projectService.getAllProjects().subscribe({
-      next: (data: Project[]) => this.projects = data,
+      next: (data: Project[]) => {
+        this.projects = data;
+        this.calculateMetrics();
+        this.createChart();
+      },
       error: (error) => console.error('Error fetching projects:', error)
     });
   }
+
 
   selectProject(project: Project): void {
     this.selectedProject = { ...project };
@@ -46,8 +92,11 @@ export class ProjectComponent implements OnInit {
 
   saveProject(): void {
     if (!this.selectedProject) return;
-
-    if (this.selectedProject.idProjet === 0) {
+  
+    // Extract the numeric part of the ID (e.g., "PRJ_009" -> 9)
+    const numericId = this.extractNumericId(this.selectedProject.idProjet);
+  
+    if (numericId === 0) {
       // For creating a new project
       this.projectService.createProject(this.selectedProject).subscribe({
         next: (newProject: Project) => {
@@ -61,9 +110,9 @@ export class ProjectComponent implements OnInit {
       });
     } else {
       // For updating the project
-      this.projectService.updateProject(this.selectedProject.idProjet, this.selectedProject).subscribe({
+      this.projectService.updateProject(numericId, this.selectedProject).subscribe({
         next: (updatedProject: Project) => {
-          const index = this.projects.findIndex(p => p.idProjet === updatedProject.idProjet);
+          const index = this.projects.findIndex(p => p.idProjet === numericId);
           if (index !== -1) this.projects[index] = updatedProject;
           this.resetForm();
         },
@@ -73,6 +122,15 @@ export class ProjectComponent implements OnInit {
         }
       });
     }
+  }
+  
+  // Helper function to extract the numeric part of the ID
+  extractNumericId(formattedId: string | number): number {
+    if (typeof formattedId === 'number') {
+      return formattedId; // Already a number
+    }
+    const numericPart = formattedId.match(/\d+/); // Extract digits
+    return numericPart ? parseInt(numericPart[0], 10) : 0; // Convert to number or return 0
   }
 
   cancelEdit(): void {
