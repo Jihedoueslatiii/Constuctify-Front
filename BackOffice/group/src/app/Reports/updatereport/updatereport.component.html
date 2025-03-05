@@ -1,0 +1,23 @@
+<div class="update-report-container">
+    <h2>Update Report</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div>
+        <label for="title">Title:</label>
+        <input id="title" [(ngModel)]="report.title" name="title" required>
+      </div>
+      <div>
+        <label for="description">Description:</label>
+        <textarea id="description" [(ngModel)]="report.description" name="description" required></textarea>
+      </div>
+      <div>
+        <label for="status">Status:</label>
+        <select id="status" [(ngModel)]="report.status" name="status" required>
+          <option *ngFor="let status of reportStatuses" [value]="status">{{ status }}</option>
+        </select>
+      </div>
+      <div class="button-container">
+        <button type="button" (click)="onCancel()">Cancel</button>
+        <button type="submit">Update</button>
+      </div>
+    </form>
+  </div>

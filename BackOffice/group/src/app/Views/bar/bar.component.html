@@ -1,0 +1,127 @@
+<!-- Navbar -->
+<nav class="navbar">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+
+  <div class="nav-right">
+    <!-- Barre de recherche -->
+    <div class="search-box">
+      <input type="text" placeholder="Search..." />
+      <button><i class="fas fa-search"></i></button>
+    </div>
+
+    <!-- Icônes -->
+    <div class="nav-icons">
+      <a href="#" class="icon" title="Messages">
+        <i class="fas fa-envelope"></i>
+      </a>
+      <a href="#" class="icon" title="Settings">
+        <i class="fas fa-cog"></i>
+      </a>
+      <a href="#" class="icon" title="User">
+        <i class="fas fa-user"></i>
+      </a>
+    </div>
+
+    <!-- Profil utilisateur -->
+    <div class="user-profile">
+      <img src="assets\image\ela.png" alt="Ela Marzouki" class="user-img" />
+      <span class="user-name">Ela Marzouki</span>
+    </div>
+  </div>
+</nav>
+
+<!-- Sidebar -->
+<aside class="sidebar" [class.closed]="isSidebarClosed">
+  <div class="logo-container">
+    <img src="assets/image/logo.png" alt="Logo" class="logo-img" />
+  </div>
+  <ul class="menu">
+    <li>
+      <a href="#" class="menu-item" (click)="toggleSubMenu('project')">
+        <i class="fas fa-folder"></i> <span>Project</span>
+      </a>
+      <ul class="submenu" [class.open]="activeMenu === 'project'">
+        <li><a href="#"><i class="fas fa-plus"></i> <span>New Project</span></a></li>
+        <li><a href="#"><i class="fas fa-list"></i> <span>View Projects</span></a></li>
+      </ul>
+    </li>
+    <li>
+      <a class="menu-item" (click)="toggleSubMenu('task')">
+        <i class="fas fa-tasks"></i> <span>Task</span>
+      </a>
+      <ul class="submenu" [class.open]="activeMenu === 'task'">
+        <li><a href="#"><i class="fas fa-pencil-alt"></i> <span>Add Task</span></a></li>
+        <li><a href="#"><i class="fas fa-thumbtack"></i> <span>View Tasks</span></a></li>
+      </ul>
+    </li>
+    <li>
+      <a class="menu-item" (click)="toggleSubMenu('resource')">
+        <i class="fas fa-wrench"></i> <span>Resource</span>
+      </a>
+      <ul class="submenu" [class.open]="activeMenu === 'resource'">
+        <li><a href="/AddRessource"><i class="fas fa-tools"></i> <span>Add Resource</span></a></li>
+        <li><a href="/ViewRessource"><i class="fas fa-scroll"></i> <span>View Resources</span></a></li>
+      </ul>
+    </li>
+    <li>
+      <a class="menu-item" (click)="toggleSubMenu('finance')">
+        <i class="fas fa-dollar-sign"></i> <span>Finance</span>
+      </a>
+      <ul class="submenu" [class.open]="activeMenu === 'finance'">
+        <li><a href="#"><i class="fas fa-chart-line"></i> <span>Budget</span></a></li>
+        <li><a href="#"><i class="fas fa-file-invoice-dollar"></i> <span>Invoices</span></a></li>
+      </ul>
+    </li>
+    <li>
+      <a class="menu-item" (click)="toggleSubMenu('supplier')">
+        <i class="fas fa-truck"></i> <span>Supplier</span>
+      </a>
+      <ul class="submenu" [class.open]="activeMenu === 'supplier'">
+        <li><a href="/add-supplier"><i class="fas fa-user-plus"></i> <span>Add Supplier</span></a></li>
+        <li><a [routerLink]="'/view-supplier'"><i class="fas fa-list-alt"></i> <span>View Suppliers</span></a></li>
+        <li><a [routerLink]="'/view-reports'"><i class="fas fa-chart-bar"></i> <span>Analytics & Reports</span></a></li>
+        <li><a [routerLink]="'/supplier-financial-health'"><i class="fas fa-chart-line"></i> <span>Supplier Insights</span></a></li>
+      </ul>
+    </li>
+    
+    <li>
+      <a class="menu-item" (click)="toggleSubMenu('users')">
+        <i class="fas fa-users"></i> <span>Users</span>
+      </a>
+      <ul class="submenu" [class.open]="activeMenu === 'users'">
+        <li><a href="#"><i class="fas fa-user-plus"></i> <span>Add User</span></a></li>
+        <li><a href="#"><i class="fas fa-users-cog"></i> <span>Manage Users</span></a></li>
+      </ul>
+    </li>
+    <li>
+      <a class="menu-item" (click)="toggleSubMenu('team')">
+        <i class="fas fa-building"></i> <span>Team</span>
+      </a>
+      <ul class="submenu" [class.open]="activeMenu === 'team'">
+        <li><a href="#"><i class="fas fa-user-friends"></i> <span>Team Members</span></a></li>
+        <li><a href="#"><i class="fas fa-tasks"></i> <span>Manage Teams</span></a></li>
+      </ul>
+    </li>
+    <li>
+      <a class="menu-item" (click)="toggleSubMenu('deliverable')">
+        <i class="fas fa-box"></i> <span>Deliverable</span>
+      </a>
+      <ul class="submenu" [class.open]="activeMenu === 'deliverable'">
+        <li><a href="#"><i class="fas fa-upload"></i> <span>Upload Deliverable</span></a></li>
+        <li><a href="#"><i class="fas fa-folder-open"></i> <span>View Deliverables</span></a></li>
+      </ul>
+    </li>
+    <li>
+      <a class="menu-item" (click)="toggleSubMenu('documentation')">
+        <i class="fas fa-file-alt"></i> <span>Documentation</span>
+      </a>
+      <ul class="submenu" [class.open]="activeMenu === 'documentation'">
+        <li><a href="#"><i class="fas fa-book"></i> <span>Guides</span></a></li>
+        <li><a href="#"><i class="fas fa-file-pdf"></i> <span>Reports</span></a></li>
+      </ul>
+    </li>
+   
+  </ul>
+</aside>

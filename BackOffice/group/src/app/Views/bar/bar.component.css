@@ -1,0 +1,219 @@
+/* Global */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  box-sizing: border-box; /* Ensure padding/margin are included in element's width/height */
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(90deg, #1E3A5F, #2A5D89);
+  padding: 10px 20px;
+  color: rgb(255, 255, 255);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+/* Toggle button */
+.toggle-btn {
+  font-size: 20px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  flex-shrink: 0; /* Prevent toggle button from shrinking */
+}
+
+.toggle-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Right section */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Reduced gap to slide everything to the left */
+  flex-wrap: nowrap; /* Prevent wrapping */
+  overflow: hidden; /* Hide overflow */
+  margin-left: -10px; /* Slide everything to the left */
+}
+
+/* Search bar */
+.search-box {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 5px;
+  padding: 5px 8px; /* Reduced padding to make the search bar smaller */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0; /* Prevent search bar from shrinking */
+  max-width: 160px; /* Reduced width of the search bar */
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  padding: 5px;
+  width: 100%; /* Make input take full width of the search box */
+  min-width: 100px; /* Reduced minimum width for the input */
+  font-size: 14px; /* Smaller font size for the input */
+}
+
+.search-box button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0; /* Prevent button from shrinking */
+  padding: 0 5px; /* Reduced padding for the button */
+}
+
+/* Icons */
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Reduce gap between icons */
+  flex-shrink: 0; /* Prevent icons from shrinking */
+}
+
+.nav-icons .icon {
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  transition: 0.3s;
+  flex-shrink: 0; /* Prevent individual icons from shrinking */
+}
+
+.nav-icons .icon:hover {
+  color: #ff5100;
+}
+
+/* User profile */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Reduce gap between image and name */
+  flex-shrink: 0; /* Prevent user profile from shrinking */
+}
+
+.user-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0; /* Prevent image from shrinking */
+}
+
+.user-name {
+  white-space: nowrap; /* Prevent the name from wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Add ellipsis if the name is too long */
+  max-width: 150px; /* Adjusted max-width */
+  flex-shrink: 0; /* Prevent name from shrinking */
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: linear-gradient(180deg, #1E3A5F, #2A2A2A);
+  color: white;
+  height: 100vh;
+  position: fixed;
+  top: 60px; /* Adjust this value to match the height of your navbar */
+  left: 0;
+  padding-top: 20px;
+  transition: all 0.3s ease-in-out;
+  overflow: hidden; /* Hide overflow content */
+  z-index: 999; /* Ensure sidebar is above other content */
+}
+
+/* Closed sidebar */
+.sidebar.closed {
+  width: 0;
+  padding: 0; /* Remove padding when closed */
+}
+
+.sidebar.closed .menu-item span {
+  display: none; /* Hide text when sidebar is closed */
+}
+
+.sidebar.closed .menu-item i {
+  margin-right: 0; /* Remove margin for icons when sidebar is closed */
+}
+
+.sidebar.closed .logo-container {
+  display: none; /* Hide logo when sidebar is closed */
+}
+
+/* Logo */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.logo-img {
+  width: 195px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Menu */
+.menu {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.menu li {
+  padding: 15px;
+  text-align: left;
+}
+
+.menu li a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: 0.3s;
+}
+
+.menu li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.menu li a i {
+  margin-right: 10px;
+}
+
+/* Submenu */
+.submenu {
+  display: none;
+  padding-left: 20px;
+}
+
+.submenu.open {
+  display: block;
+}
+
+/* Main content */
+main {
+  padding-top: 60px; /* Adjust this value to match the height of your navbar */
+  margin-left: 250px; /* Adjust for the sidebar width */
+  transition: margin-left 0.3s ease-in-out;
+  position: relative; /* Ensure main content is positioned correctly */
+  z-index: 1; /* Ensure main content is below the sidebar */
+}
+
+/* When sidebar is closed */
+.sidebar.closed + main {
+  margin-left: 0; /* Allow full width when sidebar is closed */
+}

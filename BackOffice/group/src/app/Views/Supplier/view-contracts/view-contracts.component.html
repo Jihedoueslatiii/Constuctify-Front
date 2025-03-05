@@ -1,0 +1,74 @@
+<div class="kanban-board">
+    <h2>Contract Kanban Board</h2>
+  
+    <!-- Active Contracts Column -->
+    <div class="kanban-column">
+      <h3>Active</h3>
+      <div *ngFor="let contract of contracts | filterStatus:'ACTIVE'">
+        <div class="kanban-card">
+          <h4>{{ contract.contractName }}</h4>
+          <p><strong>Start Date:</strong> {{ contract.startDate | date }}</p>
+          <p><strong>End Date:</strong> {{ contract.endDate | date }}</p>
+          <p><strong>Status:</strong> {{ contract.contractStatus }}</p>
+          <button (click)="viewContractDetails(contract.idContract)">View</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Pending Contracts Column -->
+    <div class="kanban-column">
+      <h3>Pending</h3>
+      <div *ngFor="let contract of contracts | filterStatus:'PENDING'">
+        <div class="kanban-card">
+          <h4>{{ contract.contractName }}</h4>
+          <p><strong>Start Date:</strong> {{ contract.startDate | date }}</p>
+          <p><strong>End Date:</strong> {{ contract.endDate | date }}</p>
+          <p><strong>Status:</strong> {{ contract.contractStatus }}</p>
+          <button (click)="viewContractDetails(contract.idContract)">View</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Completed Contracts Column -->
+    <div class="kanban-column">
+      <h3>Completed</h3>
+      <div *ngFor="let contract of contracts | filterStatus:'COMPLETED'">
+        <div class="kanban-card">
+          <h4>{{ contract.contractName }}</h4>
+          <p><strong>Start Date:</strong> {{ contract.startDate | date }}</p>
+          <p><strong>End Date:</strong> {{ contract.endDate | date }}</p>
+          <p><strong>Status:</strong> {{ contract.contractStatus }}</p>
+          <button (click)="viewContractDetails(contract.idContract)">View</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Terminated Contracts Column -->
+    <div class="kanban-column">
+      <h3>Terminated</h3>
+      <div *ngFor="let contract of contracts | filterStatus:'TERMINATED'">
+        <div class="kanban-card">
+          <h4>{{ contract.contractName }}</h4>
+          <p><strong>Start Date:</strong> {{ contract.startDate | date }}</p>
+          <p><strong>End Date:</strong> {{ contract.endDate | date }}</p>
+          <p><strong>Status:</strong> {{ contract.contractStatus }}</p>
+          <button (click)="viewContractDetails(contract.idContract)">View</button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Cancelled Contracts Column -->
+    <div class="kanban-column">
+      <h3>Cancelled</h3>
+      <div *ngFor="let contract of contracts | filterStatus:'CANCELLED'">
+        <div class="kanban-card">
+          <h4>{{ contract.contractName }}</h4>
+          <p><strong>Start Date:</strong> {{ contract.startDate | date }}</p>
+          <p><strong>End Date:</strong> {{ contract.endDate | date }}</p>
+          <p><strong>Status:</strong> {{ contract.contractStatus }}</p>
+          <button (click)="viewContractDetails(contract.idContract)">View Contract</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

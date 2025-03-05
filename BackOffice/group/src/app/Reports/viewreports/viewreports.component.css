@@ -1,0 +1,375 @@
+/* Card Container */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Card Styling */
+.card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.02);
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #2A5D89;
+  margin-bottom: 15px;
+}
+
+.card-text {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.list-group-item {
+  padding: 10px;
+  border: none;
+  font-size: 14px;
+  color: #333;
+}
+
+.list-group-item strong {
+  color: #2A5D89;
+}
+
+.card-footer {
+  padding: 15px;
+  background: #f8f9fa;
+  border-top: 1px solid #ddd;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+/* Button Styling */
+.btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgb(20, 20, 20);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 0px 4px rgba(180, 160, 255, 0.253);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+}
+
+.btn .svgIcon {
+  width: 20px; /* Increased icon size */
+  height: 20px; /* Added height for consistency */
+  transition-duration: 0.3s;
+}
+
+.btn .svgIcon path {
+  fill: white;
+}
+
+.btn:hover {
+  width: 140px;
+  border-radius: 50px;
+  transition-duration: 0.3s;
+  background-color: rgb(181, 160, 255);
+  align-items: center;
+}
+
+.btn:hover .svgIcon {
+  transform: translateY(-200%);
+}
+
+.btn::before {
+  position: absolute;
+  bottom: -20px;
+  content: "Button";
+  color: white;
+  font-size: 0px;
+  opacity: 0;
+  transition: opacity 0.3s, font-size 0.3s;
+}
+
+.btn:hover::before {
+  font-size: 13px;
+  opacity: 1;
+  bottom: unset;
+}
+
+/* Primary Button */
+.btn-primary {
+  background-color: #62d85e; /* Green background */
+}
+
+.btn-primary:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.btn-primary::before {
+  content: "Update";
+}
+
+/* Archive Button */
+.btn-archive {
+  background-color: #6c757d; /* Gray background */
+}
+
+.btn-archive:hover {
+  background-color: #3d4247; /* Darker gray on hover */
+}
+
+.btn-archive::before {
+  content: "Archive";
+}
+
+/* Danger Button */
+.btn-danger {
+  background-color: #c23e4b; /* Red background */
+}
+
+.btn-danger:hover {
+  background-color: #d80419; /* Darker red on hover */
+}
+
+.btn-danger::before {
+  content: "Delete";
+}
+
+/* Generate Performance Report Button */
+.generate-performance-btn {
+  width: 50px; /* Circular button */
+  height: 50px; /* Circular button */
+  border-radius: 50%; /* Circular button */
+  background-color: #2A5D89; /* Blue background */
+  color: white; /* White text */
+  font-size: 14px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth transition */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.generate-performance-btn {
+  width: 50px; /* Circular button */
+  height: 50px; /* Circular button */
+  border-radius: 50%; /* Circular button */
+  background-color: #2A5D89; /* Blue background */
+  color: white; /* White text */
+  font-size: 14px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: all 0.3s ease; /* Smooth transition */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; /* Required for ::before positioning */
+  overflow: hidden; /* Hide overflow for the sliding effect */
+}
+
+.generate-performance-btn:hover {
+  width: 220px; /* Expand width to fit the longer text */
+  border-radius: 50px; /* Rounded rectangle on hover */
+  background-color: #5485af; /* Darker blue on hover */
+}
+
+.generate-performance-btn .svgIcon {
+  width: 20px; /* Increased icon size */
+  height: 20px; /* Added height for consistency */
+  transition: transform 0.3s ease; /* Smooth transition for icon */
+}
+
+.generate-performance-btn:hover .svgIcon {
+  transform: translateY(-200%); /* Move icon out of view on hover */
+}
+
+.generate-performance-btn::before {
+  content: "Generate a Performance Report"; /* Text to display on hover */
+  position: absolute;
+  bottom: -20px; /* Start below the button */
+  color: white; /* White text */
+  font-size: 0px; /* Initially hidden */
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease, font-size 0.3s ease, bottom 0.3s ease; /* Smooth transition */
+}
+
+.generate-performance-btn:hover::before {
+  font-size: 14px; /* Show text */
+  opacity: 1; /* Show text */
+  bottom: unset; /* Move text to center */
+}
+
+/* Status Badges */
+.badge {
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.badge.bg-warning {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.badge.bg-success {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.badge.bg-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.badge.bg-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+/* No Data Message */
+.alert {
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.alert-info {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
+/* Search & Filter Section */
+.search-filter-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.filter-select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: white;
+  cursor: pointer;
+  outline: none;
+}
+
+.filter-select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.search-button {
+  background-color: #2A5D89;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.search-button:hover {
+  background-color: #5485af;
+}
+
+.search-button i {
+  font-size: 16px;
+}
+
+/* Container Styling */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header Styling */
+h2.text-center {
+  font-size: 24px;
+  font-weight: bold;
+  color: #2A5D89;
+  margin-bottom: 20px;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.ngx-pagination {
+  padding-left: 0;
+}
+
+.ngx-pagination li {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.ngx-pagination a, .ngx-pagination button {
+  color: #2A5D89;
+  text-decoration: none;
+  padding: 5px 10px;
+  border: 1px solid #2A5D89;
+  border-radius: 4px;
+}
+
+.ngx-pagination a:hover, .ngx-pagination button:hover {
+  background-color: #2A5D89;
+  color: white;
+}
+
+.ngx-pagination .current {
+  background-color: #2A5D89;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+}

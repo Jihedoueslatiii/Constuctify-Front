@@ -1,0 +1,94 @@
+<div class="container mt-4">
+  <h2 class="text-center">Reports Overview</h2>
+
+  <!-- Search & Filter Section -->
+  <div class="search-filter-section">
+    <input
+      type="text"
+      class="search-input"
+      placeholder="🔍 Search by title..."
+      [(ngModel)]="searchTerm"
+    />
+    <button class="search-button">
+      <i class="fas fa-search"></i> Search
+    </button>
+    <select
+      class="filter-select"
+      [(ngModel)]="selectedStatus"
+    >
+      <option value="">All Statuses</option>
+      <option value="PENDING">Pending</option>
+      <option value="COMPLETED">Completed</option>
+      <option value="FAILED">Failed</option>
+      <option value="ARCHIVED">Archived</option>
+    </select>
+    
+    <!-- Generate Performance Report Button -->
+    <button class="btn generate-performance-btn" (click)="generatePerformanceReport()">
+      <svg class="svgIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 4V20M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Reports Card Grid -->
+  <div class="card-container">
+    <div class="card" *ngFor="let report of pagedReports">
+      <div class="card-body">
+        <h5 class="card-title">{{ report.title }}</h5>
+        <p class="card-text">{{ report.description }}</p>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <strong>Type:</strong> {{ report.reportType }}
+          </li>
+          <li class="list-group-item">
+            <strong>Status:</strong>
+            <span class="badge bg-warning" *ngIf="report.status === 'PENDING'">Pending</span>
+            <span class="badge bg-success" *ngIf="report.status === 'COMPLETED'">Completed</span>
+            <span class="badge bg-danger" *ngIf="report.status === 'FAILED'">Failed</span>
+            <span class="badge bg-secondary" *ngIf="report.status === 'ARCHIVED'">Archived</span>
+          </li>
+          <li class="list-group-item">
+            <strong>Generated Date:</strong> {{ report.generatedDate | date:'short' }}
+          </li>
+          <li class="list-group-item">
+            <strong>Last Updated:</strong> {{ report.lastUpdated | date:'short' }}
+          </li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <!-- Update Button -->
+        <button class="btn btn-primary" (click)="onUpdate(report)">
+          <svg class="svgIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 3L17.5 5.5L8 15H5V12L15 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <!-- Archive Button -->
+        <button class="btn btn-archive" (click)="ArchiveReport(report.idReport)">
+          <svg class="svgIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 8H19M15 12H19M12 16H19M5 20H19C20.1046 20 21 19.1046 21 18V6C21 4.89543 20.1046 4 19 4H5C3.89543 4 3 4.89543 3 6V18C3 19.1046 3.89543 20 5 20Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <!-- Delete Button -->
+        <button class="btn btn-danger" (click)="deleteReport(report.idReport)">
+          <svg class="svgIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 19L18 5M6 5L18 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Data Message -->
+  <div *ngIf="filteredReports().length === 0" class="alert alert-info text-center">
+    No reports found.
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="pagination-container">
+    <pagination-controls
+      [id]="config?.id || 'defaultPaginationId'"
+      (pageChange)="onPageChange($event)"
+    ></pagination-controls>
+  </div>
+</div>

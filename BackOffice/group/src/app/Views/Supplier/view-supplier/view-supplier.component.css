@@ -1,0 +1,391 @@
+/* Conteneur principal */
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 90px;
+}
+
+/* Assuming there is a section for the Supplier Prioritization Board */
+.supplier-prioritization-board {
+  margin-bottom: 40px; /* Space below Supplier Prioritization Board */
+}
+
+/* Titre */
+.title {
+  font-size: 30px;
+  color: #2A5D89;
+  margin-bottom: 20px;
+}
+
+/* Conteneur des cartes */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+  margin-top: 40px; /* Space between Supplier Prioritization Board and card container */
+}
+
+/* Cartes */
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  width: 280px;
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  background-color: #cff7e0; /* Light gray, change to any color you prefer */
+}
+
+.card h3 {
+  margin: 0;
+  color: #2A5D89;
+  font-size: 20px;
+}
+
+.card p {
+  margin: 8px 0;
+  color: #3f3f3f;
+  font-size: 14px;
+}
+
+/* Boutons */
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* Uiverse Button Styles */
+.btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgb(20, 20, 20);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 0px 4px rgba(180, 160, 255, 0.253);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+}
+
+.btn .svgIcon {
+  width: 20px; /* Increased icon size */
+  height: 20px; /* Added height for consistency */
+  transition-duration: 0.3s;
+}
+
+.btn .svgIcon path {
+  fill: white;
+}
+
+.btn:hover {
+  width: 140px;
+  border-radius: 50px;
+  transition-duration: 0.3s;
+  align-items: center;
+}
+
+.btn:hover .svgIcon {
+  transform: translateY(-200%);
+}
+
+.btn::before {
+  position: absolute;
+  bottom: -20px;
+  content: "Button";
+  color: white;
+  font-size: 0px;
+  opacity: 0;
+  transition: opacity 0.3s, font-size 0.3s;
+}
+
+.btn:hover::before {
+  font-size: 13px;
+  opacity: 1;
+  bottom: unset;
+}
+
+/* Edit Button (Green) */
+.edit {
+  background-color: #62d85e; /* Green background */
+}
+
+.edit:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.edit::before {
+  content: "Edit";
+}
+
+/* Delete Button (Red) */
+.delete {
+  background-color: #c23e4b; /* Red background */
+}
+
+.delete:hover {
+  background-color: #d80419; /* Darker red on hover */
+}
+
+.delete::before {
+  content: "Delete";
+}
+
+/* Success Panel */
+.success-panel {
+  background-color: #4CAF50; /* Green background */
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px; /* Space between the panel and the title */
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.close-btn:hover {
+  color: #f0f0f0;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.search-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  background-color: #45a049;
+}
+
+/* Add space between the card container and the Kanban board */
+.kanban-board-section {
+  margin-top: 50px; /* Adjust this value as needed */
+}
+
+/* Kanban Board */
+.kanban-board {
+  display: flex;
+  gap: 30px; /* Increase the gap between columns */
+  padding: 30px; /* Increase the padding around the board */
+  background: #f7f8fa;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  transition: all 0.2s ease-in-out; /* Faster transition */
+}
+
+.kanban-board:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow on hover */
+}
+
+/* Kanban Column */
+.kanban-column {
+  flex: 1;
+  background: linear-gradient(135deg, #f4f6f9, #ffffff); /* Soft gradient for depth */
+  border-radius: 10px;
+  padding: 25px; /* Increase padding inside the columns */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08); /* Subtle shadow for modern feel */
+  overflow-y: auto;
+  transition: all 0.2s ease; /* Faster transition */
+  margin-top: 10px; /* Added margin to the top of columns for separation */
+}
+
+.kanban-column:hover {
+  transform: translateY(-4px); /* Slight lift effect on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Kanban Item */
+.kanban-item {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 18px; /* Increase padding inside the items */
+  margin-bottom: 16px; /* Increased margin between items */
+  cursor: move;
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Faster transition */
+}
+
+.kanban-item:hover {
+  transform: translateY(-4px); /* Lift effect on hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1); /* Soft shadow on hover */
+}
+
+.kanban-item h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.kanban-item p {
+  font-size: 14px;
+  margin-top: 8px;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* Add smooth transition for dragging */
+.kanban-item:active {
+  transform: scale(0.98); /* Slight shrinking during dragging */
+  transition: transform 0.1s ease; /* Faster transition during dragging */
+}
+
+/* Header styles for Kanban Columns */
+.kanban-column .column-header {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px; /* More space between header and items */
+  text-align: center;
+}
+
+/* Kanban Board Card Header */
+.kanban-board-section h2 {
+  font-size: 24px;
+  color: #4a4a4a;
+  margin-bottom: 30px; /* Added more space below the title */
+  text-align: center;
+  font-weight: 700;
+}
+
+/* Pagination Container */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+/* Pagination List */
+.ngx-pagination {
+  display: flex;
+  gap: 8px; /* Space between pagination items */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Pagination Items (Numbers and Arrows) */
+.ngx-pagination li {
+  display: inline-block;
+}
+
+.ngx-pagination a,
+.ngx-pagination span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%; /* Circular buttons */
+  font-size: 14px;
+  color: #2A5D89; /* Primary color */
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Hover Effect for Pagination Items */
+.ngx-pagination a:hover {
+  background-color: #2A5D89; /* Primary color */
+  color: white;
+}
+
+/* Current Page Style */
+.ngx-pagination .current {
+  background-color: #2A5D89; /* Primary color */
+  color: white;
+  font-weight: bold;
+}
+
+/* Disabled Arrows */
+.ngx-pagination .disabled span {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Previous and Next Buttons */
+.ngx-pagination .pagination-previous a::before,
+.ngx-pagination .pagination-next a::after {
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.ngx-pagination .pagination-previous a::before {
+  border-width: 6px 8px 6px 0;
+  border-color: transparent #2A5D89 transparent transparent; /* Arrow color */
+  margin-right: 8px;
+}
+
+.ngx-pagination .pagination-next a::after {
+  border-width: 6px 0 6px 8px;
+  border-color: transparent transparent transparent #2A5D89; /* Arrow color */
+  margin-left: 8px;
+}
+
+/* Hover Effect for Previous and Next Buttons */
+.ngx-pagination .pagination-previous a:hover::before {
+  border-right-color: white; /* Arrow color on hover */
+}
+
+.ngx-pagination .pagination-next a:hover::after {
+  border-left-color: white; /* Arrow color on hover */
+}
+
+/* Kanban Board Title */
+.kanban-title {
+  font-size: 24px;
+  color: #2A5D89; /* Primary color */
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 600;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #2A5D89; /* Add a subtle border below the title */
+}
+
+
