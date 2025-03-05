@@ -6,6 +6,8 @@ import { TimesheetService } from '../service/TimesheetService .service';
 import { ChartDataset, ChartOptions, ChartType } from 'chart.js';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas'; // Import html2canvas
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+
 
 
 @Component({
@@ -96,31 +98,72 @@ export class TimesheetComponent implements OnInit {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
   
-      // Add a logo (replace 'assets/logo.png' with the path to your logo)
+      // Add a logo (replace 'assets/constructify-logo.png' with the path to your logo)
       const logo = new Image();
-      logo.src = 'assets/oracle.png'; // Path to your logo
+      logo.src = 'assets/image/logo.png'; // Path to your logo
       logo.onload = () => {
         // Add the logo to the PDF (position: x=10, y=10, size: width=30, height=auto)
         pdf.addImage(logo, 'PNG', 10, 10, 30, 30 * (logo.height / logo.width));
   
-        // Add a title to the PDF
-        pdf.setFontSize(18);
+        // Add company name and address
+        pdf.setFontSize(16);
         pdf.setTextColor(40, 40, 40); // Dark gray color
-        pdf.text('Timesheet Report', 50, 30);
+        pdf.setFont('helvetica', 'bold');
+        pdf.text('Constructify', 50, 20);
+        pdf.setFontSize(10);
+        pdf.setFont('helvetica', 'normal');
+        pdf.text('123 Construction Lane, Build City, BC 12345', 50, 26);
+        pdf.text('Phone: +1 (123) 456-7890 | Email: info@constructify.com', 50, 32);
   
-        // Add the download date
-        const downloadDate = new Date().toLocaleDateString();
+        // Add a title to the PDF
+        pdf.setFontSize(20);
+        pdf.setTextColor(0, 0, 0); // Black color
+        pdf.setFont('helvetica', 'bold');
+        pdf.text('Timesheet Report', 10, 50);
+  
+        // Add a subtitle
         pdf.setFontSize(12);
         pdf.setTextColor(100, 100, 100); // Light gray color
-        pdf.text(`Download Date: ${downloadDate}`, 10, 50);
+        pdf.setFont('helvetica', 'normal');
+        pdf.text('Employee Timesheet Details', 10, 56);
+  
+        // Add document details
+        const downloadDate = new Date().toLocaleDateString();
+        const downloadTime = new Date().toLocaleTimeString();
+        pdf.setFontSize(10);
+        pdf.text(`Document ID: TS-${Math.floor(Math.random() * 10000)}`, 10, 64);
+        pdf.text(`Download Date: ${downloadDate} ${downloadTime}`, 10, 68);
+  
+        // Add a horizontal line separator
+        pdf.setDrawColor(200, 200, 200); // Light gray color
+        pdf.line(10, 72, 200, 72); // Draw a line from (x1, y1) to (x2, y2)
   
         // Add the table image to the PDF
         const imgWidth = 190;
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        pdf.addImage(imgData, 'PNG', 10, 60, imgWidth, imgHeight);
+        pdf.addImage(imgData, 'PNG', 10, 80, imgWidth, imgHeight);
+  
+        // Add a footer
+        pdf.setFontSize(10);
+        pdf.setTextColor(100, 100, 100); // Light gray color
+        pdf.text('This document is confidential and intended for internal use only.', 10, 280);
+        pdf.text('Unauthorized distribution is prohibited.', 10, 284);
+  
+        // Add a signature line
+        pdf.setFontSize(12);
+        pdf.setTextColor(0, 0, 0); // Black color
+        pdf.text('Authorized by: ________________________', 10, 290);
+  
+        // Add a horizontal line separator in the footer
+        pdf.setDrawColor(200, 200, 200); // Light gray color
+        pdf.line(10, 294, 200, 294); // Draw a line from (x1, y1) to (x2, y2)
+  
+        // Add a page number
+        pdf.setFontSize(10);
+        pdf.text('Page 1 of 1', 180, 290);
   
         // Save the PDF
-        pdf.save('Timesheets.pdf');
+        pdf.save('Constructify_Timesheets.pdf');
       };
     });
   }

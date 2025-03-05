@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
 import { Project } from 'src/app/Views/model/project';  // Ensure you have a Project model/interface defined
 
 @Injectable({
@@ -27,9 +27,8 @@ export class ProjectService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
   assignTaskToProject(projectId: number, taskId: number): Observable<any> {
-    // Assuming your backend endpoint expects these IDs in the path
-    return this.http.post<any>(`${this.apiUrl}/projects/${projectId}/tasks/${taskId}`, {});
+    const url = `${this.apiUrl}/projets/${projectId}/tasks/${taskId}`;
+    return this.http.post(url, null); // Send null instead of an empty object
   }
-  
 
 }

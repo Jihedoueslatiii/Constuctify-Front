@@ -39,10 +39,11 @@ export class TaskService {
 // In task.service.ts
 // In task.service.ts
 assignTaskToProject(projectId: number, taskId: number): Observable<any> {
-  // Match the backend endpoint structure: /{projectId}/tasks/{taskId}
-  return this.http.post<any>(`${this.apiUrl}/projects/${projectId}/tasks/${taskId}`, {});
+  const url = `${this.apiUrl}/projets/${projectId}/tasks/${taskId}`;
+  return this.http.post(url, null); // Send null instead of an empty object
 }
 getTasksByProject(projectId: number): Observable<Task[]> {
   return this.http.get<Task[]>(`${this.apiUrl}/tasks/project/${projectId}`);
 }
+
 }

@@ -19,8 +19,36 @@
         <button routerLink="/time" class="btn btn-timesheet">
           ⏰ Timesheet
         </button>
-      </div>
+        <button routerLink="/dashboard" class="btn btn-timesheet">
+          📊 Dashboard
+        </button>
 
+
+        <button routerLink="/kanban" class="btn btn-info">View Kanban Board</button>
+
+      </div>
+      <div class="filters">
+        <select [(ngModel)]="filterStatus" (change)="applyFilters()">
+          <option value="">All Statuses</option>
+          <option value="PLANIFIE">Planned</option>
+          <option value="EN_COURS">In Progress</option>
+          <option value="TERMINE">Completed</option>
+        </select>
+      
+        <input
+          type="date"
+          [(ngModel)]="filterStartDate"
+          (change)="applyFilters()"
+          placeholder="Start Date"
+        />
+      
+        <input
+          type="date"
+          [(ngModel)]="filterEndDate"
+          (change)="applyFilters()"
+          placeholder="End Date"
+        />
+      </div>
       <!-- Dashboard Overview -->
       <div class="dashboard-grid">
         <!-- Key Metrics -->
@@ -123,7 +151,8 @@
 
       <!-- Project Cards Grid -->
       <div class="project-grid">
-        <div *ngFor="let project of projects" class="card">
+        <div *ngFor="let project of filteredProjects" class="card">
+          
           <div class="card-header">
             {{ project.nomProjet }}
           </div>
@@ -151,6 +180,8 @@
               </div>
             </div>
             
+            
+            
             <div class="card-actions">
               <button (click)="viewProjectTasks(project.idProjet)" class="btn-action btn-tasks">
                 📋 Tasks
@@ -169,7 +200,9 @@
           </div>
         </div>
       </div>
+      
     </div>
   </div>
+  
 </body>
 </html>

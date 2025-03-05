@@ -6,6 +6,8 @@ import { ProjectComponent } from './Views/project/project.component';
 import { TaskListComponent } from './Views/task-list/task-list.component';
 import { TimesheetComponent } from './Views/timesheet/timesheet.component';
 import { GanttChartComponent } from './gantt-chart/gantt-chart.component';
+import { KanbanBoardComponent } from './kanban-board/kanban-board.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {path:'ViewRessource',component:ViewRessourceComponent},
@@ -15,6 +17,10 @@ const routes: Routes = [
   { path: 'gantt', component:GanttChartComponent },
 
   { path: 'time', component: TimesheetComponent },
+  { path: 'kanban', component: KanbanBoardComponent },
+  { path: 'dashboard', component: DashboardComponent },
+
+
 
 
 

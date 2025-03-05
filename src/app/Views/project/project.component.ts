@@ -21,6 +21,11 @@ export class ProjectComponent implements OnInit {
   totalProjects: number = 0;
   completedProjects: number = 0;
   overdueProjects: number = 0;
+  filterStatus: string = '';
+  filterStartDate: string = '';
+  filterEndDate: string = '';
+  filteredProjects: Project[] = [];
+  p: number = 1;
 
   constructor(private projectService: ProjectService, private router: Router) {Chart.register(...registerables)}
 
@@ -66,6 +71,8 @@ export class ProjectComponent implements OnInit {
       next: (data: Project[]) => {
         this.projects = data;
         this.calculateMetrics();
+        this.filteredProjects = [...this.projects]; // Ensure all projects are displayed initially
+
         this.createChart();
       },
       error: (error) => console.error('Error fetching projects:', error)
@@ -85,13 +92,22 @@ export class ProjectComponent implements OnInit {
       descriptionProjet: '', 
       dateDebut: '', 
       dateFin: '', 
-      etatProjet: 'PLANIFIE'
+      etatProjet: 'PLANIFIE',
+      updatedAt: new Date() // Add the missing updatedAt property
     };
     this.isEditing = true;
   }
-
   saveProject(): void {
     if (!this.selectedProject) return;
+  
+    // Check if the end date is after the start date
+    const startDate = new Date(this.selectedProject.dateDebut);
+    const endDate = new Date(this.selectedProject.dateFin);
+  
+    if (endDate <= startDate) {
+      alert('The end date must be later than the start date.');
+      return;
+    }
   
     // Extract the numeric part of the ID (e.g., "PRJ_009" -> 9)
     const numericId = this.extractNumericId(this.selectedProject.idProjet);
@@ -124,6 +140,7 @@ export class ProjectComponent implements OnInit {
     }
   }
   
+  
   // Helper function to extract the numeric part of the ID
   extractNumericId(formattedId: string | number): number {
     if (typeof formattedId === 'number') {
@@ -138,14 +155,14 @@ export class ProjectComponent implements OnInit {
   }
 
   deleteProject(idProjet: string | number): void {
-    // Convert formatted ID (PRJ_003) to numeric ID (3)
+    const confirmDeletion = window.confirm('Are you sure you want to delete this project?');
+    if (!confirmDeletion) return;
+  
     const numericId = typeof idProjet === 'string' ? parseInt(idProjet.replace('PRJ_', ''), 10) : idProjet;
-
-    console.log('Deleting project with ID:', numericId, 'Type:', typeof numericId); // Debugging log
-
     this.projectService.deleteProject(numericId).subscribe({
       next: () => {
         this.projects = this.projects.filter(project => project.idProjet !== numericId);
+        this.loadProjects();
       },
       error: (error) => {
         console.error('Error deleting project:', error);
@@ -153,6 +170,7 @@ export class ProjectComponent implements OnInit {
       }
     });
   }
+  
 
   private resetForm(): void {
     this.isEditing = false;
@@ -164,4 +182,56 @@ export class ProjectComponent implements OnInit {
       queryParams: { projectId: projectId }
     });
   }
+  applyFilters(): void {
+    if (!this.filterStatus && !this.filterStartDate && !this.filterEndDate) {
+      // Show all projects if no filters are selected
+      this.filteredProjects = [...this.projects];
+      return;
+    }
+
+    this.filteredProjects = this.projects.filter(project => {
+      const matchesStatus = !this.filterStatus || project.etatProjet === this.filterStatus;
+      const matchesStartDate = !this.filterStartDate || project.dateDebut >= this.filterStartDate;
+      const matchesEndDate = !this.filterEndDate || project.dateFin <= this.filterEndDate;
+      return matchesStatus && matchesStartDate && matchesEndDate;
+    });
+  }
+    // Double-check how you're calling the method
+    assignTaskToProject(projectId: number, taskId: number) {
+      console.log('Attempting to assign task:', { projectId, taskId });
+  
+      this.projectService.assignTaskToProject(projectId, taskId)
+        .subscribe({
+          next: (response) => {
+            console.log('Task assigned successfully', response);
+            // Handle success (e.g., show a notification or refresh the task list)
+          },
+          error: (error) => {
+            console.error('Complete error object:', error);
+            console.error('Error status:', error.status);
+            console.error('Error message:', error.message);
+            console.error('Error body:', error.error);
+            
+            // More detailed error handling
+            let errorMessage = 'Failed to assign task to project.';
+            if (error.status === 0) {
+              errorMessage += ' Network error. Check your connection.';
+            } else if (error.status === 404) {
+              errorMessage += ' Project or task not found.';
+            } else if (error.status === 409) {
+              errorMessage += ' Task is already assigned to another project.';
+            } else if (error.status === 500) {
+              errorMessage += ' Server error. Please try again later.';
+            }
+            
+            alert(errorMessage);
+          }
+        });
+    }
+    getPaginatedProjects(): Project[] {
+      const startIndex = (this.p - 1) * 10; // Calculate starting index for current page
+      const endIndex = startIndex + 10; // Set limit of 10 items per page
+      return this.filteredProjects.slice(startIndex, endIndex);
+    }
+    
 }

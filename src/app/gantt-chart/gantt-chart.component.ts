@@ -1,19 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
 import { Task } from 'src/app/Views/model/task.model';
 import { TaskService } from 'src/app/Views/service/task.service';
+import { gantt } from 'dhtmlx-gantt';
 
-
-// Use require syntax for CommonJS modules
-const Gantt = require('frappe-gantt').default;
-console.log('Gantt:', Gantt);
 @Component({
   selector: 'app-gantt-chart',
   templateUrl: './gantt-chart.component.html',
   styleUrls: ['./gantt-chart.component.css']
 })
-export class GanttChartComponent implements OnInit {
+export class GanttChartComponent implements OnInit, AfterViewInit {
   @Input() tasks: Task[] = [];
-  private gantt: any;
+  ganttData: any[] = [];
 
   constructor(private taskService: TaskService) {}
 
@@ -21,11 +18,23 @@ export class GanttChartComponent implements OnInit {
     this.loadTasks();
   }
 
+  ngAfterViewInit(): void {
+    if (this.tasks.length > 0) {
+      setTimeout(() => {
+        this.prepareGanttData();
+        this.renderGanttChart();
+      }, 100);
+    }
+  }
+
   loadTasks(): void {
     this.taskService.getAllTasks().subscribe({
       next: (tasks) => {
         this.tasks = tasks;
-        this.renderGanttChart();
+        this.prepareGanttData();
+        setTimeout(() => {
+          this.renderGanttChart();
+        }, 100);
       },
       error: (error) => {
         console.error('Error fetching tasks:', error);
@@ -33,34 +42,88 @@ export class GanttChartComponent implements OnInit {
     });
   }
 
-  renderGanttChart(): void {
-    const ganttData = this.tasks.map(task => ({
-      id: task.idTask.toString(), // Ensure ID is a string
-      name: task.title,
-      start: task.dueDate, // Use dueDate as the start date
-      end: this.calculateEndDate(task.dueDate), // Calculate end date
-      progress: this.calculateProgress(task.status), // Calculate progress
-      dependencies: task.dependencies ? task.dependencies.map(d => d.toString()) : [], // Ensure dependencies are strings
-    }));
-  
-    this.gantt = new Gantt('#gantt', ganttData, {
-      header_height: 50,
-      column_width: 30,
-      step: 24,
-      view_modes: ['Quarter Day', 'Half Day', 'Day', 'Week', 'Month'],
-      bar_height: 20,
-      bar_corner_radius: 3,
-      arrow_curve: 5,
-      padding: 18,
-      view_mode: 'Day',
-      date_format: 'YYYY-MM-DD',
-      custom_popup_html: null,
-    });
+  prepareGanttData(): void {
+    if (!this.tasks || this.tasks.length === 0) {
+      console.warn('No tasks available for Gantt preparation');
+      this.ganttData = [];
+      return;
+    }
+
+    try {
+      this.ganttData = this.tasks.map(task => {
+        if (!task) {
+          console.warn('Found undefined task in tasks array');
+          return null;
+        }
+
+        let startDate = new Date();
+        if (task.dueDate) {
+          try {
+            startDate = new Date(task.dueDate);
+            if (isNaN(startDate.getTime())) {
+              console.warn('Invalid date format for task:', task.idTask);
+              startDate = new Date();
+            }
+          } catch (e) {
+            console.warn('Error parsing date for task:', task.idTask);
+            startDate = new Date();
+          }
+        }
+
+        const formattedStartDate = startDate.toISOString().split('T')[0];
+        const endDate = new Date(startDate);
+        endDate.setDate(endDate.getDate() + 7);
+        const formattedEndDate = endDate.toISOString().split('T')[0];
+
+        return {
+          id: task.idTask?.toString() || `task-${Math.random().toString(36).substr(2, 9)}`,
+          text: task.title || 'Untitled Task',
+          start_date: formattedStartDate,
+          duration: 7,
+          progress: this.calculateProgress(task.status || 'NOT_STARTED'),
+          open: true
+        };
+      }).filter(task => task !== null);
+    } catch (error) {
+      console.error('Error preparing Gantt data:', error);
+      this.ganttData = [];
+    }
   }
-  calculateEndDate(startDate: string): string {
-    const endDate = new Date(startDate);
-    endDate.setDate(endDate.getDate() + 7); // Example: 7 days duration
-    return endDate.toISOString().split('T')[0];
+
+  renderGanttChart(): void {
+    console.log('Rendering Gantt chart...');
+
+    const container = document.getElementById('gantt');
+    if (!container) {
+      console.error('Gantt container not found in the DOM!');
+      return;
+    }
+
+    container.innerHTML = '';
+
+    if (!this.ganttData || this.ganttData.length === 0) {
+      console.warn('No tasks available for Gantt chart');
+      container.innerHTML = '<div class="no-data-message">No tasks available to display.</div>';
+      return;
+    }
+
+    try {
+      gantt.init('gantt');
+
+      gantt.config.date_format = '%Y-%m-%d';
+      gantt.config['scale_unit'] = 'day';
+      gantt.config['step'] = 1;
+      gantt.config.min_column_width = 30;
+
+      gantt.parse({ data: this.ganttData });
+
+      console.log('Gantt chart successfully initialized!');
+    } catch (error: any) {
+      console.error('Error initializing Gantt chart:', error);
+      container.innerHTML = `<div class="error-message">
+        Error loading Gantt chart: ${error?.message || 'Unknown error'}
+      </div>`;
+    }
   }
 
   calculateProgress(status: string): number {
@@ -72,5 +135,28 @@ export class GanttChartComponent implements OnInit {
       default:
         return 0;
     }
+  }
+
+  // Add this method to handle view mode changes
+  changeViewMode(mode: string): void {
+    switch (mode) {
+      case 'Day':
+        gantt.config['scale_unit'] = 'day'; // Use bracket notation
+        gantt.config['step'] = 1; // Use bracket notation
+        break;
+      case 'Week':
+        gantt.config['scale_unit'] = 'week'; // Use bracket notation
+        gantt.config['step'] = 1; // Use bracket notation
+        break;
+      case 'Month':
+        gantt.config['scale_unit'] = 'month'; // Use bracket notation
+        gantt.config['step'] = 1; // Use bracket notation
+        break;
+      default:
+        console.warn('Unknown view mode:', mode);
+        return;
+    }
+  
+    gantt.render(); // Refresh the Gantt chart
   }
 }

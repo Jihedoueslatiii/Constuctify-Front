@@ -1,4 +1,5 @@
 export interface Project {
+    updatedAt: any;
     idProjet: number;
     nomProjet: string;
     descriptionProjet: string;

@@ -1,0 +1,226 @@
+/* Dashboard container */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Sidebar */
+
+
+/* Dashboard content */
+.dashboard {
+  flex-grow: 1;
+  margin-left: 250px; /* To account for the sidebar */
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #f7f9fc;
+}
+
+/* Metrics Section */
+.metrics {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap; /* Allow metrics to wrap on small screens */
+}
+
+.metric-card {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 22%; /* Adjust width for better distribution */
+  text-align: center;
+  min-width: 200px; /* Ensure a minimum width */
+}
+
+.metric-card h3 {
+  margin-bottom: 10px;
+}
+
+.metric-card .value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #2ecc71;
+}
+
+/* Average Completion Time */
+.average-completion-time {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.average-completion-time h3 {
+  margin-bottom: 10px;
+}
+
+/* Filters Section */
+.filters {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap; /* Allow filters to wrap */
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-item label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.filter-item input {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  max-width: 200px;
+}
+
+/* Charts Section */
+.charts {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap; /* Allow charts to stack on smaller screens */
+}
+
+.chart-container {
+  width: 48%; /* Adjust width for consistent spacing */
+  height: 250px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+/* Recent Activities Section */
+.recent-activities {
+  margin-bottom: 30px;
+}
+
+.recent-activities h3 {
+  margin-bottom: 10px;
+}
+
+.activity-item {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* Projects List Section */
+.project-list {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.project-list h3 {
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f1f1f1;
+  font-weight: bold;
+}
+
+td {
+  background-color: #fafafa;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    position: relative;
+    height: auto;
+  }
+
+  .dashboard {
+    margin-left: 0;
+  }
+
+  .metrics {
+    flex-direction: column;
+  }
+
+  .metric-card {
+    width: 100%; /* Full width on small screens */
+    margin-bottom: 20px;
+  }
+
+  .charts {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .chart-container {
+    width: 100%;
+  }
+
+  .filters {
+    flex-direction: column;
+    gap: 15px;
+  }
+}
+
+/* Small Screen Design */
+@media screen and (max-width: 600px) {
+  .sidebar {
+    display: none; /* Hide sidebar on mobile */
+  }
+
+  .dashboard {
+    margin-left: 0;
+    padding: 10px;
+  }
+
+  .metrics {
+    justify-content: center;
+  }
+
+  .metric-card {
+    width: 100%;
+  }
+
+  .charts {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .chart-container {
+    width: 100%;
+    height: 200px; /* Adjust chart height for smaller screens */
+  }
+
+  table {
+    font-size: 12px;
+  }
+}

@@ -1,44 +1,52 @@
 <div class="timesheet-container">
   <div class="timesheet-form">
     <h3>Log Timesheet</h3>
-    <button (click)="exportToPDF()">Export to PDF</button> <!-- Add this button -->
+    <button class="export-button" (click)="exportToPDF()">Export to PDF</button>
 
     <form (ngSubmit)="logTimesheet()">
-      <label for="project">Project:</label>
-      <select id="project" [(ngModel)]="selectedProjectId" name="project" required>
-        <option *ngFor="let project of projects" [value]="project.idProjet">
-          {{ project.nomProjet }}
-        </option>
-      </select>
+      <div class="form-group">
+        <label for="project">Project:</label>
+        <select id="project" [(ngModel)]="selectedProjectId" name="project" required>
+          <option *ngFor="let project of projects" [value]="project.idProjet">
+            {{ project.nomProjet }}
+          </option>
+        </select>
+      </div>
 
-      <label for="date">Date:</label>
-      <input type="date" id="date" [(ngModel)]="timesheet.date" name="date" required />
+      <div class="form-group">
+        <label for="date">Date:</label>
+        <input type="date" id="date" [(ngModel)]="timesheet.date" name="date" required />
+      </div>
 
-      <label for="hoursWorked">Hours Worked:</label>
-      <input
-        type="number"
-        id="hoursWorked"
-        [(ngModel)]="timesheet.hoursWorked"
-        name="hoursWorked"
-        required
-        min="0"
-      />
+      <div class="form-group">
+        <label for="hoursWorked">Hours Worked:</label>
+        <input
+          type="number"
+          id="hoursWorked"
+          [(ngModel)]="timesheet.hoursWorked"
+          name="hoursWorked"
+          required
+          min="0"
+        />
+      </div>
 
-      <label for="description">Description:</label>
-      <textarea
-        id="description"
-        [(ngModel)]="timesheet.description"
-        name="description"
-        required
-      ></textarea>
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <textarea
+          id="description"
+          [(ngModel)]="timesheet.description"
+          name="description"
+          required
+        ></textarea>
+      </div>
 
-      <button type="submit">Log Time</button>
+      <button type="submit" class="submit-button">Log Time</button>
     </form>
   </div>
 
   <div class="timesheet-list">
     <h3>Logged Timesheets</h3>
-    <table id="timesheet-table"> <!-- Add the ID here -->
+    <table id="timesheet-table">
       <thead>
         <tr>
           <th>Project</th>

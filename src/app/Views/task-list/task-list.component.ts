@@ -1,21 +1,15 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Task } from 'src/app/Views/model/task.model';
 import { TaskService } from 'src/app/Views/service/task.service';
 import { ProjectService } from 'src/app/Views/service/project.service';
 import { Project } from 'src/app/Views/model/project';
 import { ActivatedRoute } from '@angular/router';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
-@Pipe({
-  name: 'filterByStatus'
-})
-export class FilterByStatusPipe implements PipeTransform {
-  transform(tasks: Task[], status: string): Task[] {
-    if (!tasks) return [];
-    return tasks.filter(task => task.status === status);
-  }
-}
+
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
@@ -26,38 +20,27 @@ export class TaskListComponent implements OnInit {
   notStartedTasks: Task[] = [];
   inProgressTasks: Task[] = [];
   completedTasks: Task[] = [];
-  projects: Project[] = []; // List of projects for the dropdown
-  newTask: Task = { 
-    idTask: 0, 
-    title: '', 
-    description: '', 
-    dueDate: '', 
-    status: 'NOT_STARTED', 
-    priority: 'LOW', 
-    project: undefined 
+  projects: Project[] = [];
+  newTask: Task = {
+    idTask: 0,
+    title: '',
+    description: '',
+    dueDate: '',
+    status: 'NOT_STARTED',
+    priority: 'LOW',
+    project: undefined
   };
   showModal = false;
   editingTask: Task | null = null;
   currentProjectId: number | null = null;
 
-
   constructor(
     private taskService: TaskService,
     private projectService: ProjectService,
-    private route: ActivatedRoute  // Add this
-
+    private route: ActivatedRoute,
   ) {}
 
-  getTasksByStatus(status: string): Task[] {
-    return this.tasks.filter(t => t.status === status);
-  }
-
-  getTaskCountByStatus(status: string): number {
-    return this.getTasksByStatus(status).length;
-  }
-
   ngOnInit(): void {
-    // Subscribe to query params to get project ID
     this.route.queryParams.subscribe(params => {
       this.currentProjectId = params['projectId'] ? Number(params['projectId']) : null;
       this.loadTasks();
@@ -65,33 +48,30 @@ export class TaskListComponent implements OnInit {
     this.loadProjects();
   }
 
-  // Load all tasks
   loadTasks(): void {
     if (this.currentProjectId) {
-      // If you have an endpoint to get tasks by project:
       this.taskService.getTasksByProject(this.currentProjectId).subscribe({
         next: (tasks) => {
           this.tasks = tasks;
+          this.updateFilteredTasks();
         },
         error: (error) => {
           console.error('Error fetching tasks:', error);
         }
       });
     } else {
-      // Load all tasks if no project selected
       this.taskService.getAllTasks().subscribe({
         next: (tasks) => {
           this.tasks = tasks;
+          this.updateFilteredTasks();
         },
         error: (error) => {
           console.error('Error fetching tasks:', error);
         }
       });
     }
-    
   }
 
-  // Load all projects
   loadProjects(): void {
     this.projectService.getAllProjects().subscribe({
       next: (projects) => {
@@ -103,33 +83,44 @@ export class TaskListComponent implements OnInit {
     });
   }
 
-  // Open modal for adding/editing a task
+  updateFilteredTasks(): void {
+    this.notStartedTasks = this.getTasksByStatus('NOT_STARTED');
+    this.inProgressTasks = this.getTasksByStatus('IN_PROGRESS');
+    this.completedTasks = this.getTasksByStatus('COMPLETED');
+  }
+
+  getTasksByStatus(status: string): Task[] {
+    return this.tasks.filter(task => task.status === status) || [];
+  }
+
+  getTaskCountByStatus(status: string): number {
+    return this.getTasksByStatus(status).length;
+  }
+
   openModal(isEdit: boolean, task?: Task): void {
     this.showModal = true;
     if (isEdit && task) {
-      this.editingTask = { ...task }; // Clone the task for editing
+      this.editingTask = { ...task };
       this.newTask = this.editingTask;
     } else {
       this.editingTask = null;
-      this.newTask = { 
-        idTask: 0, 
-        title: '', 
-        description: '', 
-        dueDate: '', 
-        status: 'NOT_STARTED', 
-        priority: 'LOW', 
-        project: undefined 
+      this.newTask = {
+        idTask: 0,
+        title: '',
+        description: '',
+        dueDate: '',
+        status: 'NOT_STARTED',
+        priority: 'LOW',
+        project: undefined
       };
     }
   }
 
-  // Close the modal
   closeModal(): void {
     this.showModal = false;
     this.editingTask = null;
   }
 
-  // Save or update a task
   saveTask(): void {
     if (this.editingTask) {
       this.updateTask(this.editingTask);
@@ -142,10 +133,11 @@ export class TaskListComponent implements OnInit {
     this.taskService.createTask(this.newTask).subscribe({
       next: (createdTask) => {
         if (this.newTask.project) {
-          // Note the order: project ID first, then task ID
           this.assignTaskToProject(createdTask.idTask, this.newTask.project.idProjet);
         }
         this.tasks.push(createdTask);
+        
+        this.updateFilteredTasks();
         this.closeModal();
       },
       error: (error) => {
@@ -154,9 +146,7 @@ export class TaskListComponent implements OnInit {
       }
     });
   }
-  
-  
-  // Update an existing task
+
   updateTask(task: Task): void {
     if (this.editingTask) {
       this.taskService.updateTask(task).subscribe({
@@ -168,6 +158,7 @@ export class TaskListComponent implements OnInit {
           if (index !== -1) {
             this.tasks[index] = updatedTask;
           }
+          this.updateFilteredTasks();
           this.closeModal();
         },
         error: (error) => {
@@ -178,43 +169,39 @@ export class TaskListComponent implements OnInit {
     }
   }
 
- // In task-list.component.ts
- assignTaskToProject(taskId: number | string, projectId: number | string): void {
-  const numericTaskId = typeof taskId === 'string' ? this.extractNumericId(taskId) : taskId;
-  const numericProjectId = typeof projectId === 'string' ? this.extractNumericId(projectId) : projectId;
+  assignTaskToProject(taskId: number | string, projectId: number | string): void {
+    const numericTaskId = typeof taskId === 'string' ? this.extractNumericId(taskId) : taskId;
+    const numericProjectId = typeof projectId === 'string' ? this.extractNumericId(projectId) : projectId;
 
-  if (isNaN(numericTaskId) || isNaN(numericProjectId)) {
-    console.error('Invalid task or project ID');
-    alert('Invalid task or project ID');
-    return;
+    if (isNaN(numericTaskId) || isNaN(numericProjectId)) {
+      console.error('Invalid task or project ID');
+      alert('Invalid task or project ID');
+      return;
+    }
+
+    this.taskService.assignTaskToProject(numericProjectId, numericTaskId).subscribe({
+      next: (response) => {
+        this.loadTasks();
+        alert('Task successfully assigned to the project.');
+      },
+      error: (error) => {
+        console.error('Error assigning task to project:', error);
+        if (error.status === 404) {
+          alert('Project or task not found.');
+        } else if (error.status === 409) {
+          alert('Task is already assigned to another project.');
+        } else {
+          alert('Failed to assign task to project. Please try again.');
+        }
+      }
+    });
   }
 
-  this.taskService.assignTaskToProject(numericProjectId, numericTaskId).subscribe({
-    next: (response) => {
-      this.loadTasks();
-      alert('Task successfully assigned to the project.');
-    },
-    error: (error) => {
-      console.error('Error assigning task to project:', error);
-      if (error.status === 404) {
-        alert('Project or task not found.');
-      } else if (error.status === 409) {
-        alert('Task is already assigned to another project.');
-      } else {
-        alert('Failed to assign task to project. Please try again.');
-      }
-    }
-  });
-}
-
-  
-  // Helper function to extract numeric ID from formatted ID (e.g., "PRJ_013" -> 13)
   extractNumericId(formattedId: string): number {
-    const numericPart = formattedId.match(/\d+/); // Extract numeric part using regex
+    const numericPart = formattedId.match(/\d+/);
     return numericPart ? parseInt(numericPart[0], 10) : NaN;
   }
 
-  // Delete a task
   deleteTask(id: string | number): void {
     let numericId: number;
 
@@ -234,6 +221,7 @@ export class TaskListComponent implements OnInit {
     this.taskService.deleteTask(numericId).subscribe({
       next: () => {
         this.tasks = this.tasks.filter(task => task.idTask !== numericId);
+        this.updateFilteredTasks();
       },
       error: (error) => {
         console.error('Error deleting task:', error);
@@ -241,4 +229,103 @@ export class TaskListComponent implements OnInit {
       }
     });
   }
+
+  drop(event: CdkDragDrop<Task[]>): void {
+    if (event.previousContainer === event.container) {
+      // Same container - just reordering
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      // Moving between containers
+      const item = event.previousContainer.data[event.previousIndex];
+      
+      // Update the task status based on the target container
+      if (event.container.id === 'not-started-list') {
+        item.status = 'NOT_STARTED';
+      } else if (event.container.id === 'in-progress-list') {
+        item.status = 'IN_PROGRESS';
+      } else if (event.container.id === 'completed-list') {
+        item.status = 'COMPLETED';
+      }
+      
+      // Perform the array transfer
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+
+      // Update the task in the backend
+      this.taskService.updateTask(item).subscribe({
+        next: (updatedTask) => {
+          console.log('Task status updated:', updatedTask);
+        },
+        error: (error) => {
+          console.error('Error updating task status:', error);
+          // Revert the UI change if the API call fails
+          this.updateFilteredTasks();
+        }
+      });
+    }
+  }
+  // Calculate completion rate
+  getCompletionRate(): number {
+    if (this.tasks.length === 0) return 0;
+    return Math.round((this.completedTasks.length / this.tasks.length) * 100);
+  }
+
+  // Count tasks by priority
+  getTasksByPriority(priority: string): number {
+    return this.tasks.filter(task => task.priority === priority).length;
+  }
+
+  // Count tasks by status
+  getTasksByStatusCount(status: string): number {
+    return this.tasks.filter(task => task.status === status).length;
+  }
+
+  // Get recent completions
+  getRecentCompletions(): Task[] {
+    return [...this.completedTasks]
+      .sort((a, b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime())
+      .slice(0, 3); // Get only the 3 most recent
+  }
+
+  // Get project completion stats
+  getProjectCompletionStats(): { name: string, completionPercentage: number }[] {
+    const projectStats: Map<string, { total: number, completed: number }> = new Map();
+    
+    this.tasks.forEach(task => {
+      if (task.project) {
+        const projectName = task.project.nomProjet;
+        if (!projectStats.has(projectName)) {
+          projectStats.set(projectName, { total: 0, completed: 0 });
+        }
+        
+        const stats = projectStats.get(projectName);
+        if (stats) {
+          stats.total++;
+          if (task.status === 'COMPLETED') {
+            stats.completed++;
+          }
+        }
+      }
+    });
+    
+    const result: { name: string, completionPercentage: number }[] = [];
+    projectStats.forEach((stats, projectName) => {
+      const completionPercentage = stats.total > 0 
+        ? Math.round((stats.completed / stats.total) * 100) 
+        : 0;
+      
+      result.push({
+        name: projectName,
+        completionPercentage
+      });
+    });
+    
+    return result.sort((a, b) => b.completionPercentage - a.completionPercentage);
+  }
+ 
+ 
 }

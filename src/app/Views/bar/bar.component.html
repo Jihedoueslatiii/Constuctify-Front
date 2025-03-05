@@ -43,9 +43,9 @@
           <i class="fas fa-folder"></i> Project
         </a>
         <ul class="submenu" [class.open]="activeMenu === 'project'">
-          <li><a href="#"><i class="fas fa-plus"></i> New Project</a></li>
-          <li><a href="/project"><i class="fas fa-tools"></i> View Porjects</a></li>
+          <li><a [routerLink]="'/project'"><i class="fas fa-tools"></i> View Projects</a></li>
         </ul>
+        
       </li>
       <li>
         <a href="#" class="menu-item" (click)="toggleSubMenu('task')">
