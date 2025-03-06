@@ -1,0 +1,106 @@
+.container {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 22px;
+    color: #2A5D89;
+    margin-bottom: 15px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  .error-snackbar {
+    background-color: #ff4444; /* Red background */
+    color: white; /* White text */
+  }
+  
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .btn.submit {
+    width: 100%;
+    padding: 10px;
+    background: #28a745;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .btn.submit:hover {
+    background: #218838;
+  }
+  .btn {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: 0.3s;
+  
+}
+
+.edit {
+  background: #28a745;
+  color: white;
+}
+
+.edit:hover {
+  background: #218838;
+}
+
+.delete {
+  background: #dc3545;
+  color: white;
+}
+
+.delete:hover {
+  background: #c82333;
+}
+/* Changer la couleur de fond pour les erreurs */
+.toast-error {
+  background-color: #f44336 !important;
+  color: #fff !important;
+}
+
+/* Changer la couleur de fond pour les succès */
+.toast-success {
+  background-color: #4caf50 !important;
+  color: #fff !important;
+}
+
+/* Personnaliser l'apparence des toasts */
+.toast {
+  font-size: 16px;
+  border-radius: 10px;
+  padding: 12px 20px;
+}
+
+/* Positionnement du toast à droite */
+.toast-top-right {
+  top: 10px !important;  /* Ajustez cette valeur si nécessaire */
+  right: 10px !important;  /* Ajustez cette valeur si nécessaire */
+  left: auto;
+}
+

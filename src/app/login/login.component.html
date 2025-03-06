@@ -1,0 +1,77 @@
+<app-bar *ngIf="showTeamField"></app-bar>
+<div class="container" id="container">
+
+	<!-- Formulaire d'inscription -->
+	<div class="form-container sign-up-container" id="signUpContainer">
+		<form (ngSubmit)="register()" #registerForm="ngForm">
+		<h1>Create Account</h1>
+		<div class="social-container">
+		  <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+		  <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+		  <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+		</div>
+		<span>or use your email for registration</span>
+  
+		<!-- Champs du formulaire -->
+		<input type="text" placeholder="First Name" [(ngModel)]="user.firstname" name="firstname" required />
+		<input type="text" placeholder="Last Name" [(ngModel)]="user.lastname" name="lastname" required />
+		<input type="email" placeholder="Email" [(ngModel)]="user.email" name="email" required />
+		<input type="password" placeholder="Password" [(ngModel)]="user.password" name="password" required />
+		<input type="tel" placeholder="Phone" [(ngModel)]="user.phone" name="phone" required />
+  
+		<!-- Sélection du rôle -->
+		<mat-form-field appearance="fill" class="role-field">
+		  <mat-label>Select Your Role</mat-label>
+		  <mat-select [(ngModel)]="user.role" name="role" required>
+			<mat-option *ngFor="let r of roles" [value]="r.value">{{ r.viewValue }}</mat-option>
+		  </mat-select>
+		</mat-form-field>
+
+		<mat-form-field *ngIf="showTeamField" appearance="fill" class="role-field">
+			<mat-label>Teams</mat-label>
+			<mat-select [(ngModel)]="user.teamId" name="teamId" required>
+			  <mat-option *ngFor="let team of teams" [value]="team.id">{{ team.teamName }}</mat-option>
+			</mat-select>
+		  </mat-form-field>
+
+  
+		<button type="submit">Sign Up</button>
+
+	  </form>
+	</div>
+  
+	<!-- Formulaire de connexion -->
+	<div class="form-container sign-in-container" id="signInContainer">
+		<form (ngSubmit)="login()" #loginForm="ngForm">
+		  <h1>Sign in</h1>
+		  <div class="social-container">
+			<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+			<a href="#" class="social google-signin-btn">
+				<i class="fab fa-google"></i>
+			  </a>			  
+			<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+		  </div>
+		  <span>or use your account</span>
+		  <input type="email" placeholder="Email" [(ngModel)]="email" name="email" required />
+		  <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required />
+		  <a href="#">Forgot your password?</a>
+		  <button type="submit">Sign In</button>
+		</form>
+	  </div>
+  
+	<!-- Section de transition -->
+	<div class="overlay-container">
+		<div class="overlay">
+		  <div class="overlay-panel overlay-left">
+			<h1>Welcome Back!</h1>
+			<p>To keep connected with us please login with your personal info</p>
+			<button class="ghost" id="signIn">Sign In</button>
+		  </div>
+		  <div class="overlay-panel overlay-right">
+			<h1>Hello, Friend!</h1>
+			<p>Enter your personal details and start the journey with us</p>
+			<button class="ghost" id="signUp">Sign Up</button>
+		  </div>
+		</div>
+	  </div>
+  </div>
