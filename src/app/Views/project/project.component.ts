@@ -16,6 +16,8 @@ export class ProjectComponent implements OnInit {
   isEditing: boolean = false;
 
   public chart: any;
+  // Add this to your component class properties
+Math: any = Math;
 
   // Key metrics
   totalProjects: number = 0;
@@ -98,7 +100,31 @@ export class ProjectComponent implements OnInit {
     this.isEditing = true;
   }
   saveProject(): void {
-    if (!this.selectedProject) return;
+    if (!this.selectedProject) {
+      alert('No project selected.');
+      return;
+    }
+  
+    // Validate required fields
+    if (!this.selectedProject.nomProjet || this.selectedProject.nomProjet.trim() === '') {
+      alert('Project name is required.');
+      return;
+    }
+  
+    if (!this.selectedProject.descriptionProjet || this.selectedProject.descriptionProjet.trim() === '') {
+      alert('Project description is required.');
+      return;
+    }
+  
+    if (!this.selectedProject.dateDebut) {
+      alert('Start date is required.');
+      return;
+    }
+  
+    if (!this.selectedProject.dateFin) {
+      alert('End date is required.');
+      return;
+    }
   
     // Check if the end date is after the start date
     const startDate = new Date(this.selectedProject.dateDebut);
@@ -112,12 +138,16 @@ export class ProjectComponent implements OnInit {
     // Extract the numeric part of the ID (e.g., "PRJ_009" -> 9)
     const numericId = this.extractNumericId(this.selectedProject.idProjet);
   
+    // Set the updatedAt field to the current timestamp
+    this.selectedProject.updatedAt = new Date();
+  
     if (numericId === 0) {
       // For creating a new project
       this.projectService.createProject(this.selectedProject).subscribe({
         next: (newProject: Project) => {
           this.projects.push(newProject);
           this.resetForm();
+          alert('Project created successfully!');
         },
         error: (error) => {
           console.error('Error creating project:', error);
@@ -131,6 +161,7 @@ export class ProjectComponent implements OnInit {
           const index = this.projects.findIndex(p => p.idProjet === numericId);
           if (index !== -1) this.projects[index] = updatedProject;
           this.resetForm();
+          alert('Project updated successfully!');
         },
         error: (error) => {
           console.error('Error updating project:', error);
@@ -229,9 +260,18 @@ export class ProjectComponent implements OnInit {
         });
     }
     getPaginatedProjects(): Project[] {
-      const startIndex = (this.p - 1) * 10; // Calculate starting index for current page
-      const endIndex = startIndex + 10; // Set limit of 10 items per page
+      const startIndex = (this.p - 1) * 6; // 6 projects per page
+      const endIndex = startIndex + 6;
       return this.filteredProjects.slice(startIndex, endIndex);
     }
+    nextPage(): void {
+      if (this.p * 6 < this.filteredProjects.length) {
+        this.p++;
+      }
+    }
+    // Add this method to your component class
+getTotalPages(): number {
+  return Math.ceil(this.filteredProjects.length / 6);
+}
     
 }

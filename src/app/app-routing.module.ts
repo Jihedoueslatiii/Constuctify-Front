@@ -8,6 +8,11 @@ import { TimesheetComponent } from './Views/timesheet/timesheet.component';
 import { GanttChartComponent } from './gantt-chart/gantt-chart.component';
 import { KanbanBoardComponent } from './kanban-board/kanban-board.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { LandingpageComponent } from './landingpage/landingpage.component';
+import { LoginComponent } from './login/login.component';
+import { ClientInterfaceComponent } from './client-interface/client-interface.component';
+import { TaskCalendarComponent } from './task-calendar/task-calendar.component';
+import { GeminiChatComponent } from './components/gemini-chat/gemini-chat.component';
 
 const routes: Routes = [
   {path:'ViewRessource',component:ViewRessourceComponent},
@@ -19,7 +24,16 @@ const routes: Routes = [
   { path: 'time', component: TimesheetComponent },
   { path: 'kanban', component: KanbanBoardComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'clientInterface/project', component: ProjectComponent }, 
+  { path: 'login', component: LoginComponent },
+  {path: 'clientInterface', component:ClientInterfaceComponent},// ✅ Correct path!
+  {path: 'calendar', component:TaskCalendarComponent},// ✅ Correct path!
+  {path: 'gemini', component:GeminiChatComponent}// ✅ Correct path!
 
+
+
+  
+ 
 
 
 

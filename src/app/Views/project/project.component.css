@@ -429,3 +429,72 @@ canvas#MyChart {
     grid-template-columns: 1fr;
   }
 }
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+  padding: 15px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.filters select,
+.filters input {
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.filters select {
+  background-color: #f8f8f8;
+}
+
+.filters select:focus,
+.filters input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 6px rgba(79, 70, 229, 0.3);
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+.pagination-controls {
+  display: flex;
+  justify-content: center; /* Centers items horizontally */
+  align-items: center;
+  margin: 20px auto; /* Adds spacing and centers the container */
+  gap: 15px;
+  max-width: 400px; /* Optional: limits the width */
+  width: 100%;
+}
+
+.btn-pagination {
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-pagination:hover:not([disabled]) {
+  background-color: #e0e0e0;
+}
+
+.btn-pagination[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.page-info {
+  font-size: 14px;
+  font-weight: 600;
+}

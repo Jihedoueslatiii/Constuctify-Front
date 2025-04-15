@@ -8,8 +8,6 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
-
-
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
@@ -34,25 +32,52 @@ export class TaskListComponent implements OnInit {
   editingTask: Task | null = null;
   currentProjectId: number | null = null;
 
+  searchQuery: string = ''; // Variable for search query
+  selectedStatus: string = ''; // Filter by status
+  selectedPriority: string = ''; // Filter by priority
+  selectedProject: string = ''; // Filter by project
+
+
+   // Chart variables
+  
+
   constructor(
     private taskService: TaskService,
     private projectService: ProjectService,
     private route: ActivatedRoute,
   ) {}
+  projectStats: {
+    name: string;
+    completed: number;
+    inProgress: number;
+    notStarted: number;
+    total: number;
+    percentage: number;
+  }[] = [];
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.currentProjectId = params['projectId'] ? Number(params['projectId']) : null;
       this.loadTasks();
+      
     });
     this.loadProjects();
   }
 
   loadTasks(): void {
+    const sortByPriority = (a: Task, b: Task) => {
+      const priorityOrder: { [key in Task['priority']]: number } = {
+        'HIGH': 1,
+        'MEDIUM': 2,
+        'LOW': 3
+      };
+      return priorityOrder[a.priority] - priorityOrder[b.priority];
+    };
+  
     if (this.currentProjectId) {
       this.taskService.getTasksByProject(this.currentProjectId).subscribe({
         next: (tasks) => {
-          this.tasks = tasks;
+          this.tasks = tasks.sort(sortByPriority);
           this.updateFilteredTasks();
         },
         error: (error) => {
@@ -62,7 +87,7 @@ export class TaskListComponent implements OnInit {
     } else {
       this.taskService.getAllTasks().subscribe({
         next: (tasks) => {
-          this.tasks = tasks;
+          this.tasks = tasks.sort(sortByPriority);
           this.updateFilteredTasks();
         },
         error: (error) => {
@@ -71,6 +96,7 @@ export class TaskListComponent implements OnInit {
       });
     }
   }
+  
 
   loadProjects(): void {
     this.projectService.getAllProjects().subscribe({
@@ -84,17 +110,43 @@ export class TaskListComponent implements OnInit {
   }
 
   updateFilteredTasks(): void {
-    this.notStartedTasks = this.getTasksByStatus('NOT_STARTED');
-    this.inProgressTasks = this.getTasksByStatus('IN_PROGRESS');
-    this.completedTasks = this.getTasksByStatus('COMPLETED');
+    let filteredTasks = this.tasks;
+
+    // Apply search query filter
+    if (this.searchQuery) {
+      filteredTasks = filteredTasks.filter(task =>
+        task.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        task.description.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    }
+
+    // Apply status filter
+    if (this.selectedStatus) {
+      filteredTasks = filteredTasks.filter(task => task.status === this.selectedStatus);
+    }
+
+    // Apply priority filter
+    if (this.selectedPriority) {
+      filteredTasks = filteredTasks.filter(task => task.priority === this.selectedPriority);
+    }
+
+    // Apply project filter
+    if (this.selectedProject) {
+      filteredTasks = filteredTasks.filter(task => task.project?.nomProjet === this.selectedProject);
+    }
+
+    // Update filtered task arrays based on status
+    this.notStartedTasks = this.getTasksByStatus('NOT_STARTED', filteredTasks);
+    this.inProgressTasks = this.getTasksByStatus('IN_PROGRESS', filteredTasks);
+    this.completedTasks = this.getTasksByStatus('COMPLETED', filteredTasks);
   }
 
-  getTasksByStatus(status: string): Task[] {
-    return this.tasks.filter(task => task.status === status) || [];
+  getTasksByStatus(status: string, tasks: Task[]): Task[] {
+    return tasks.filter(task => task.status === status) || [];
   }
 
   getTaskCountByStatus(status: string): number {
-    return this.getTasksByStatus(status).length;
+    return this.getTasksByStatus(status, this.tasks).length;
   }
 
   openModal(isEdit: boolean, task?: Task): void {
@@ -136,7 +188,6 @@ export class TaskListComponent implements OnInit {
           this.assignTaskToProject(createdTask.idTask, this.newTask.project.idProjet);
         }
         this.tasks.push(createdTask);
-        
         this.updateFilteredTasks();
         this.closeModal();
       },
@@ -170,21 +221,26 @@ export class TaskListComponent implements OnInit {
   }
 
   assignTaskToProject(taskId: number | string, projectId: number | string): void {
+    // Convert taskId and projectId to numbers if they are strings
     const numericTaskId = typeof taskId === 'string' ? this.extractNumericId(taskId) : taskId;
     const numericProjectId = typeof projectId === 'string' ? this.extractNumericId(projectId) : projectId;
-
+  
+    // Validate taskId and projectId to ensure they are numbers
     if (isNaN(numericTaskId) || isNaN(numericProjectId)) {
       console.error('Invalid task or project ID');
       alert('Invalid task or project ID');
       return;
     }
-
-    this.taskService.assignTaskToProject(numericProjectId, numericTaskId).subscribe({
+  
+    // Correct the order of parameters to match the backend URL: taskId first, then projectId
+    this.taskService.assignTaskToProject(numericTaskId, numericProjectId).subscribe({
       next: (response) => {
+        // Reload tasks and show success message
         this.loadTasks();
         alert('Task successfully assigned to the project.');
       },
       error: (error) => {
+        // Handle different types of errors
         console.error('Error assigning task to project:', error);
         if (error.status === 404) {
           alert('Project or task not found.');
@@ -196,6 +252,8 @@ export class TaskListComponent implements OnInit {
       }
     });
   }
+  
+  
 
   extractNumericId(formattedId: string): number {
     const numericPart = formattedId.match(/\d+/);
@@ -326,6 +384,12 @@ export class TaskListComponent implements OnInit {
     
     return result.sort((a, b) => b.completionPercentage - a.completionPercentage);
   }
- 
+  markTaskComplete(task: Task): void {
+    task.status = 'COMPLETED';  // Update task status to completed
+    // Optionally, persist this change to the backend if needed (e.g., using a service)
+    // this.taskService.updateTask(task).subscribe(updatedTask => { ... });
+  }
+  
+  
  
 }

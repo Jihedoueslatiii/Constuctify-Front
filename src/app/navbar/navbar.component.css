@@ -1,0 +1,21 @@
+.signin-btn {
+  border: 3px solid green !important;  /* Green border */
+  color: green !important;  /* Green text */
+  background-color: transparent !important;  /* Transparent background */
+  border-radius: 35% !important;  /* Circular shape */
+  width: 80px !important;  /* Increased width of the circle */
+  height: 50px !important;  /* Increased height of the circle */
+  display: flex !important;  /* Flexbox to center text */
+  justify-content: center !important;  /* Center text horizontally */
+  align-items: center !important;  /* Center text vertically */
+  font-weight: bold !important;  /* Make text bold */
+  font-size: 16px !important;  /* Increased font size for readability */
+  text-transform: uppercase !important;  /* Optional: make text uppercase */
+  transition: all 0.3s ease !important;  /* Smooth transition for hover */
+  text-decoration: none !important;  /* Remove underline from the link */
+}
+
+.signin-btn:hover {
+  background-color: green !important;  /* Green background on hover */
+  color: white !important;  /* White text on hover */
+}

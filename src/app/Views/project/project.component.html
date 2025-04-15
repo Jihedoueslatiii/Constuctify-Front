@@ -151,7 +151,7 @@
 
       <!-- Project Cards Grid -->
       <div class="project-grid">
-        <div *ngFor="let project of filteredProjects" class="card">
+        <div *ngFor="let project of getPaginatedProjects()" class="card">
           
           <div class="card-header">
             {{ project.nomProjet }}
@@ -182,6 +182,7 @@
             
             
             
+            
             <div class="card-actions">
               <button (click)="viewProjectTasks(project.idProjet)" class="btn-action btn-tasks">
                 📋 Tasks
@@ -197,12 +198,30 @@
             <button routerLink="/gantt" class="btn-action btn-gantt" style="width: 100%; margin-top: 8px;">
               📊 Gantt Chart
             </button>
+            
           </div>
         </div>
       </div>
+        <!-- Pagination Controls -->
+<div class="pagination-controls">
+  <button 
+    [disabled]="p <= 1" 
+    (click)="p = p - 1" 
+    class="btn btn-pagination">
+    ◀ Previous
+  </button>
+  <span class="page-info">Page {{ p }} of {{ getTotalPages() }}</span>
+  <button 
+    [disabled]="p >= getTotalPages()" 
+    (click)="p = p + 1" 
+    class="btn btn-pagination">
+    Next ▶
+  </button>
+</div>
       
     </div>
   </div>
+  
   
 </body>
 </html>

@@ -13,6 +13,7 @@
         {{ tasks.length }}
       </div>
     </div>
+    
 
     <!-- Tasks by Status -->
     <div style="flex: 1; min-width: 200px;">
@@ -67,6 +68,69 @@
   </div>
 </div>
 
+
+<!-- Add this section to the template -->
+<div class="search-filter-container">
+  <!-- Search input -->
+  <input 
+    [(ngModel)]="searchQuery" 
+    (input)="updateFilteredTasks()" 
+    placeholder="Search tasks" 
+    class="search-bar" 
+  />
+
+  <div class="search-filter-wrapper">
+    <!-- Filter by Status -->
+    <div class="filter-group">
+      <label for="status" class="filter-label">Status</label>
+      <select 
+        [(ngModel)]="selectedStatus" 
+        (change)="updateFilteredTasks()" 
+        id="status" 
+        class="filter-dropdown"
+      >
+        <option value="">All Statuses</option>
+        <option value="NOT_STARTED">Not Started</option>
+        <option value="IN_PROGRESS">In Progress</option>
+        <option value="COMPLETED">Completed</option>
+      </select>
+    </div>
+
+    <!-- Filter by Priority -->
+    <div class="filter-group">
+      <label for="priority" class="filter-label">Priority</label>
+      <select 
+        [(ngModel)]="selectedPriority" 
+        (change)="updateFilteredTasks()" 
+        id="priority" 
+        class="filter-dropdown"
+      >
+        <option value="">All Priorities</option>
+        <option value="LOW">Low</option>
+        <option value="MEDIUM">Medium</option>
+        <option value="HIGH">High</option>
+      </select>
+    </div>
+
+    <!-- Filter by Project -->
+    <div class="filter-group">
+      <label for="project" class="filter-label">Project</label>
+      <select 
+        [(ngModel)]="selectedProject" 
+        (change)="updateFilteredTasks()" 
+        id="project" 
+        class="filter-dropdown"
+      >
+        <option value="">All Projects</option>
+        <option *ngFor="let project of projects" [value]="project.nomProjet">
+          {{ project.nomProjet }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+
+
   
 
   <!-- Add Task and Gantt Chart Buttons -->
@@ -77,6 +141,8 @@
     <button routerLink="/gantt" class="btn btn-gantt" style="background-color: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
       📊 View Gantt Chart
     </button>
+    <button routerLink="/calendar" class="btn btn-primary">📅 View Calendar</button>
+
   </div>
 
   <!-- Task Columns -->

@@ -38,10 +38,12 @@ export class TaskService {
 // In task.service.ts
 // In task.service.ts
 // In task.service.ts
-assignTaskToProject(projectId: number, taskId: number): Observable<any> {
-  const url = `${this.apiUrl}/projets/${projectId}/tasks/${taskId}`;
-  return this.http.post(url, null); // Send null instead of an empty object
+assignTaskToProject(taskId: number, projectId: number): Observable<Task> {
+  // Construct the correct API URL for assigning a task to a project
+  return this.http.put<Task>(`${this.apiUrl}/${taskId}/assign/${projectId}`, {});
 }
+
+
 getTasksByProject(projectId: number): Observable<Task[]> {
   return this.http.get<Task[]>(`${this.apiUrl}/tasks/project/${projectId}`);
 }

@@ -19,6 +19,16 @@ import { KanbanBoardComponent } from './kanban-board/kanban-board.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
+import { LandingpageComponent } from './landingpage/landingpage.component';
+import { LoginComponent } from './login/login.component';
+import { ClientNavbarComponent } from './client-navbar/client-navbar.component';
+import { ClientInterfaceComponent } from './client-interface/client-interface.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { TaskCalendarComponent } from './task-calendar/task-calendar.component';
+import { GeminiChatComponent } from './components/gemini-chat/gemini-chat.component';
+
 
 
 @NgModule({
@@ -36,6 +46,15 @@ import { NgxPaginationModule } from 'ngx-pagination';
          GanttChartComponent,
          KanbanBoardComponent,
          DashboardComponent,
+         AppComponent,
+         NavbarComponent,
+         FooterComponent,
+         LandingpageComponent,
+         LoginComponent,
+         ClientNavbarComponent,
+         ClientInterfaceComponent,
+         TaskCalendarComponent,
+         GeminiChatComponent,
     
     
     
@@ -49,7 +68,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     DragDropModule,
     BrowserAnimationsModule,
     NgxPaginationModule,
-    
+    FullCalendarModule,
    
 
 

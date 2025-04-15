@@ -86,11 +86,15 @@ export class DashboardComponent implements OnInit {
   }
 
   loadRecentActivities(): void {
-    this.recentActivities = this.projects.slice(0, 5).map(project => ({
-      name: project.nomProjet,
-      status: project.etatProjet,
-      updatedAt: project.updatedAt
-    }));
+    // Sort projects by updatedAt in descending order and take the first 5
+    this.recentActivities = this.projects
+      .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+      .slice(0, 5)
+      .map(project => ({
+        name: project.nomProjet,
+        status: project.etatProjet,
+        updatedAt: project.updatedAt
+      }));
   }
 
   createCharts(): void {
