@@ -1,0 +1,24 @@
+<!-- dashboard.component.html -->
+<div class="dashboard-container">
+    <div class="metric-card health" [class.critical]="healthScore < 40"
+                                [class.warning]="healthScore >= 40 && healthScore < 70">
+      <h3>Santé du projet</h3>
+      <div class="gauge">
+        <div class="fill" [style.width.%]="healthScore"></div>
+      </div>
+      <div class="score">{{ healthScore | number:'1.0-0' }}%</div>
+    </div>
+  
+    <div class="metric-card risk" [class.critical]="delayRisk.riskLevel === 'high'"
+                              [class.warning]="delayRisk.riskLevel === 'medium'">
+      <h3>Risque de retard</h3>
+      <div class="risk-level">{{ delayRisk.riskLevel | uppercase }}</div>
+      <p>{{ delayRisk.delayed }} livrables en retard</p>
+    </div>
+  
+    <div class="metric-card completion">
+      <h3>Fin estimée</h3>
+      <div class="date">{{ estimatedCompletion | date:'dd/MM/yyyy' }}</div>
+      <p *ngIf="estimatedCompletion">Basé sur {{ deliverables.length }} livrables</p>
+    </div>
+  </div>

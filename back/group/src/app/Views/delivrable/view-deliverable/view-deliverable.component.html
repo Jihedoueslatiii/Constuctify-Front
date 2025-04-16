@@ -1,21 +1,220 @@
 <app-bar (searchEvent)="onSearchChange($event)"></app-bar>
 
 <div class="container">
-    <h2 class="title">List of deliverables</h2>
+    <div class="action-buttons">
+        <!-- Bouton Dashboard -->
+        <button class="dashboard-toggle-btn" (click)="toggleDashboard()">
+            <i class="fas fa-chart-pie"></i> 
+            {{ showDashboard ? 'Masquer' : 'Afficher' }} le Dashboard
+        </button>
+        
+        <!-- Bouton Export PDF -->
+        <button class="export-btn" (click)="exportToPDF()">
+            <i class="fas fa-file-pdf"></i> Exporter PDF
+        </button>
+        
+        <!-- Bouton Prévisualisation -->
+        <button class="preview-btn" (click)="openPreview()">
+            <i class="fas fa-eye"></i> Prévisualiser
+        </button>
+        
+        <!-- Bouton Vue Kanban -->
+        <button class="toggle-view-btn" (click)="toggleView()">
+            <i class="fas fa-columns"></i> 
+            {{ isKanbanView ? 'Vue Tableau' : 'Vue Kanban' }}
+        </button>
+    </div>
 
-    <div class="card-container">
+    <!-- Modal du Dashboard -->
+    <div class="dashboard-modal" [class.show]="showDashboard" (click)="showDashboard = false">
+        <div class="modal-content" (click)="$event.stopPropagation()">
+            <button class="close-btn" (click)="toggleDashboard()">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <h2 class="modal-title">
+                <i class="fas fa-tachometer-alt"></i> Tableau de Bord des Livrables
+            </h2>
+            
+            <div class="dashboard-grid">
+                <!-- Carte principale - Taux de complétion -->
+                <div class="dashboard-card primary-card">
+                    <div class="card-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <div class="metric-main">
+                        <div class="metric-value">{{ dashboardStats.completionRate || 0 }}%</div>
+                        <div class="metric-label">Taux de Complétion</div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" [style.width.%]="dashboardStats.completionRate || 0"></div>
+                    </div>
+                    <div class="card-footer">
+                        <span [class]="getCompletionStatus().class">
+                            {{ getCompletionStatus().label }}
+                        </span>
+                    </div>
+                </div>
 
-        <div class="card" *ngFor="let deliverable of filteredDeliverables">
-            <h3>{{ deliverable.name }}</h3>
-            <p><strong>Date delivery:</strong> {{ deliverable.delivery_date }}</p>
-            <p><strong>Date expected:</strong> {{ deliverable.expected_date }}</p>
-            <p><strong>Status:</strong> <span class="status {{ deliverable.status }}">{{ deliverable.status }}</span></p>
+                <!-- Cartes secondaires -->
+                <div class="dashboard-card">
+                    <div class="metric-group">
+                        <div class="metric-item success">
+                            <div class="metric-value">{{ dashboardStats.completed || 0 }}</div>
+                            <div class="metric-label">
+                                <i class="fas fa-check-circle"></i> Terminés
+                            </div>
+                        </div>
+                        <div class="metric-item warning">
+                            <div class="metric-value">{{ dashboardStats.inProgress || 0 }}</div>
+                            <div class="metric-label">
+                                <i class="fas fa-spinner"></i> En Cours
+                            </div>
+                        </div>
+                        <div class="metric-item danger">
+                            <div class="metric-value">{{ dashboardStats.delayed || 0 }}</div>
+                            <div class="metric-label">
+                                <i class="fas fa-exclamation-triangle"></i> En Retard
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="buttons">
-                <button class="btn edit" [routerLink]="['/UpdateDeliverable', deliverable.idDeliverable]">Update</button>
-                <button class="btn delete" (click)="deleteDeliverable(deliverable.idDeliverable)">Delete</button>
+                <!-- Carte Total -->
+                <div class="dashboard-card highlight-card">
+                    <div class="metric-total">
+                        <div class="metric-value">{{ dashboardStats.total || 0 }}</div>
+                        <div class="metric-label">Total Livrables</div>
+                    </div>
+                    <div class="distribution-chart">
+                        <div class="chart-bar completed" [style.flex-grow]="dashboardStats.completed"></div>
+                        <div class="chart-bar in-progress" [style.flex-grow]="dashboardStats.inProgress"></div>
+                        <div class="chart-bar delayed" [style.flex-grow]="dashboardStats.delayed"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <h2 class="title">Liste des Livrables</h2>
+
+    <!-- Vue Tableau (par défaut) -->
+    <div *ngIf="!isKanbanView">
+        <div class="card-container">
+            <div class="card" *ngFor="let deliverable of paginatedDeliverables">
+                <h3>{{ deliverable.name }}</h3>
+                <p><strong>Date livraison:</strong> {{ deliverable.delivery_date | date:'dd/MM/yyyy' }}</p>
+                <p><strong>Date attendue:</strong> {{ deliverable.expected_date | date:'dd/MM/yyyy' }}</p>
+                <p>
+                    <strong>Statut:</strong> 
+                    <span class="status-badge" [ngClass]="{
+                        'completed': deliverable.status === DeliverableStatus.COMPLETED,
+                        'validated': deliverable.status === DeliverableStatus.VALIDATED,
+                        'in-progress': deliverable.status === DeliverableStatus.IN_PROGRESS,
+                        'rejected': deliverable.status === DeliverableStatus.REJECTED
+                    }">
+                        {{ deliverable.status }}
+                    </span>
+                </p>
+
+                <div class="buttons">
+                    <button class="btn edit" [routerLink]="['/UpdateDeliverable', deliverable.idDeliverable]">
+                        <i class="fas fa-edit"></i> Modifier
+                    </button>
+                    <button class="btn delete" (click)="deleteDeliverable(deliverable.idDeliverable)">
+                        <i class="fas fa-trash-alt"></i> Supprimer
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination controls -->
+        <div class="pagination-controls">
+            <div class="items-per-page-selector">
+                <label for="itemsPerPage">Items par page:</label>
+                <select id="itemsPerPage" 
+                        [(ngModel)]="itemsPerPage" 
+                        (change)="onItemsPerPageChange(itemsPerPage)">
+                    <option *ngFor="let option of pageSizeOptions" [value]="option">{{option}}</option>
+                </select>
+            </div>
+
+            <div class="pagination-buttons">
+                <button (click)="onPageChange(currentPage - 1)" 
+                        [disabled]="currentPage === 1">
+                    Précédent
+                </button>
+                
+                <span class="page-info">
+                    Page {{currentPage}} sur {{ totalPages }}
+                </span>
+                
+                <button (click)="onPageChange(currentPage + 1)" 
+                        [disabled]="currentPage * itemsPerPage >= totalItems">
+                    Suivant
+                </button>
+            </div>
+        </div>
+    </div>
+
+   
+            </div>
+
+           
+
+           
+            <button class="preview-btn" (click)="openPreview()" [disabled]="isGeneratingPreview">
+                <i class="fas fa-eye"></i> 
+                {{ isGeneratingPreview ? 'Génération en cours...' : 'Prévisualiser' }}
+                <span *ngIf="isGeneratingPreview" class="spinner-border spinner-border-sm"></span>
+            </button>
+            <button class="export-btn" (click)="exportToPDF()" [disabled]="isGeneratingPdf">
+                <i class="fas fa-file-pdf"></i> 
+                {{ isGeneratingPdf ? 'Génération en cours...' : 'Exporter PDF' }}
+                <span *ngIf="isGeneratingPdf" class="spinner-border spinner-border-sm"></span>
+            </button>
+
+<!-- Contenu caché pour le PDF -->
+<div id="pdfContent" style="display: none;">
+    <div class="pdf-header">
+       
+       
+    </div>
     
+    <table class="pdf-table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Date livraison</th>
+                <th>Date attendue</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let deliverable of listDeliverable">
+                <td>{{ deliverable.name }}</td>
+                <td>{{ deliverable.delivery_date | date:'dd/MM/yyyy' }}</td>
+                <td>{{ deliverable.expected_date | date:'dd/MM/yyyy' }}</td>
+                <td>
+                    <span class="pdf-status" [ngClass]="{
+                        'completed': deliverable.status === DeliverableStatus.COMPLETED,
+                        'validated': deliverable.status === DeliverableStatus.VALIDATED,
+                        'in-progress': deliverable.status === DeliverableStatus.IN_PROGRESS,
+                        'rejected': deliverable.status === DeliverableStatus.REJECTED
+                    }">
+                        {{ deliverable.status }}
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="pdf-summary">
+        <h3>Résumé</h3>
+        <p>Total livrables: {{ dashboardStats.total || 0 }}</p>
+        <p>Terminés: {{ dashboardStats.completed || 0 }}</p>
+        <p>En cours: {{ dashboardStats.inProgress || 0 }}</p>
+        <p>En retard: {{ dashboardStats.delayed || 0 }}</p>
+        <p>Taux de complétion: {{ dashboardStats.completionRate || 0 }}%</p>
+    </div>
 </div>

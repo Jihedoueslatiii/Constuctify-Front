@@ -1,0 +1,86 @@
+/* Conteneur principal */
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 90px;
+}
+
+/* Titre */
+.title {
+    font-size: 24px;
+    color: #2A5D89;
+    margin-bottom: 20px;
+}
+
+/* Conteneur des cartes */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* Cartes */
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card h3 {
+    margin: 0;
+    color: #2A5D89;
+    font-size: 18px;
+}
+
+.card p {
+    margin: 8px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+/* Boutons */
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+    color: white;
+}
+
+.edit {
+    background: #28a745;
+}
+
+.edit:hover {
+    background: #218838;
+}
+
+.delete {
+    background: #dc3545;
+}
+
+.delete:hover {
+    background: #c82333;
+}

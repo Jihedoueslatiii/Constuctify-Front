@@ -1,0 +1,28 @@
+<div class="container">
+    <h2 class="title">Liste des Ressources</h2>
+  
+    <table class="resource-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nom</th>
+          <th>Nombre</th>
+          <th>Type</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ressource of listRessource">
+          <td>{{ ressource.idRessource }}</td>
+          <td>{{ ressource.nomRessource }}</td>
+          <td>{{ ressource.nombreRessource }}</td>
+          <td>{{ ressource.typesRessource }}</td>
+          <td>
+            <button class="btn edit" >Modifier</button>
+            <button class="btn delete">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

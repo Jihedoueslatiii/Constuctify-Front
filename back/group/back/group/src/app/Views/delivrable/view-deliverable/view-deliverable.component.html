@@ -1,0 +1,21 @@
+<app-bar (searchEvent)="onSearchChange($event)"></app-bar>
+
+<div class="container">
+    <h2 class="title">List of deliverables</h2>
+
+    <div class="card-container">
+
+        <div class="card" *ngFor="let deliverable of filteredDeliverables">
+            <h3>{{ deliverable.name }}</h3>
+            <p><strong>Date delivery:</strong> {{ deliverable.delivery_date }}</p>
+            <p><strong>Date expected:</strong> {{ deliverable.expected_date }}</p>
+            <p><strong>Status:</strong> <span class="status {{ deliverable.status }}">{{ deliverable.status }}</span></p>
+
+            <div class="buttons">
+                <button class="btn edit" [routerLink]="['/UpdateDeliverable', deliverable.idDeliverable]">Update</button>
+                <button class="btn delete" (click)="deleteDeliverable(deliverable.idDeliverable)">Delete</button>
+            </div>
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,90 @@
+<div class="container">
+  <h2 class="title">List of Problèmes/Risques</h2>
+
+  <!-- Barre de recherche -->
+  <app-bar (searchEvent)="onSearchChange($event)"></app-bar>
+
+  <!-- Actions principales -->
+  <div class="actions">
+    <div class="top-buttons">
+      <!-- Boutons d'export -->
+      <div class="export-buttons">
+        <button class="btn export-pdf" (click)="exportPdf()">Exporter en PDF</button>
+        <button class="btn export-excel" (click)="exportExcel()">Exporter en Excel</button>
+      </div>
+
+      <!-- Bouton d'ajout -->
+      <div class="main-actions">
+        <button routerLink="/add-problem-risk" class="btn add center-button">Ajouter un ProblemRisk</button>
+      </div>
+
+      <!-- Bouton des statistiques -->
+      <div class="stats-button">
+        <button class="btn stats" (click)="loadStatistics()">Afficher les Statistiques</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Liste des problèmes/risques -->
+  <div class="card-container">
+    <div class="card" *ngFor="let pr of filteredProblemRisks | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+      <h3>{{ pr.title }}</h3>
+      <p><strong>Type :</strong> {{ pr.type }}</p>
+      <p><strong>Status :</strong> {{ pr.problemStatus }}</p>
+      <p><strong>Description :</strong> {{ pr.description }}</p>
+      <p><strong>Probabilité :</strong> {{ pr.probability }}</p> <!-- Correction ici -->
+      <p><strong>Solution Appliquée :</strong> {{ pr.appliedSolutions }}</p> <!-- Correction ici -->
+      <p><strong>Date of Detection :</strong> {{ pr.detectionDate ? (pr.detectionDate | date:'shortDate') : "Non disponible" }}</p>
+      <p><strong>Date of Resolution :</strong> {{ pr.resolutionDate ? (pr.resolutionDate | date:'shortDate') : "Non résolu" }}</p>
+      
+      <!-- Boutons d'actions -->
+      <div class="buttons">
+        <button class="btn edit" [routerLink]="['/edit-problem-risk', pr.idProblemRisk]">Update</button>
+        <button class="btn delete" (click)="deleteProblemRisk(pr.idProblemRisk)">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+
+  <!-- Modal des statistiques -->
+  <div class="modal" *ngIf="showStats">
+    <div class="modal-content">
+      <span class="close" (click)="showStats = false">&times;</span>
+      <h3>Statistiques</h3>
+
+      <!-- Statistiques par type -->
+      <div *ngIf="statsByType.length > 0; else noDataType">
+        <ngx-charts-bar-vertical
+          [results]="statsByType"
+          [view]="[400, 300]"
+          [scheme]="'vivid'"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="true"
+          [showDataLabel]="true">
+        </ngx-charts-bar-vertical>
+      </div>
+      <ng-template #noDataType>
+        <p>Aucune donnée disponible pour les types.</p>
+      </ng-template>
+
+      <!-- Statistiques par statut -->
+      <div *ngIf="statsByStatus.length > 0; else noDataStatus">
+        <ngx-charts-bar-vertical
+          [results]="statsByStatus"
+          [view]="[400, 300]"
+          [scheme]="'cool'"
+          [xAxis]="true"
+          [yAxis]="true"
+          [legend]="true"
+          [showDataLabel]="true">
+        </ngx-charts-bar-vertical>
+      </div>
+      <ng-template #noDataStatus>
+        <p>Aucune donnée disponible pour les statuts.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

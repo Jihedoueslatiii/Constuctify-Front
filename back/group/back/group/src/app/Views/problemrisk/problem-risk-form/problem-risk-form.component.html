@@ -1,0 +1,117 @@
+<div class="container">
+  <h2 class="title">
+    {{ isEditMode ? 'Modifier un ProblemRisk' : 'Add  ProblemRisk' }}
+  </h2>
+
+  <form [formGroup]="problemRiskForm">
+    <!-- Champ Titre -->
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input
+        id="title"
+        formControlName="title"
+        required
+      />
+      <div *ngIf="problemRiskForm.get('title')?.invalid && problemRiskForm.get('title')?.touched" class="text-danger">
+        <div *ngIf="problemRiskForm.get('title')?.errors?.['required']">Le titre est obligatoire.</div>
+        <div *ngIf="problemRiskForm.get('title')?.errors?.['minlength']">Le titre doit contenir au moins 5 caractères.</div>
+        <div *ngIf="problemRiskForm.get('title')?.errors?.['maxlength']">Le titre ne doit pas dépasser 100 caractères.</div>
+      </div>
+    </div>
+
+    <!-- Champ Description -->
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea
+        id="description"
+        formControlName="description"
+        rows="3"
+      ></textarea>
+      <div *ngIf="problemRiskForm.get('description')?.invalid && problemRiskForm.get('description')?.touched" class="text-danger">
+        <div *ngIf="problemRiskForm.get('description')?.errors?.['required']">La description est obligatoire.</div>
+        <div *ngIf="problemRiskForm.get('description')?.errors?.['minlength']">La description doit contenir au moins 10 caractères.</div>
+        <div *ngIf="problemRiskForm.get('description')?.errors?.['maxlength']">La description ne doit pas dépasser 500 caractères.</div>
+      </div>
+    </div>
+
+    <!-- Champ Type (enum) -->
+    <div class="form-group">
+      <label for="type">Type</label>
+      <select id="type" formControlName="type">
+        <option value="TECHNICAL">TECHNICAL</option>
+        <option value="MANAGEMENT">MANAGEMENT</option>
+        <option value="OTHER">OTHER</option>
+      </select>
+    </div>
+
+    <!-- Champ Probabilité (enum) -->
+    <div class="form-group">
+      <label for="probability">Probabilité</label>
+      <select id="probability" formControlName="probability">
+        <option value="LOW">LOW</option>
+        <option value="MEDIUM">MEDIUM</option>
+        <option value="HIGH">HIGH</option>
+      </select>
+    </div>
+
+    <!-- Champ Statut (enum) -->
+    <div class="form-group">
+      <label for="problemStatus">Status</label>
+      <select id="problemStatus" formControlName="problemStatus">
+        <option value="OPEN">OPEN</option>
+        <option value="IN_PROGRESS">IN_PROGRESS</option>
+        <option value="RESOLVED">RESOLVED</option>
+      </select>
+    </div>
+
+    <!-- Date de détection -->
+    <div class="form-group">
+      <label for="detectionDate">Date of detection</label>
+      <input
+        id="detectionDate"
+        formControlName="detectionDate"
+        type="datetime-local"
+      />
+      <div *ngIf="problemRiskForm.get('detectionDate')?.invalid && problemRiskForm.get('detectionDate')?.touched" class="text-danger">
+        <div *ngIf="problemRiskForm.get('detectionDate')?.errors?.['required']">La date de détection est obligatoire.</div>
+      </div>
+    </div>
+
+    <!-- Date de résolution -->
+    <div class="form-group">
+      <label for="resolutionDate">Date of resolution</label>
+      <input
+        id="resolutionDate"
+        formControlName="resolutionDate"
+        type="datetime-local"
+      />
+      <div *ngIf="problemRiskForm.hasError('dateOrder') && problemRiskForm.get('resolutionDate')?.touched" class="text-danger">
+        La date de résolution doit être postérieure à la date de détection.
+      </div>
+    </div>
+
+    <!-- Solutions appliquées -->
+    <div class="form-group">
+      <label for="appliedSolutions">applied Solutions</label>
+      <textarea
+        id="appliedSolutions"
+        formControlName="appliedSolutions"
+        rows="2"
+      ></textarea>
+    </div>
+
+    <!-- Boutons d'action -->
+    <button type="button" class="btn generate" (click)="generateData()">
+      Generate 
+    </button>
+    
+    <button
+      type="button"
+      class="btn submit"
+      (click)="save()"
+      [disabled]="problemRiskForm.invalid"
+    >
+      {{ isEditMode ? 'Mettre à jour' : 'Add' }}
+    </button>
+  </form>
+</div>

@@ -19,13 +19,13 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotificationComponent } from './Views/notification/notification.component.spec';
-import { DashboardComponent } from './Views/delivrable/predictive-dashboard/dashboard.component';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
     BarComponent,
-    
     ViewRessourceComponent, 
     AddRessourceComponent,
     AddDeliverableComponent,
@@ -33,11 +33,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     UpdateDeliverableComponent,
     ProblemRiskListComponent,
     ProblemRiskFormComponent,
-     
     NotificationComponent,
-     DashboardComponent , 
-     
-    
     
   ],
   imports: [

@@ -1,0 +1,48 @@
+/* dashboard.component.css */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .metric-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+  
+  .gauge {
+    height: 20px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    margin: 15px 0;
+    overflow: hidden;
+  }
+  
+  .fill {
+    height: 100%;
+    background: #4CAF50;
+    transition: width 0.5s ease;
+  }
+  
+  .health.critical .fill { background: #f44336; }
+  .health.warning .fill { background: #FFC107; }
+  
+  .risk-level {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .risk.critical .risk-level { color: #f44336; }
+  .risk.warning .risk-level { color: #FFC107; }
+  .risk .risk-level { color: #4CAF50; }
+  
+  .date {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2196F3;
+    margin: 10px 0;
+  }
