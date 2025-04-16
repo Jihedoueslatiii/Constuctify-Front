@@ -1,0 +1,321 @@
+<div class="task-list" style="margin-left: 250px; padding: 20px; max-width: calc(100% - 300px);">
+  
+  <h2 style="color: #333; margin-bottom: 20px;">Task List</h2>
+  <!-- Task Statistics Section -->
+<div class="task-stats" style="background: white; border-radius: 8px; padding: 16px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+  <h3 style="color: #333; margin-top: 0; margin-bottom: 15px;">Task Statistics</h3>
+  
+  <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    <!-- Total Tasks -->
+    <div style="flex: 1; min-width: 200px;">
+      <div style="font-weight: bold; color: #4CAF50; margin-bottom: 5px;">Total Tasks</div>
+      <div style="font-size: 24px; font-weight: bold;">
+        {{ tasks.length }}
+      </div>
+    </div>
+    
+
+    <!-- Tasks by Status -->
+    <div style="flex: 1; min-width: 200px;">
+      <div style="font-weight: bold; color: #2196F3; margin-bottom: 5px;">Tasks by Status</div>
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <div>
+          <span style="color: #ffcc00; font-weight: bold;">Not Started:</span> 
+          {{ getTasksByStatusCount('NOT_STARTED') }}
+        </div>
+        <div>
+          <span style="color: #2196F3; font-weight: bold;">In Progress:</span> 
+          {{ getTasksByStatusCount('IN_PROGRESS') }}
+        </div>
+        <div>
+          <span style="color: #4CAF50; font-weight: bold;">Completed:</span> 
+          {{ getTasksByStatusCount('COMPLETED') }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Tasks by Priority -->
+    <div style="flex: 1; min-width: 200px;">
+      <div style="font-weight: bold; color: #9C27B0; margin-bottom: 5px;">Tasks by Priority</div>
+      <div style="display: flex; flex-direction: column; gap: 5px;">
+        <div>
+          <span style="color: #f44336; font-weight: bold;">High:</span> 
+          {{ getTasksByPriority('HIGH') }}
+        </div>
+        <div>
+          <span style="color: #ff9800; font-weight: bold;">Medium:</span> 
+          {{ getTasksByPriority('MEDIUM') }}
+        </div>
+        <div>
+          <span style="color: #4CAF50; font-weight: bold;">Low:</span> 
+          {{ getTasksByPriority('LOW') }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Completions -->
+    <div style="flex: 1; min-width: 200px;">
+      <div style="font-weight: bold; color: #FF5722; margin-bottom: 5px;">Recent Completions</div>
+      <div *ngIf="getRecentCompletions().length > 0">
+        <div *ngFor="let task of getRecentCompletions()" style="margin-bottom: 5px;">
+          {{ task.title }} ({{ task.dueDate | date:'shortDate' }})
+        </div>
+      </div>
+      <div *ngIf="getRecentCompletions().length === 0" style="color: #777;">
+        No recent completions
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Add this section to the template -->
+<div class="search-filter-container">
+  <!-- Search input -->
+  <input 
+    [(ngModel)]="searchQuery" 
+    (input)="updateFilteredTasks()" 
+    placeholder="Search tasks" 
+    class="search-bar" 
+  />
+
+  <div class="search-filter-wrapper">
+    <!-- Filter by Status -->
+    <div class="filter-group">
+      <label for="status" class="filter-label">Status</label>
+      <select 
+        [(ngModel)]="selectedStatus" 
+        (change)="updateFilteredTasks()" 
+        id="status" 
+        class="filter-dropdown"
+      >
+        <option value="">All Statuses</option>
+        <option value="NOT_STARTED">Not Started</option>
+        <option value="IN_PROGRESS">In Progress</option>
+        <option value="COMPLETED">Completed</option>
+      </select>
+    </div>
+
+    <!-- Filter by Priority -->
+    <div class="filter-group">
+      <label for="priority" class="filter-label">Priority</label>
+      <select 
+        [(ngModel)]="selectedPriority" 
+        (change)="updateFilteredTasks()" 
+        id="priority" 
+        class="filter-dropdown"
+      >
+        <option value="">All Priorities</option>
+        <option value="LOW">Low</option>
+        <option value="MEDIUM">Medium</option>
+        <option value="HIGH">High</option>
+      </select>
+    </div>
+
+    <!-- Filter by Project -->
+    <div class="filter-group">
+      <label for="project" class="filter-label">Project</label>
+      <select 
+        [(ngModel)]="selectedProject" 
+        (change)="updateFilteredTasks()" 
+        id="project" 
+        class="filter-dropdown"
+      >
+        <option value="">All Projects</option>
+        <option *ngFor="let project of projects" [value]="project.nomProjet">
+          {{ project.nomProjet }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+
+
+  
+
+  <!-- Add Task and Gantt Chart Buttons -->
+  <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+    <button (click)="openModal(false)" class="add-button" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+      + Add Task
+    </button>
+    <button routerLink="/gantt" class="btn btn-gantt" style="background-color: #2196F3; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+      📊 View Gantt Chart
+    </button>
+    <button routerLink="/calendar" class="btn btn-primary">📅 View Calendar</button>
+
+  </div>
+
+  <!-- Task Columns -->
+  <div style="display: flex; gap: 20px; overflow-x: auto;">
+    <!-- Not Started Column -->
+    <div 
+      cdkDropList 
+      #notStartedList="cdkDropList"
+      id="not-started-list" 
+      [cdkDropListData]="notStartedTasks"
+      [cdkDropListConnectedTo]="['in-progress-list', 'completed-list']"
+      (cdkDropListDropped)="drop($event)" 
+      style="flex: 1; min-width: 300px; background: #f4f5f7; border-radius: 8px; padding: 16px;">
+      <div style="border-bottom: 2px solid #ffcc00; padding-bottom: 10px; margin-bottom: 16px;">
+        <h3 style="color: #172b4d; margin: 0;">🟡 Not Started</h3>
+        <span style="color: #6b778c;">{{ notStartedTasks.length }} tasks</span>
+      </div>
+      <div class="task-list-content">
+        <div *ngFor="let task of notStartedTasks" cdkDrag [cdkDragData]="task" class="task-card" style="border-left: 4px solid #ffcc00; background: white; margin-bottom: 10px; padding: 12px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin: 0; color: #333;">{{ task.title }}</h3>
+            <span style="font-size: 0.8em; color: #777;">ID: {{ task.idTask }}</span>
+          </div>
+          <p style="margin: 10px 0; color: #555;">{{ task.description }}</p>
+          <div style="font-size: 0.9em; color: #666;">
+            <span><strong>Due Date:</strong> {{ task.dueDate | date:'mediumDate' }}</span><br>
+            <span><strong>Priority:</strong> {{ task.priority }}</span><br>
+            <span><strong>Project:</strong> {{ task.project?.nomProjet || 'No Project' }}</span>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
+            <button (click)="openModal(true, task)" style="background-color: #2196F3; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+              ✏️ Edit
+            </button>
+            <button (click)="deleteTask(task.idTask)" style="background-color: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+              🗑️ Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- In Progress Column -->
+    <div 
+      cdkDropList 
+      #inProgressList="cdkDropList"
+      id="in-progress-list" 
+      [cdkDropListData]="inProgressTasks"
+      [cdkDropListConnectedTo]="['not-started-list', 'completed-list']"
+      (cdkDropListDropped)="drop($event)" 
+      style="flex: 1; min-width: 300px; background: #f4f5f7; border-radius: 8px; padding: 16px;">
+      <div style="border-bottom: 2px solid #2196F3; padding-bottom: 10px; margin-bottom: 16px;">
+        <h3 style="color: #172b4d; margin: 0;">🔵 In Progress</h3>
+        <span style="color: #6b778c;">{{ inProgressTasks.length }} tasks</span>
+      </div>
+      <div class="task-list-content">
+        <div *ngFor="let task of inProgressTasks" cdkDrag [cdkDragData]="task" class="task-card" style="border-left: 4px solid #2196F3; background: white; margin-bottom: 10px; padding: 12px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin: 0; color: #333;">{{ task.title }}</h3>
+            <span style="font-size: 0.8em; color: #777;">ID: {{ task.idTask }}</span>
+          </div>
+          <p style="margin: 10px 0; color: #555;">{{ task.description }}</p>
+          <div style="font-size: 0.9em; color: #666;">
+            <span><strong>Due Date:</strong> {{ task.dueDate | date:'mediumDate' }}</span><br>
+            <span><strong>Priority:</strong> {{ task.priority }}</span><br>
+            <span><strong>Project:</strong> {{ task.project?.nomProjet || 'No Project' }}</span>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
+            <button (click)="openModal(true, task)" style="background-color: #2196F3; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+              ✏️ Edit
+            </button>
+            <button (click)="deleteTask(task.idTask)" style="background-color: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+              🗑️ Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Completed Column -->
+    <div 
+      cdkDropList 
+      #completedList="cdkDropList"
+      id="completed-list" 
+      [cdkDropListData]="completedTasks"
+      [cdkDropListConnectedTo]="['not-started-list', 'in-progress-list']"
+      (cdkDropListDropped)="drop($event)" 
+      style="flex: 1; min-width: 300px; background: #f4f5f7; border-radius: 8px; padding: 16px;">
+      <div style="border-bottom: 2px solid #4CAF50; padding-bottom: 10px; margin-bottom: 16px;">
+        <h3 style="color: #172b4d; margin: 0;">✅ Completed</h3>
+        <span style="color: #6b778c;">{{ completedTasks.length }} tasks</span>
+      </div>
+      <div class="task-list-content">
+        <div *ngFor="let task of completedTasks" cdkDrag [cdkDragData]="task" class="task-card" style="border-left: 4px solid #4CAF50; background: white; margin-bottom: 10px; padding: 12px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin: 0; color: #333;">{{ task.title }}</h3>
+            <span style="font-size: 0.8em; color: #777;">ID: {{ task.idTask }}</span>
+          </div>
+          <p style="margin: 10px 0; color: #555;">{{ task.description }}</p>
+          <div style="font-size: 0.9em; color: #666;">
+            <span><strong>Due Date:</strong> {{ task.dueDate | date:'mediumDate' }}</span><br>
+            <span><strong>Priority:</strong> {{ task.priority }}</span><br>
+            <span><strong>Project:</strong> {{ task.project?.nomProjet || 'No Project' }}</span>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px;">
+            <button (click)="openModal(true, task)" style="background-color: #2196F3; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+              ✏️ Edit
+            </button>
+            <button (click)="deleteTask(task.idTask)" style="background-color: #f44336; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+              🗑️ Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Add/Edit Task -->
+<div *ngIf="showModal" class="modal" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto;">
+  <div class="modal-content" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+    <h2 style="color: #333; margin-top: 0;">{{ editingTask ? 'Edit Task' : 'Add Task' }}</h2>
+    <form style="display: flex; flex-direction: column; gap: 15px;">
+      <div>
+        <label for="title" style="display: block; margin-bottom: 5px; color: #666;">Title:</label>
+        <input id="title" [(ngModel)]="newTask.title" name="title" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+      </div>
+      <div>
+        <label for="description" style="display: block; margin-bottom: 5px; color: #666;">Description:</label>
+        <textarea id="description" [(ngModel)]="newTask.description" name="description" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; min-height: 100px;"></textarea>
+      </div>
+      <div>
+        <label for="dueDate" style="display: block; margin-bottom: 5px; color: #666;">Due Date:</label>
+        <input type="date" id="dueDate" [(ngModel)]="newTask.dueDate" name="dueDate" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+      </div>
+      <div>
+        <label for="status" style="display: block; margin-bottom: 5px; color: #666;">Status:</label>
+        <select id="status" [(ngModel)]="newTask.status" name="status" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+          <option value="NOT_STARTED">Not Started</option>
+          <option value="IN_PROGRESS">In Progress</option>
+          <option value="COMPLETED">Completed</option>
+        </select>
+      </div>
+      <div>
+        <label for="priority" style="display: block; margin-bottom: 5px; color: #666;">Priority:</label>
+        <select id="priority" [(ngModel)]="newTask.priority" name="priority" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+          <option value="LOW">Low</option>
+          <option value="MEDIUM">Medium</option>
+          <option value="HIGH">High</option>
+        </select>
+      </div>
+      <div>
+        <label for="project" style="display: block; margin-bottom: 5px; color: #666;">Project:</label>
+        <select id="project" [(ngModel)]="newTask.project" name="project" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+          <option [ngValue]="null">No Project</option>
+          <option *ngFor="let project of projects" [ngValue]="project">{{ project.nomProjet }}</option>
+        </select>
+      </div>
+      <div>
+        <label for="dependencies" style="display: block; margin-bottom: 5px; color: #666;">Dependencies:</label>
+        <select id="dependencies" [(ngModel)]="newTask.dependencies" name="dependencies" multiple style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+          <option *ngFor="let task of tasks" [value]="task.idTask">
+            {{ task.title }}
+          </option>
+        </select>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+        <button type="button" (click)="saveTask()" style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+          Save
+        </button>
+        <button type="button" (click)="closeModal()" style="background-color: #f44336; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

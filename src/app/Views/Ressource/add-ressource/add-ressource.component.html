@@ -1,0 +1,23 @@
+<div class="container">
+    <h2 class="title">Ajouter une Ressource</h2>
+  
+    <form (ngSubmit)="addRessource()">
+      <div class="form-group">
+        <label for="nom">Nom de la ressource :</label>
+        <input type="text" id="nom" [(ngModel)]="ressource.nomRessource" name="nomRessource" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="nombre">Nombre :</label>
+        <input type="number" id="nombre" [(ngModel)]="ressource.nombreRessource" name="nombreRessource" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="type">Type :</label>
+        <input type="text" id="type" [(ngModel)]="ressource.typesRessource" name="typesRessource" required>
+      </div>
+  
+      <button type="submit" class="btn submit">Ajouter</button>
+    </form>
+  </div>
+  

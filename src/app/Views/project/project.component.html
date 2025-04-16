@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="C:\Users\Jihed Oueslati\Desktop\group\src\app\gantt-chart\gantt-chart.component.css">
+</head>
+<body>
+  <div class="main-content">
+    <div class="container">
+      <!-- Header -->
+      <div class="header">
+        <h2>Project Dashboard</h2>
+        <button (click)="createProject()" class="btn btn-add">
+          ➕ Add New Project
+        </button>
+        <button routerLink="/time" class="btn btn-timesheet">
+          ⏰ Timesheet
+        </button>
+        <button routerLink="/dashboard" class="btn btn-timesheet">
+          📊 Dashboard
+        </button>
+
+
+        <button routerLink="/kanban" class="btn btn-info">View Kanban Board</button>
+
+      </div>
+      <div class="filters">
+        <select [(ngModel)]="filterStatus" (change)="applyFilters()">
+          <option value="">All Statuses</option>
+          <option value="PLANIFIE">Planned</option>
+          <option value="EN_COURS">In Progress</option>
+          <option value="TERMINE">Completed</option>
+        </select>
+      
+        <input
+          type="date"
+          [(ngModel)]="filterStartDate"
+          (change)="applyFilters()"
+          placeholder="Start Date"
+        />
+      
+        <input
+          type="date"
+          [(ngModel)]="filterEndDate"
+          (change)="applyFilters()"
+          placeholder="End Date"
+        />
+      </div>
+      <!-- Dashboard Overview -->
+      <div class="dashboard-grid">
+        <!-- Key Metrics -->
+        <div class="metrics-container">
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <h3>Total Projects</h3>
+              <p>{{ totalProjects }}</p>
+            </div>
+            <div class="metric-card">
+              <h3>Completed</h3>
+              <p>{{ completedProjects }}</p>
+            </div>
+            <div class="metric-card">
+              <h3>Overdue</h3>
+              <p>{{ overdueProjects }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Status Chart - Made Smaller -->
+        <div class="chart-container">
+          <h3>Project Status Overview</h3>
+          <div class="chart-wrapper">
+            <canvas id="MyChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Form (Conditional) -->
+      <div *ngIf="isEditing && selectedProject" class="project-form">
+        <h3 class="form-title">{{ selectedProject.idProjet ? 'Edit Project' : 'Add New Project' }}</h3>
+        <form (ngSubmit)="saveProject()">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nomProjet">Project Name</label>
+              <input
+                type="text"
+                id="nomProjet"
+                [(ngModel)]="selectedProject.nomProjet"
+                name="nomProjet"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="etatProjet">Status</label>
+              <select
+                id="etatProjet"
+                [(ngModel)]="selectedProject.etatProjet"
+                name="etatProjet"
+                required
+              >
+                <option value="PLANIFIE">Planned</option>
+                <option value="EN_COURS">In Progress</option>
+                <option value="TERMINE">Completed</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="dateDebut">Start Date</label>
+              <input
+                type="date"
+                id="dateDebut"
+                [(ngModel)]="selectedProject.dateDebut"
+                name="dateDebut"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="dateFin">End Date</label>
+              <input
+                type="date"
+                id="dateFin"
+                [(ngModel)]="selectedProject.dateFin"
+                name="dateFin"
+                required
+              />
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="descriptionProjet">Description</label>
+            <textarea
+              id="descriptionProjet"
+              [(ngModel)]="selectedProject.descriptionProjet"
+              name="descriptionProjet"
+              required
+              rows="4"
+            ></textarea>
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" (click)="cancelEdit()" class="btn btn-cancel">❌ Cancel</button>
+            <button type="submit" class="btn btn-save">💾 Save</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Project Cards Grid -->
+      <div class="project-grid">
+        <div *ngFor="let project of getPaginatedProjects()" class="card">
+          
+          <div class="card-header">
+            {{ project.nomProjet }}
+          </div>
+          <div class="card-body">
+            <span [ngClass]="{
+              'badge-plan': project.etatProjet === 'PLANIFIE',
+              'badge-progress': project.etatProjet === 'EN_COURS',
+              'badge-complete': project.etatProjet === 'TERMINE'
+            }" class="badge">
+              {{ project.etatProjet === 'PLANIFIE' ? '📅 Planned' : '' }}
+              {{ project.etatProjet === 'EN_COURS' ? '🚧 In Progress' : '' }}
+              {{ project.etatProjet === 'TERMINE' ? '✅ Completed' : '' }}
+            </span>
+            
+            <p class="description">{{ project.descriptionProjet }}</p>
+            
+            <div class="card-meta">
+              <div class="meta-item">
+                <span class="meta-label">Start Date</span>
+                <span class="meta-value">{{ project.dateDebut }}</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">End Date</span>
+                <span class="meta-value">{{ project.dateFin }}</span>
+              </div>
+            </div>
+            
+            
+            
+            
+            <div class="card-actions">
+              <button (click)="viewProjectTasks(project.idProjet)" class="btn-action btn-tasks">
+                📋 Tasks
+              </button>
+              <button (click)="selectProject(project)" class="btn-action btn-edit">
+                ✏️ Edit
+              </button>
+              <button (click)="deleteProject(project.idProjet)" class="btn-action btn-delete">
+                🗑️ Delete
+              </button>
+            </div>
+            
+            <button routerLink="/gantt" class="btn-action btn-gantt" style="width: 100%; margin-top: 8px;">
+              📊 Gantt Chart
+            </button>
+            
+          </div>
+        </div>
+      </div>
+        <!-- Pagination Controls -->
+<div class="pagination-controls">
+  <button 
+    [disabled]="p <= 1" 
+    (click)="p = p - 1" 
+    class="btn btn-pagination">
+    ◀ Previous
+  </button>
+  <span class="page-info">Page {{ p }} of {{ getTotalPages() }}</span>
+  <button 
+    [disabled]="p >= getTotalPages()" 
+    (click)="p = p + 1" 
+    class="btn btn-pagination">
+    Next ▶
+  </button>
+</div>
+      
+    </div>
+  </div>
+  
+  
+</body>
+</html>

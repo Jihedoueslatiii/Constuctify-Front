@@ -47,6 +47,23 @@ import { SetPasswordComponent } from './Views/Teams/set-password/set-password.co
 import { ListEmployerComponent } from './Views/Teams/list-employer/list-employer.component';
 import { SelectTeamDialogComponent } from './Views/Teams/select-team-dialog/select-team-dialog.component';
 
+//jihed
+
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ViewRessourceComponent } from './Views/Ressource/view-ressource/view-ressource.component';
+import { AddRessourceComponent } from './Views/Ressource/add-ressource/add-ressource.component';
+import { ProjectComponent } from './Views/project/project.component';
+import { TaskListComponent } from './Views/task-list/task-list.component';
+import { TimesheetComponent } from './Views/timesheet/timesheet.component';
+import { GanttChartComponent } from './gantt-chart/gantt-chart.component';
+import { KanbanBoardComponent } from './kanban-board/kanban-board.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { TaskCalendarComponent } from './task-calendar/task-calendar.component';
+import { GeminiChatComponent } from './components/gemini-chat/gemini-chat.component';
+
+
+
 
 @NgModule({
   declarations: [
@@ -69,6 +86,17 @@ import { SelectTeamDialogComponent } from './Views/Teams/select-team-dialog/sele
     SetPasswordComponent,
     ListEmployerComponent,
     SelectTeamDialogComponent,
+    //
+    ViewRessourceComponent,
+    AddRessourceComponent,
+    ProjectComponent,
+    TaskListComponent, 
+    TimesheetComponent,
+         GanttChartComponent,
+         KanbanBoardComponent,
+         DashboardComponent,
+         TaskCalendarComponent,
+         GeminiChatComponent,
   ],
   imports: [
     BrowserModule,
@@ -89,8 +117,10 @@ import { SelectTeamDialogComponent } from './Views/Teams/select-team-dialog/sele
     MatIconModule,
     MatListModule,
     MatProgressSpinnerModule,
+    DragDropModule,
+    FullCalendarModule,
     ToastrModule.forRoot(),  // Configuration globale de Toastr
-    NgxPaginationModule  // Si utilisé pour pagination
+   
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
@@ -99,3 +129,5 @@ import { SelectTeamDialogComponent } from './Views/Teams/select-team-dialog/sele
   
 })
 export class AppModule { }
+
+

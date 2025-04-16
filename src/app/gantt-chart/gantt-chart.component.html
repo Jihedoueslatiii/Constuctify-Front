@@ -1,0 +1,12 @@
+<div class="gantt-container">
+    <h2 class="shining-title">Project Timeline Gantt Chart and WBS</h2>
+    <div class="gantt-controls">
+      <button (click)="changeViewMode('Day')">Day</button>
+      <button (click)="changeViewMode('Week')">Week</button>
+      <button (click)="changeViewMode('Month')">Month</button>
+    </div>
+    <div id="gantt" class="gantt-chart"></div>
+    <div *ngIf="tasks.length === 0" class="no-tasks-message">
+      No tasks available to display in the Gantt chart.
+    </div>
+  </div>
