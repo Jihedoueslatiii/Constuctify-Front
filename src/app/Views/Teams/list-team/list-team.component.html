@@ -13,6 +13,16 @@
           <span class="label">Team Name :</span>
           <span class="team-name">{{ team.teamName }}</span>
         </div>
+
+        <!-- Notation par étoiles -->
+        <div class="team-field">
+          <span class="label">Rating :</span>
+          <app-star-rating
+            [rating]="userRatings[team.id] || 0"
+            (ratingChange)="addRating(team.id, $event)">
+          </app-star-rating>
+          <span class="average-rating">(Average: {{ averageRatings[team.id] || 'No ratings yet' }})</span>
+        </div>
       </div>
 
       <div class="team-actions">

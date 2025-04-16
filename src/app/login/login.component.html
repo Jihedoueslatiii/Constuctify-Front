@@ -16,7 +16,7 @@
 		<input type="text" placeholder="First Name" [(ngModel)]="user.firstname" name="firstname" required />
 		<input type="text" placeholder="Last Name" [(ngModel)]="user.lastname" name="lastname" required />
 		<input type="email" placeholder="Email" [(ngModel)]="user.email" name="email" required />
-		<input type="password" placeholder="Password" [(ngModel)]="user.password" name="password" required />
+		<input *ngIf="!showTeamField" type="password" placeholder="Password" [(ngModel)]="user.password" name="password" required />
 		<input type="tel" placeholder="Phone" [(ngModel)]="user.phone" name="phone" required />
   
 		<!-- Sélection du rôle -->
@@ -27,12 +27,7 @@
 		  </mat-select>
 		</mat-form-field>
 
-		<mat-form-field *ngIf="showTeamField" appearance="fill" class="role-field">
-			<mat-label>Teams</mat-label>
-			<mat-select [(ngModel)]="user.teamId" name="teamId" required>
-			  <mat-option *ngFor="let team of teams" [value]="team.id">{{ team.teamName }}</mat-option>
-			</mat-select>
-		  </mat-form-field>
+		
 
   
 		<button type="submit">Sign Up</button>
@@ -62,11 +57,11 @@
 	<!-- Section de transition -->
 	<div class="overlay-container">
 		<div class="overlay">
-		  <div class="overlay-panel overlay-left">
-			<h1>Welcome Back!</h1>
-			<p>To keep connected with us please login with your personal info</p>
-			<button class="ghost" id="signIn">Sign In</button>
-		  </div>
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p>To keep connected with us please login with your personal info</p>
+				<button class="ghost" id="signIn" *ngIf="!showTeamField">Sign In</button>
+			  </div>
 		  <div class="overlay-panel overlay-right">
 			<h1>Hello, Friend!</h1>
 			<p>Enter your personal details and start the journey with us</p>

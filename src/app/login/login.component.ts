@@ -101,9 +101,11 @@ export class LoginComponent implements AfterViewInit {
 
   register() {
     console.log("User data:", this.user);
-
-    // Validation des champs
-    if (!this.user.firstname || !this.user.lastname || !this.user.email || !this.user.password || !this.user.phone || !this.user.role) {
+  
+    const showTeamField = this.route.snapshot.queryParamMap.get('showTeamField') === 'true';
+  
+    // Validation des champs (on exclut password si showTeamField est true)
+    if (!this.user.firstname || !this.user.lastname || !this.user.email || (!showTeamField && !this.user.password) || !this.user.phone || !this.user.role) {
       Swal.fire({
         icon: 'error',
         title: 'Erreur!',
@@ -112,7 +114,7 @@ export class LoginComponent implements AfterViewInit {
       });
       return;
     }
-
+  
     if (!this.validateEmail(this.user.email)) {
       Swal.fire({
         icon: 'error',
@@ -122,8 +124,9 @@ export class LoginComponent implements AfterViewInit {
       });
       return;
     }
-
-    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(this.user.password)) {
+  
+    // Validation du mot de passe uniquement si showTeamField est false
+    if (!showTeamField && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(this.user.password)) {
       Swal.fire({
         icon: 'error',
         title: 'Erreur!',
@@ -132,7 +135,7 @@ export class LoginComponent implements AfterViewInit {
       });
       return;
     }
-
+  
     if (!/^\d{8}$/.test(this.user.phone)) {
       Swal.fire({
         icon: 'error',
@@ -142,9 +145,9 @@ export class LoginComponent implements AfterViewInit {
       });
       return;
     }
-
+  
     // Appel du service pour enregistrer l'utilisateur
-    this.userService.registerUser(this.user).subscribe(
+    this.userService.registerUser(this.user, showTeamField).subscribe(
       (response) => {
         console.log("Response:", response);
         Swal.fire({
@@ -153,9 +156,7 @@ export class LoginComponent implements AfterViewInit {
           text: 'Registration successful! Please confirm your email to activate your account.',
           confirmButtonColor: '#28a745'
         });
-
-        const showTeamField = this.route.snapshot.queryParamMap.get('showTeamField') === 'true';
-
+  
         if (showTeamField) {
           window.location.href = "http://localhost:4200/list-teams";
         } else {
@@ -163,13 +164,13 @@ export class LoginComponent implements AfterViewInit {
         }
       },
       (error) => {
-        console.error("Error:", error); // 🔥 Vérifier l'erreur en console
-
+        console.error("Error:", error);
+  
         let errorMessage = 'Registration failed. Please try again.';
-
+  
         if (error.status === 400) {
           console.log("Backend error message:", error.error);
-
+  
           if (typeof error.error === 'string' && error.error.includes('Email already in use')) {
             errorMessage = 'Email is already in use.';
           } else if (error.error && typeof error.error === 'string') {
@@ -178,7 +179,7 @@ export class LoginComponent implements AfterViewInit {
             errorMessage = error.error.message;
           }
         }
-
+  
         Swal.fire({
           icon: 'error',
           title: 'Erreur!',
@@ -187,7 +188,8 @@ export class LoginComponent implements AfterViewInit {
         });
       }
     );
-}
+  }
+  
 
 
 

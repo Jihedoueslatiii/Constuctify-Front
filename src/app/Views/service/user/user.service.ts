@@ -23,9 +23,11 @@ export class UserService {
 
   
   
-  registerUser(user: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, user);
+  registerUser(user: any, showTeamField: boolean = false): Observable<any> {
+    const params = new HttpParams().set('showTeamField', showTeamField.toString());
+    return this.http.post(`${this.apiUrl}/register`, user, { params });
   }
+  
   deleteUser(userId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${userId}`);
   }
@@ -46,5 +48,18 @@ export class UserService {
     );
   }
 
+  setPassword(token: string, password: string): Observable<any> {
+    const payload = { token, password };
+    return this.http.post(`${this.apiUrl}/set-password`, payload);
+  }
   
+   // Affecter un utilisateur à une équipe
+   assignUserToTeam(userId: string, teamId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/users/${userId}/assign`, { teamId });
+  }
+
+  // Désaffecter un utilisateur de son équipe
+  unassignUser(userId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/users/${userId}/unassign`, {});
+  }
 }

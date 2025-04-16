@@ -29,6 +29,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatListModule } from '@angular/material/list';
+
 
 // Third-party Modules
 import { ToastrModule } from 'ngx-toastr';
@@ -39,6 +41,11 @@ import { AuthInterceptor } from './auth.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { AuditComponent } from './Views/Logs/audit/audit.component';
+import { StarRatingComponent } from './Views/Teams/star-rating/star-rating.component';
+import { SetPasswordComponent } from './Views/Teams/set-password/set-password.component';
+import { ListEmployerComponent } from './Views/Teams/list-employer/list-employer.component';
+import { SelectTeamDialogComponent } from './Views/Teams/select-team-dialog/select-team-dialog.component';
 
 
 @NgModule({
@@ -56,7 +63,12 @@ import { MatTableModule } from '@angular/material/table';
     AddEmployerComponent,
     AddTeamComponent,
     ListTeamComponent,
-    EditTeamComponent
+    EditTeamComponent,
+    AuditComponent,
+    StarRatingComponent,
+    SetPasswordComponent,
+    ListEmployerComponent,
+    SelectTeamDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +87,7 @@ import { MatTableModule } from '@angular/material/table';
     MatButtonModule,
     MatDialogModule,
     MatIconModule,
+    MatListModule,
     MatProgressSpinnerModule,
     ToastrModule.forRoot(),  // Configuration globale de Toastr
     NgxPaginationModule  // Si utilisé pour pagination

@@ -59,6 +59,7 @@ body {
   outline: none;
   padding: 5px;
   width: 200px;
+  color: #333;
 }
 
 .search-box button {
@@ -342,9 +343,8 @@ margin-right: 20px;
 
 .search-box input {
 padding: 5px;
-margin-right: 10px;
+margin-right: 152px;
 border-radius: 5px;
-border: 1px solid #ccc;
 }
 
 .search-box button {

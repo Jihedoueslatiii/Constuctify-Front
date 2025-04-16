@@ -33,6 +33,7 @@ export class EditTeamComponent implements OnInit {
           this.teams.forEach((team) => {
             if (team.id !== undefined) { // Vérifie que team.id n'est pas undefined
               this.loadUsersByTeam(team.id);
+              this.cdr.detectChanges();
             }
           });
         },

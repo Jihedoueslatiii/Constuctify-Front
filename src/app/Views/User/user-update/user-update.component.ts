@@ -65,6 +65,7 @@ export class UserUpdateComponent implements OnInit {
             timeOut: 3000,
             positionClass: 'toast-top-right'
           });
+          
           this.router.navigate(['/users']); // Redirection vers la liste des utilisateurs
         },
         error: (err) => {

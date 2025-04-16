@@ -188,3 +188,11 @@
   background-color: #ff4444; /* Red background */
   color: white; /* White text */
 }
+.status-free {
+  color: green;
+  font-weight: bold;
+}
+.status-busy {
+  color: red;
+  font-weight: bold;
+}

@@ -14,7 +14,9 @@ export class AddTeamComponent {
   team: Teams = {
     id: 0,
     teamName: '',
+    
   };
+  suggestedName: string = '';
 
   constructor(private teamsService: TeamsService,private router: Router,private snackBar: MatSnackBar,private toastr: ToastrService) {}
 
@@ -69,5 +71,23 @@ export class AddTeamComponent {
       signUpContainer.classList.remove('hidden');
     }
   }
+
+  suggestTeamName(): void {
+    this.teamsService.suggestTeamName().subscribe({
+      next: (name) => {
+        this.suggestedName = name;
+        this.toastr.info(`Nom suggéré : ${name}`, 'Suggestion AI', {
+          timeOut: 3000,
+          positionClass: 'toast-top-right',
+          progressBar: true
+        });
+      },
+      error: (err) => {
+        console.error('Erreur lors de la suggestion de nom', err);
+        this.toastr.error('Impossible de suggérer un nom d\'équipe', 'Erreur AI');
+      }
+    });
+  }
+  
   
 }

@@ -5,12 +5,14 @@
 
   <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
 
-  <div class="nav-right">
-    <!-- Barre de recherche -->
-    <div class="search-box">
-      <input type="text" placeholder="Search..." />
-      <button><i class="fas fa-search"></i></button>
-    </div>
+ <!-- Navbar -->
+<div class="nav-right">
+  <!-- Barre de recherche -->
+  <div class="search-box">
+    <input type="text" [(ngModel)]="searchTerm" (input)="onSearchChange()" placeholder="Search..." />
+    <button><i class="fas fa-search"></i></button>
+  </div>
+
 
     <!-- Profil utilisateur avec menu déroulant -->
     <div class="user-profile" (click)="toggleProfileMenu()">
@@ -78,8 +80,10 @@
       <ul class="submenu" [class.open]="activeMenu === 'team'">
         <li><a href="/add-team"><i class="fas fa-building"></i> Add Teams</a></li>
         <li><a href="/list-teams"><i class="fas fa-building"></i> View Teams</a></li>
+        <li><a href="/list-employer"><i class="fas fa-building"></i>Employers</a></li>
       </ul>
     </li>
+    <li><a routerLink="/logs" ><i class="fas fa-users"></i>Logs</a></li>
     <li><a href="#"><i class="fas fa-box"></i> Deliverable</a></li>
     <li><a href="#"><i class="fas fa-file-alt"></i> Documentation</a></li>
   </ul>

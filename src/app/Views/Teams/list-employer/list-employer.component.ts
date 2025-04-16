@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { UserService } from '../../service/user/user.service';
 import { TeamsService } from '../../service/teams/teams.service';
 import { User } from '../../model/user.model';
@@ -7,15 +7,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ToastrService } from 'ngx-toastr';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
+import { SelectTeamDialogComponent } from '../select-team-dialog/select-team-dialog.component';
+import { SearchService } from '../../service/search.service'; // Assure-toi que le chemin est correct
 import { Subscription } from 'rxjs';
-import { SearchService } from '../../service/search.service';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.css']
+  selector: 'app-list-employer',
+  templateUrl: './list-employer.component.html',
+  styleUrls: ['./list-employer.component.css']
 })
-export class ViewUserComponent implements OnInit {
+export class ListEmployerComponent implements OnInit, OnDestroy {
   listUsers: User[] = [];
   filteredUsers: User[] = [];
   roles: string[] = ['Client', 'Admin', 'Project_Manager', 'Employer'];
@@ -28,13 +29,13 @@ export class ViewUserComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private searchService: SearchService,
     private teamService: TeamsService,
     private cdr: ChangeDetectorRef,
     private dialog: MatDialog,
     private router: Router,
     private snackBar: MatSnackBar,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private searchService: SearchService // Injecte le service de recherche
   ) {}
 
   ngOnInit(): void {
@@ -45,18 +46,13 @@ export class ViewUserComponent implements OnInit {
     });
     this.cdr.detectChanges();
   }
-  onSearchChange(): void {
-    const searchTermLower = this.searchTerm.toLowerCase();
-    // Filtrer les utilisateurs en fonction du texte de recherche
-    this.filteredUsers = this.listUsers.filter(user =>
-      user.firstname.toLowerCase().includes(searchTermLower) ||
-      user.lastname.toLowerCase().includes(searchTermLower) ||
-      user.email.toLowerCase().includes(searchTermLower) ||
-      user.role.toLowerCase().includes(searchTermLower) ||
-      user.phone.toLowerCase().includes(searchTermLower)
-    );
-    this.totalUsers = this.filteredUsers.length;  // Mettre à jour le total d'utilisateurs filtrés
+
+  ngOnDestroy(): void {
+    if (this.searchTermSubscription) {
+      this.searchTermSubscription.unsubscribe(); // Se désabonne lorsque le composant est détruit
+    }
   }
+
   loadUsers(): void {
     this.userService.getAllUsers(this.page, this.itemsPerPage).subscribe({
       next: (response) => {
@@ -70,27 +66,18 @@ export class ViewUserComponent implements OnInit {
       }
     });
   }
-  
 
-  searchByRole(): void {
-    if (this.selectedRole) {
-      // Si un rôle est sélectionné, filtrez les utilisateurs par rôle
-      this.userService.getUsersByRole(this.selectedRole).subscribe(
-        (users) => {
-          this.filteredUsers = users;  // Liste des utilisateurs filtrés par rôle
-          this.totalUsers = users.length;  // Nombre total d'utilisateurs filtrés
-          this.cdr.detectChanges();
-        },
-        (error) => {
-          console.error('Error filtering by role:', error);
-        }
-      );
-    } else {
-      // Si aucun rôle n'est sélectionné (All), chargez tous les utilisateurs
-      this.loadUsers();  // Charge tous les utilisateurs sans filtre
-    }
+  onSearchChange(): void {
+    const searchTermLower = this.searchTerm.toLowerCase();
+    // Filtrer les utilisateurs en fonction du texte de recherche
+    this.filteredUsers = this.listUsers.filter(user =>
+      user.firstname.toLowerCase().includes(searchTermLower) ||
+      user.lastname.toLowerCase().includes(searchTermLower) ||
+      user.email.toLowerCase().includes(searchTermLower) ||
+      user.phone.toLowerCase().includes(searchTermLower)
+    );
+    this.totalUsers = this.filteredUsers.length;  // Mettre à jour le total d'utilisateurs filtrés
   }
-  
 
   deleteUser(userId: number): void {
     const snackBarRef = this.snackBar.open('Are you sure you want to delete this user?', 'Delete', {
@@ -126,9 +113,31 @@ export class ViewUserComponent implements OnInit {
   onPageChange(event: PageEvent): void {
     this.page = event.pageIndex;
     this.itemsPerPage = event.pageSize;
-    console.log(`Page Index: ${this.page}, Page Size: ${this.itemsPerPage}`);
-    this.loadUsers(); // Reload users based on the page
+    this.loadUsers(); // Recharger les utilisateurs en fonction de la page
   }
 
+  openAssignTeamDialog(userId: number): void {
+    const dialogRef = this.dialog.open(SelectTeamDialogComponent, {
+      data: { userId }
+    });
   
+    // Charger les équipes directement dans le composant appelant
+    this.teamService.getAllTeams().subscribe(teams => {
+      dialogRef.componentInstance.teams = teams;
+    });
+  
+    dialogRef.afterClosed().subscribe(assigned => {
+      if (assigned) {
+        this.toastr.success('Employee assigned to team successfully!', 'Success', {
+          timeOut: 3000,
+          positionClass: 'toast-top-right',
+          progressBar: true,
+          closeButton: true,
+          tapToDismiss: true,
+          extendedTimeOut: 1000
+        });
+        this.loadUsers();
+      }
+    });
+  }
 }

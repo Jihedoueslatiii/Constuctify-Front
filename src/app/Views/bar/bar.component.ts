@@ -3,6 +3,7 @@ import { AuthService } from '../service/auth/auth.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
+import { SearchService } from '../service/search.service'; // Importation du service de recherche
 
 @Component({
   selector: 'app-bar',
@@ -15,9 +16,11 @@ export class BarComponent implements OnInit {
   isProfileMenuVisible = false; 
   activeMenu: string | null = null;
   isOnline = true;
+  searchTerm: string = '';  // Variable liée à la barre de recherche
 
   constructor(
     private authService: AuthService, 
+    private searchService: SearchService, // Injection du service de recherche
     private router: Router, 
     private route: ActivatedRoute, 
     private cdr: ChangeDetectorRef // Pour forcer la détection des changements si nécessaire
@@ -52,6 +55,7 @@ export class BarComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+
   // Fonction de déconnexion
   logout() {
     this.authService.logout().subscribe(
@@ -69,4 +73,10 @@ export class BarComponent implements OnInit {
       }
     );
   }
+
+  onSearchChange(): void {
+    // Met à jour le terme de recherche via le service
+    this.searchService.updateSearchTerm(this.searchTerm);
+  }
+
 }

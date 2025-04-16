@@ -1,0 +1,142 @@
+/* Conteneur principal */
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  /* Titre */
+  .title {
+    text-align: center;
+    font-size: 24px;
+    color: #2A5D89;
+    margin-bottom: 20px;
+  }
+  
+  /* Liste des logs d'audit */
+  .audit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  /* Carte de log d'audit */
+  .audit-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+  }
+  
+  /* Effet de survol sur la carte de log */
+  .audit-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Informations du log */
+  .audit-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .audit-field {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .label {
+    font-weight: bold;
+    color: #1E3A5F;
+  }
+  
+  .value {
+    color: #333;
+  }
+  
+  /* Pagination */
+  .pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .pagination-button {
+    padding: 8px 16px;
+    background-color: #2A5D89;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .pagination-button:hover {
+    background-color: #1a4965;
+  }
+  
+  .pagination-info {
+    font-size: 14px;
+    color: #333;
+  }
+  
+  /* Barre de recherche pour les logs */
+  .search-bar {
+    margin-bottom: 20px;
+  }
+  
+  .search-bar label {
+    margin-right: 10px;
+    font-weight: bold;
+    color: #2A5D89;
+  }
+  
+  .search-bar select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  /* Custom styles for Angular Material snackbar */
+  .mat-snack-bar-container {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    z-index: 9999 !important;
+  }
+  
+  .cdk-overlay-container {
+    z-index: 9999 !important;
+    position: fixed !important;
+  }
+  
+  /* Custom snackbar styles */
+  .confirmation-snackbar {
+    background-color: #ffcc00; /* Yellow background */
+    color: black; /* Black text */
+  }
+  
+  .success-snackbar {
+    background-color: #4caf50; /* Green background */
+    color: white; /* White text */
+  }
+  
+  .error-snackbar {
+    background-color: #ff4444; /* Red background */
+    color: white; /* White text */
+  }
+  

@@ -6,7 +6,7 @@ import { throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import {Teams} from '../../model/teams.model';
-
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -17,16 +17,10 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  registerUser(user: any) {
-    return this.http.post(`${this.apiUrl}/register`, user, {
-      headers: { 'Content-Type': 'application/json' }
-    }).pipe(
-      catchError((error: HttpErrorResponse) => {
-        this.showErrorPopup(error);
-        return throwError(error);
-      })
-    );
-  }
+  registerUser(user: any, showTeamField: boolean = false): Observable<any> {
+      const params = new HttpParams().set('showTeamField', showTeamField.toString());
+      return this.http.post(`${this.apiUrl}/register`, user, { params });
+    }
 
   private showErrorPopup(error: HttpErrorResponse) {
     Swal.fire({

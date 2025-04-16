@@ -1,18 +1,10 @@
 <app-bar></app-bar>
 <div class="container">
-  <h2 class="title">User List</h2>
-
-  <div class="filters">
-    <label for="role">Filter by Role:</label>
-    <select id="role" [(ngModel)]="selectedRole" (change)="searchByRole()">
-      <option value="">All</option>
-      <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
-    </select>
-  </div>
+  <h2 class="title">Employers List</h2>
 
   <div class="user-list">
     <ng-container *ngFor="let user of filteredUsers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
-      <div class="user-card">
+      <div *ngIf="user.role === 'Employer'" class="user-card">
         <div class="user-info">
           <div class="user-field">
             <span class="label">Firstname :</span>
@@ -34,18 +26,18 @@
             <span class="label">Role :</span>
             <span class="value">{{ user.role }}</span>
           </div>
-          <div *ngIf="user.role === 'Employer'" class="user-field">
+          <div class="user-field">
             <span class="label">État :</span>
             <span class="value" [ngStyle]="{'color': user.teamId ? 'red' : 'green'}">
-              {{ user.teamId ? '🔴 Busy' : '🟢 Available' }}
+                {{ user.teamId ? '🔴 Busy' : '🟢 Available' }}
             </span>
           </div>
         </div>
 
-        <div class="user-actions">
-          <button class="btn edit" (click)="updateUser(user)">Update</button>
-          <button class="btn delete" (click)="deleteUser(user.id)">Delete</button>
-        </div>
+        <!-- Afficher le bouton si l'utilisateur n'est pas affecté à une équipe -->
+        <button *ngIf="!user.teamId" mat-button (click)="openAssignTeamDialog(user.id)">
+          <mat-icon>person_add</mat-icon>
+        </button>
       </div>
     </ng-container>
   </div>
