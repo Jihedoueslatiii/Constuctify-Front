@@ -24,6 +24,8 @@ import { KanbanBoardComponent } from './kanban-board/kanban-board.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TaskCalendarComponent } from './task-calendar/task-calendar.component';
 import { GeminiChatComponent } from './components/gemini-chat/gemini-chat.component';
+import { ProjectComponent2 } from './projectFront/project.component';
+
 
 const routes: Routes = [
   { path: 'Front', component: LandingpageComponent },
@@ -40,7 +42,7 @@ const routes: Routes = [
   { path: 'logs', component: AuditComponent },
   { path: 'set-password', component: SetPasswordComponent },
   { path: 'list-employer', component: ListEmployerComponent },
-
+  { path: 'clientInterface/project', component: ProjectComponent2 }, 
   {path:'ViewRessource',component:ViewRessourceComponent},
   {path:'AddRessource',component:AddRessourceComponent},
   {path: 'project',component: ProjectComponent},
@@ -49,7 +51,6 @@ const routes: Routes = [
   { path: 'time', component: TimesheetComponent },
   { path: 'kanban', component: KanbanBoardComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'clientInterface/project', component: ProjectComponent }, 
   { path: 'login', component: LoginComponent },
   {path: 'clientInterface', component:ClientInterfaceComponent},// ✅ Correct path!
   {path: 'calendar', component:TaskCalendarComponent},// ✅ Correct path!

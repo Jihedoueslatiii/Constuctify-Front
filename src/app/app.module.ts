@@ -17,7 +17,7 @@ import { ClientNavbarComponent } from './client-navbar/client-navbar.component';
 import { ClientInterfaceComponent } from './client-interface/client-interface.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavbarComponent } from './navbar/navbar.component';
-
+import { CommonModule } from '@angular/common';
 
 // Angular Material Modules
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -61,6 +61,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { TaskCalendarComponent } from './task-calendar/task-calendar.component';
 import { GeminiChatComponent } from './components/gemini-chat/gemini-chat.component';
+import { ProjectComponent2 } from './projectFront/project.component';
+
 
 
 
@@ -86,9 +88,9 @@ import { GeminiChatComponent } from './components/gemini-chat/gemini-chat.compon
     SetPasswordComponent,
     ListEmployerComponent,
     SelectTeamDialogComponent,
-    //
     ViewRessourceComponent,
     AddRessourceComponent,
+    ProjectComponent2,
     ProjectComponent,
     TaskListComponent, 
     TimesheetComponent,
@@ -117,6 +119,7 @@ import { GeminiChatComponent } from './components/gemini-chat/gemini-chat.compon
     MatIconModule,
     MatListModule,
     MatProgressSpinnerModule,
+    CommonModule,
     DragDropModule,
     FullCalendarModule,
     ToastrModule.forRoot(),  // Configuration globale de Toastr

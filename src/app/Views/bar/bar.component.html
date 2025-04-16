@@ -45,23 +45,23 @@
   </div>
   <ul class="menu">
     <li>
-      <a href="#" class="menu-item" (click)="toggleSubMenu('project')">
+      <a 
+        class="menu-item" 
+        [routerLink]="'/project'" 
+        routerLinkActive="active">
         <i class="fas fa-folder"></i> Project
       </a>
-      <ul class="submenu" [class.open]="activeMenu === 'project'">
-        <li><a href="#"><i class="fas fa-plus"></i> New Project</a></li>
-        <li><a href="#"><i class="fas fa-list"></i> View Projects</a></li>
-      </ul>
     </li>
+    
     <li>
-      <a href="#" class="menu-item" (click)="toggleSubMenu('task')">
+      <a 
+        class="menu-item" 
+        [routerLink]="'/tasks'" 
+        routerLinkActive="active">
         <i class="fas fa-tasks"></i> Task
       </a>
-      <ul class="submenu" [class.open]="activeMenu === 'task'">
-        <li><a href="#"><i class="fas fa-pencil-alt"></i> Add Task</a></li>
-        <li><a href="#"><i class="fas fa-thumbtack"></i> View Tasks</a></li>
-      </ul>
     </li>
+   
     <li>
       <a  class="menu-item" (click)="toggleSubMenu('resource')">
         <i class="fas fa-wrench"></i> Resource
@@ -86,5 +86,6 @@
     <li><a routerLink="/logs" ><i class="fas fa-users"></i>Logs</a></li>
     <li><a href="#"><i class="fas fa-box"></i> Deliverable</a></li>
     <li><a href="#"><i class="fas fa-file-alt"></i> Documentation</a></li>
+    <li><a href="/gemini"><i class="fas fa-file-alt"></i> Chatbot</a></li>
   </ul>
 </aside>
