@@ -1,0 +1,13 @@
+{
+    "REPORTS": {
+      "DESCRIPTION": "El campo Descripción proporciona una visión detallada de lo que cubre el informe.",
+      "TYPE": "Este es el tipo de informe. Indica la categoría o clasificación del informe.",
+      "STATUS": {
+        "PENDING": "Pendiente",
+        "COMPLETED": "Completado",
+        "FAILED": "Fallido",
+        "ARCHIVED": "Archivado"
+      }
+    }
+  }
+  

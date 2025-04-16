@@ -60,7 +60,7 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: rgb(20, 20, 20);
+  background-color: rgb(161, 198, 244);
   border: none;
   font-weight: 600;
   display: flex;
@@ -87,7 +87,7 @@
   width: 140px;
   border-radius: 50px;
   transition-duration: 0.3s;
-  background-color: rgb(181, 160, 255);
+  background-color: rgb(96, 124, 158);
   align-items: center;
 }
 
@@ -372,4 +372,351 @@ h2.text-center {
   color: white;
   padding: 5px 10px;
   border-radius: 4px;
+}
+
+/* Add to your component's CSS file */
+.translation-button-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.btn-translate {
+  background-color: #53abfd;
+  color: white;
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.btn-translate i {
+  margin-right: 5px;
+}
+
+.translation-dialog {
+  padding: 20px;
+}
+
+.language-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.language-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  text-align: center;
+}
+
+.flag-icon {
+  margin-right: 8px;
+  width: 20px;
+  height: 15px;
+  border-radius: 2px;
+}
+
+.btn-schedule {
+  background-color: #6c757d;
+  color: white;
+  margin-left: 8px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-schedule:hover {
+  background-color: #5a6268;
+}
+
+.btn-schedule i {
+  margin-right: 5px;
+}
+
+/* QR Code Dialog Styles */
+.qr-dialog {
+  text-align: center;
+  padding: 20px;
+}
+
+.qr-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qr-dialog button {
+  margin: 0 5px;
+}
+
+/* Make QR code container responsive */
+.qrcode {
+  display: block;
+  margin: 0 auto;
+}
+
+
+/* Main Container Layout */
+.container.mt-4 {
+  display: grid;
+  grid-template-columns: 1fr 300px; /* Reports take main space, calendar fixed width */
+  gap: 20px;
+  align-items: start;
+  max-width: 1400px; /* Increased max width to accommodate both */
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.reports-section {
+  grid-column: 1;
+  min-width: 0; /* Important for proper grid behavior */
+  overflow: hidden; /* Prevents content from overflowing */
+}
+
+/* Modern Calendar Container */
+.deadline-tracker {
+  position: sticky;
+  top: 20px;
+  background: linear-gradient(145deg, #ffffff, #f8faff);
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(213, 222, 238, 0.6);
+  width: 500px;
+  height: fit-content;
+  backdrop-filter: blur(4px);
+}
+
+.deadline-tracker h3 {
+  font-size: 1rem;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  color: #1a365d;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+
+.deadline-tracker h3 i {
+  font-size: 0.9rem;
+  margin-right: 8px;
+  color: #5D9CEC;
+  background: rgba(93, 156, 236, 0.1);
+  padding: 6px;
+  border-radius: 8px;
+}
+
+.deadline-tracker h3 small {
+  font-size: 0.65rem;
+  color: #718096;
+  margin-left: auto;
+  background: rgba(113, 128, 150, 0.1);
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+/* Modern Calendar Styling */
+:host ::ng-deep .fc {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --fc-border-color: rgba(226, 232, 240, 0.8);
+  --fc-today-bg-color: rgba(93, 156, 236, 0.08);
+  --fc-neutral-bg-color: #f8fafc;
+}
+
+:host ::ng-deep .fc .fc-toolbar {
+  padding: 0;
+  margin-bottom: 12px;
+}
+
+:host ::ng-deep .fc .fc-toolbar-title {
+  font-size: 0.85rem !important;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+:host ::ng-deep .fc .fc-button {
+  padding: 0.3rem 0.5rem;
+  font-size: 0.7rem;
+  background: transparent;
+  border: 1px solid #e2e8f0;
+  color: #4a5568;
+  transition: all 0.2s ease;
+}
+
+:host ::ng-deep .fc .fc-button:hover {
+  background: #f7fafc;
+  color: #2A5D89;
+}
+
+:host ::ng-deep .fc .fc-button-primary:not(:disabled).fc-button-active {
+  background: #5D9CEC;
+  border-color: #5D9CEC;
+  color: white;
+}
+
+/* Day Headers */
+:host ::ng-deep .fc .fc-col-header-cell {
+  padding: 8px 0;
+}
+
+:host ::ng-deep .fc .fc-col-header-cell-cushion {
+  font-size: 0.7rem;
+  color: #718096;
+  font-weight: 500;
+  text-transform: uppercase;
+  padding: 4px;
+}
+
+/* Day Cells */
+:host ::ng-deep .fc .fc-daygrid-day-frame {
+  min-height: 42px;
+  padding: 2px;
+}
+
+:host ::ng-deep .fc .fc-daygrid-day-number {
+  font-size: 0.75rem;
+  color: #4a5568;
+  padding: 4px;
+  margin: 2px;
+}
+
+/* Today's Date */
+:host ::ng-deep .fc .fc-daygrid-day.fc-day-today {
+  background: rgba(93, 156, 236, 0.05);
+}
+
+:host ::ng-deep .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+  font-weight: 700;
+  color: #2A5D89;
+  background: rgba(93, 156, 236, 0.15);
+  border-radius: 8px;
+}
+
+/* Modern Event Indicators */
+:host ::ng-deep .fc-event {
+  margin: 0 auto;
+  width: 10px;
+  height: 10px;
+  min-height: 10px;
+  border-radius: 50%;
+  opacity: 0.9;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+:host ::ng-deep .fc-event:hover {
+  width: 14px;
+  height: 14px;
+  opacity: 1;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+  transform: translateY(-1px);
+}
+
+/* Status Styling */
+:host ::ng-deep .fc-event.PENDING {
+  background: #F6AD55;
+  box-shadow: 0 2px 4px rgba(246, 173, 85, 0.3);
+}
+
+:host ::ng-deep .fc-event.COMPLETED {
+  background: #68D391;
+  box-shadow: 0 2px 4px rgba(104, 211, 145, 0.3);
+}
+
+:host ::ng-deep .fc-event.FAILED {
+  background: #FC8181;
+  box-shadow: 0 2px 4px rgba(252, 129, 129, 0.3);
+}
+
+:host ::ng-deep .fc-event.ARCHIVED {
+  background: #A0AEC0;
+  box-shadow: 0 2px 4px rgba(160, 174, 192, 0.3);
+}
+
+/* Enhanced Tooltips */
+:host ::ng-deep .fc-daygrid-event-harness:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2A5D89;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(5px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Modern Legend */
+.calendar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(226, 232, 240, 0.6);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.7rem;
+  color: #4a5568;
+  background: rgba(226, 232, 240, 0.4);
+  padding: 4px 8px;
+  border-radius: 12px;
+}
+
+.legend-color {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 6px;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+}
+
+/* Status colors */
+.pending { background-color: #F6AD55; }
+.completed { background-color: #68D391; }
+.failed { background-color: #FC8181; }
+.archived { background-color: #A0AEC0; }
+.urgent { background-color: #F687B3; }
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .deadline-tracker {
+    width: 100%;
+    margin-top: 24px;
+    backdrop-filter: none;
+  }
+  
+  :host ::ng-deep .fc {
+    font-size: 0.8rem;
+  }
+  
+  :host ::ng-deep .fc .fc-toolbar-title {
+    font-size: 0.9rem !important;
+  }
 }

@@ -1,0 +1,13 @@
+{
+    "REPORTS": {
+      "DESCRIPTION": "Le champ Description fournit un aperçu détaillé de ce que couvre le rapport.",
+      "TYPE": "Il s'agit du type du rapport. Il indique la catégorie ou la classification du rapport.",
+      "STATUS": {
+        "PENDING": "En attente",
+        "COMPLETED": "Terminé",
+        "FAILED": "Échoué",
+        "ARCHIVED": "Archivé"
+      }
+    }
+  }
+  

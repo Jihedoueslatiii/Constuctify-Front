@@ -6,19 +6,33 @@ import { UpdateSupplierComponent } from './Views/Supplier/update-supplier/update
 import { ViewContractsComponent } from './Views/Supplier/view-contracts/view-contracts.component';
 import { ViewSupplierComponent } from './Views/Supplier/view-supplier/view-supplier.component';
 import { SupplierStatsComponent } from './Views/Supplier/supplier-stats/supplier-stats.component';
+import { TranslatedReportsComponent } from './translated-reports/translated-reports.component';
 
 
 const routes: Routes = [
+  // Supplier Routes
   { path: 'view-supplier', component: ViewSupplierComponent },
   { path: 'add-supplier', component: AddSupplierComponent },
   { path: 'update-supplier/:id', component: UpdateSupplierComponent },
+  
+  // Contract Routes
   { path: 'view-contracts', component: ViewContractsComponent },
   { path: 'contract-details/:id', component: ViewContractsComponent },
+  
+  // Report Routes
   { path: 'view-reports', component: ViewReportsComponent },
+  { path: 'reports/translated/:lang', component: TranslatedReportsComponent }, // Added translated reports route
   { path: 'archived-reports', component: ViewReportsComponent }, 
   { path: 'delete-reports', component: ViewReportsComponent }, 
-  // Add the new route for Supplier Financial Health Stats
+  
+  // Stats Route
   { path: 'supplier-financial-health', component: SupplierStatsComponent },
+  
+  // Default Redirect
+  { path: '', redirectTo: '/view-reports', pathMatch: 'full' },
+  
+  // Wildcard Route (should be last)
+  { path: '**', redirectTo: '/view-reports' }
 ];
 
 @NgModule({
