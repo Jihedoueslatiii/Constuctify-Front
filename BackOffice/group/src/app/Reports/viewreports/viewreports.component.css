@@ -320,7 +320,7 @@
 
 /* Container Styling */
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -329,7 +329,7 @@
 h2.text-center {
   font-size: 24px;
   font-weight: bold;
-  color: #2A5D89;
+  color: #5c7c99;
   margin-bottom: 20px;
 }
 
@@ -467,18 +467,23 @@ h2.text-center {
 /* Main Container Layout */
 .container.mt-4 {
   display: grid;
-  grid-template-columns: 1fr 300px; /* Reports take main space, calendar fixed width */
+  grid-template-columns: 1fr 350px; /* More space for cards, fixed width for calendar */
+  grid-template-rows: auto 1fr; /* First row for calendar, rest for cards */
   gap: 20px;
   align-items: start;
-  max-width: 1400px; /* Increased max width to accommodate both */
+  max-width: 1400px; /* Wider container */
   margin: 0 auto;
   padding: 20px;
 }
+
 
 .reports-section {
   grid-column: 1;
   min-width: 0; /* Important for proper grid behavior */
   overflow: hidden; /* Prevents content from overflowing */
+  margin: 0 auto; /* Center the reports section */
+  max-width: 800px; /* Set a max-width for better centering */
+  width: 500%;
 }
 
 /* Modern Calendar Container */
@@ -494,7 +499,6 @@ h2.text-center {
   border: 1px solid rgba(213, 222, 238, 0.6);
   width: 500px;
   height: fit-content;
-  backdrop-filter: blur(4px);
 }
 
 .deadline-tracker h3 {
@@ -706,17 +710,113 @@ h2.text-center {
 
 /* Responsive Design */
 @media (max-width: 992px) {
+  .container.mt-4 {
+    grid-template-columns: 1fr;
+  }
+  
   .deadline-tracker {
     width: 100%;
     margin-top: 24px;
-    backdrop-filter: none;
+    position: static;
   }
   
-  :host ::ng-deep .fc {
-    font-size: 0.8rem;
-  }
-  
-  :host ::ng-deep .fc .fc-toolbar-title {
-    font-size: 0.9rem !important;
-  }
+  .reports-section {
+    max-width: 100%;
+  }}
+
+/* Search & Filter Section Styles */
+.search-filter-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: center; /* Center the search and filter elements */
+}
+
+.search-container {
+  display: flex;
+  flex-grow: 1;
+  max-width: 400px;
+  justify-content: center; /* Center the search input */
+}
+
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center; /* Center the filter elements */
+}
+
+.filter-tag-toggle {
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+}
+
+.filter-tag-toggle.active {
+  background: #e3f2fd;
+  border-color: #bbdefb;
+}
+
+.selected-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.selected-tag {
+  background: #e3f2fd;
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.selected-tag i {
+  cursor: pointer;
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.add-tag-container {
+  position: relative;
+}
+
+.tag-input {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-width: 150px;
+}
+
+/* Card Styles with Tags */
+.card-header-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.btn-tag-edit {
+  color: #6c757d;
+  padding: 4px 8px;
+  font-size: 0.85rem;
+}
+
+.report-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.report-tag {
+  background: #f5f5f5;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  color: #555;
 }

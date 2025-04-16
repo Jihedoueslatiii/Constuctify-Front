@@ -22,6 +22,7 @@ export interface Report {
   filePath: string;
   originalTitle: string;
   originalDescription: string;  
+  tags: string[];  
 }
   
   

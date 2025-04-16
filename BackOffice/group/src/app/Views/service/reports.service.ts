@@ -117,4 +117,24 @@ updateReportDate(reportId: number, newDate: Date): Observable<any> {
     catchError(this.handleError<any>('updateReportDate'))
   );
 }
+
+updateReportTags(reportId: number, tags: string[]): Observable<Report> {
+  return this.http.patch<Report>(
+    `${this.apiUrl}/${reportId}/tags`,
+    { tags },
+    {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }
+  ).pipe(
+    catchError(this.handleError<Report>('updateReportTags'))
+  );
+}
+
+getReportsByTag(tag: string): Observable<Report[]> {
+  return this.http.get<Report[]>(`${this.apiUrl}/by-tag/${tag}`).pipe(
+    catchError(this.handleError<Report[]>('getReportsByTag', []))
+  );
+}
 }

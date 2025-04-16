@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>Edit Tags for {{ data.report.title }}</h2>
+<div mat-dialog-content>
+  <div class="tag-editor">
+    <div class="available-tags">
+      <h3>Available Tags</h3>
+      <mat-chip-set>
+        <mat-chip 
+          *ngFor="let tag of availableTags" 
+          [highlighted]="selectedTags.includes(tag)"
+          (click)="toggleTag(tag)">
+          {{ tag }}
+        </mat-chip>
+      </mat-chip-set>
+    </div>
+    
+    <div class="new-tag">
+      <mat-form-field appearance="fill">
+        <mat-label>New Tag</mat-label>
+        <input matInput [(ngModel)]="newTag" 
+               (keyup.enter)="addNewTag()">
+        <button matSuffix mat-icon-button (click)="addNewTag()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    
+    <div class="selected-tags">
+      <h3>Selected Tags</h3>
+      <mat-chip-set>
+        <mat-chip 
+          *ngFor="let tag of selectedTags"
+          [removable]="true" 
+          (removed)="removeTag(tag)">
+          {{ tag }}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-set>
+    </div>
+  </div>
+</div>

@@ -15,6 +15,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CalendarOptions, EventInput, EventApi } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { TagService } from 'src/app/Views/service/tag.service';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { TagEditorComponent } from '../tag-editor.component';
 
 @Component({
   selector: 'app-view-reports',
@@ -45,6 +49,7 @@ export class ViewReportsComponent implements OnInit {
       minute: '2-digit',
       meridiem: false
     }
+    
   };
 
   reports: Report[] = [];  
@@ -74,17 +79,67 @@ legendItems = [
   { status: 'ARCHIVED', label: 'Archived' }
 ];
 
+readonly separatorKeysCodes: readonly number[] = [ENTER, COMMA] as const;
+selectedTags: string[] = [];
+availableTags: string[] = [];
+tagFilterEnabled = false;
+
+
   constructor(
     private reportsService: ReportsService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private router: Router,
     private schedulerService: ReportSchedulerService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private tagService: TagService
   ) { }
 
   ngOnInit(): void {
     this.fetchReports();
+    this.loadTags()
+  }
+
+  loadTags(): void {
+    this.tagService.getAvailableTags().subscribe(tags => {
+      this.availableTags = tags;
+    });
+    
+    this.tagService.getSelectedTags().subscribe(tags => {
+      this.selectedTags = tags;
+    });
+  }
+
+  addTag(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.selectedTags = [...this.selectedTags, value];
+    }
+    event.chipInput?.clear();
+  }
+  
+  removeTag(tag: string): void {
+    this.tagService.removeTag(tag);
+  }
+  
+  toggleTagFilter(): void {
+    this.tagFilterEnabled = !this.tagFilterEnabled;
+  }
+  
+  updateReportTags(report: Report, tags: string[]): void {
+    this.reportsService.updateReportTags(report.idReport, tags).subscribe({
+      next: (updatedReport) => {
+        const index = this.reports.findIndex(r => r.idReport === report.idReport);
+        if (index !== -1) {
+          this.reports[index].tags = updatedReport.tags;
+        }
+        this.showSnackbar('Tags updated successfully');
+      },
+      error: (error) => {
+        console.error('Error updating tags:', error);
+        this.showSnackbar('Error updating tags');
+      }
+    });
   }
 
   // Calendar Methods
@@ -271,14 +326,13 @@ legendItems = [
 
   filteredReports(): Report[] {
     return this.reports.filter(report => 
-      (this.searchTerm === '' || report.title.toLowerCase().includes(this.searchTerm.toLowerCase())) &&
-      (this.selectedStatus === '' || report.status === this.selectedStatus)
+      (this.searchTerm === '' || 
+       report.title.toLowerCase().includes(this.searchTerm.toLowerCase())) &&
+      (this.selectedStatus === '' || report.status === this.selectedStatus) &&
+      (!this.tagFilterEnabled || 
+       this.selectedTags.length === 0 || 
+       (report.tags && this.selectedTags.some(tag => report.tags.includes(tag))))
     );
-  }
-
-  get pagedReports(): Report[] {
-    const startIndex = (this.page - 1) * this.itemsPerPage;
-    return this.filteredReports().slice(startIndex, startIndex + this.itemsPerPage);
   }
 
   ArchiveReport(id: number): void {
@@ -555,4 +609,23 @@ legendItems = [
       }
     });
   }
-}
+  openTagEditor(report: Report): void {
+    const dialogRef = this.dialog.open(TagEditorComponent, {
+      width: '500px',
+      data: { report }
+    });
+  
+    dialogRef.afterClosed().subscribe((updatedTags: string[] | undefined) => {
+      if (updatedTags !== undefined) {
+        this.updateReportTags(report, updatedTags);
+      }
+    });
+  }
+  addTagFromInput(inputElement: HTMLInputElement): void {
+    const value = inputElement.value.trim();
+    if (value) {
+      this.tagService.createNewTag(value);
+      this.tagService.addTag(value);
+      inputElement.value = '';
+    }
+  }}
