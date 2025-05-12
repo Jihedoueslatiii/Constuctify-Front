@@ -1,0 +1,126 @@
+<app-bar> </app-bar>
+<div class="container mt-4">
+  <h2 class="text-center">Reports Overview</h2>
+
+  <!-- Search & Filter Section -->
+  <div class="search-filter-section">
+    <input
+      type="text"
+      class="search-input"
+      placeholder="🔍 Search by title..."
+      [(ngModel)]="searchTerm"
+    />
+    <button class="search-button">
+      <i class="fas fa-search"></i> Search
+    </button>
+    <select
+      class="filter-select"
+      [(ngModel)]="selectedStatus"
+    >
+      <option value="">All Statuses</option>
+      <option value="PENDING">Pending</option>
+      <option value="COMPLETED">Completed</option>
+      <option value="FAILED">Failed</option>
+      <option value="ARCHIVED">Archived</option>
+    </select>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button class="btn generate-performance-btn" (click)="generatePerformanceReport()">
+        <i class="fas fa-file-pdf"></i> Generate Report
+      </button>
+      <button class="btn btn-primary" (click)="viewTranslatedReports('fr')">
+        <i class="fas fa-globe"></i> View Translations
+      </button>
+    </div>
+  </div>
+
+  <!-- Reports Card Grid -->
+  <div class="card-container">
+    <div class="card" *ngFor="let report of pagedReports">
+      <div class="card-body">
+        <div class="translation-button-container">
+          <button class="btn btn-translate" (click)="openTranslationDialog(report)">
+            <i class="fas fa-language"></i> Translate
+          </button>
+        </div>
+        <h5 class="card-title">{{ report.title }}</h5>
+        <p class="card-text">{{ report.description }}</p>
+        
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <strong>Type:</strong> {{ report.reportType }}
+          </li>
+          <li class="list-group-item">
+            <strong>Status:</strong>
+            <span class="badge bg-warning" *ngIf="report.status === 'PENDING'">Pending</span>
+            <span class="badge bg-success" *ngIf="report.status === 'COMPLETED'">Completed</span>
+            <span class="badge bg-danger" *ngIf="report.status === 'FAILED'">Failed</span>
+            <span class="badge bg-secondary" *ngIf="report.status === 'ARCHIVED'">Archived</span>
+          </li>
+          <li class="list-group-item">
+            <strong>Generated Date:</strong> {{ report.generatedDate | date:'short' }}
+          </li>
+        </ul>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-primary" (click)="onUpdate(report)">
+          <i class="fas fa-edit"></i> Edit
+        </button>
+        <button class="btn btn-schedule" (click)="openScheduler(report)">
+          <i class="fas fa-calendar-alt"></i> Schedule
+        </button>
+        <button class="btn btn-archive" (click)="ArchiveReport(report.idReport)">
+          <i class="fas fa-archive"></i> Archive
+        </button>
+        <button class="btn btn-danger" (click)="deleteReport(report.idReport)">
+          <i class="fas fa-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Data Message -->
+  <div *ngIf="filteredReports().length === 0" class="alert alert-info text-center">
+    No reports found matching your criteria.
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="pagination-container">
+    <pagination-controls
+      [id]="config?.id || 'defaultPaginationId'"
+      (pageChange)="onPageChange($event)"
+    ></pagination-controls>
+  </div>
+</div>
+
+<!-- Translation Dialog -->
+<ng-template #translationDialog>
+  <div class="translation-dialog">
+    <h2 mat-dialog-title>Select Language</h2>
+    <div mat-dialog-content>
+      <div class="language-grid">
+        <button mat-raised-button 
+                class="language-option" 
+                (click)="selectLanguage('en')">
+          <span class="flag-icon flag-icon-us"></span> English (Original)
+        </button>
+        <button mat-raised-button 
+                class="language-option" 
+                *ngFor="let lang of availableLanguages" 
+                (click)="selectLanguage(lang)"
+                [disabled]="lang === 'en'">
+          <span class="flag-icon" [class.flag-icon-fr]="lang === 'fr'" 
+                               [class.flag-icon-es]="lang === 'es'" 
+                               [class.flag-icon-sa]="lang === 'ar'"></span>
+          {{ lang === 'fr' ? 'Français' : 
+             lang === 'es' ? 'Español' : 
+             lang === 'ar' ? 'العربية' : lang }}
+        </button>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button (click)="closeDialog()">Close</button>
+    </div>
+  </div>
+</ng-template>

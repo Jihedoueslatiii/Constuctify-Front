@@ -1,0 +1,33 @@
+<div class="container">
+    <h2 class="title">Ajouter un Employé</h2>
+  
+    <form (ngSubmit)="addEmployee()">
+      <div class="form-group">
+        <label for="firstname">Prénom :</label>
+        <input type="text" id="firstname" [(ngModel)]="employer.firstname" name="firstname" required>
+      </div>
+      <div class="form-group">
+        <label for="lastname">Nom :</label>
+        <input type="text" id="lastname" [(ngModel)]="employer.lastname" name="lastname" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email :</label>
+        <input type="email" id="email" [(ngModel)]="employer.email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password :</label>
+        <input type="password" id="password" [(ngModel)]="employer.password" name="password" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Téléphone :</label>
+        <input type="text" id="phone" [(ngModel)]="employer.phone" name="phone" required>
+      </div>
+      <div class="role-field">
+        <label for="teamId">Équipe :</label>
+        <select id="teamId" [(ngModel)]="employer.teamId" name="teamId" required>
+          <option *ngFor="let team of teams" [value]="team.id">{{ team.teamName }}</option>
+        </select>
+      </div>
+      <button type="submit" class="btn submit">Ajouter l'employé</button>
+    </form>
+  </div>

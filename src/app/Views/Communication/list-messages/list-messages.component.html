@@ -1,0 +1,184 @@
+<app-bar></app-bar>
+<div class="messenger">
+  <div class="active-users">
+    <h3>Active Users</h3>
+    <ul>
+      <li *ngFor="let user of users" (click)="startPrivateConversation(user.id)">
+        <div class="user-status">
+          <span>{{ user.firstname }}&nbsp;{{ user.lastname }}</span>
+          <span class="status-indicator" [class.active]="isUserActive(user.id)"></span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="conversation-container">
+    <div class="conversation-header">
+      <h3 *ngIf="selectedConversation">
+        <span>{{ getConversationDisplayName(selectedConversation) }}</span>
+      </h3>
+      <p *ngIf="!selectedConversation">Select a conversation to start chatting!</p>
+    </div>
+    <div class="header-actions" *ngIf="selectedConversation">
+      <button class="summarize-btn" (click)="summarizeConversation()" [disabled]="isSummarizing">
+        <i class="fa-solid fa-list-ul"></i>
+        {{ isSummarizing ? 'Summarizing...' : 'Summarize' }}
+      </button>
+    </div>
+
+    <div class="pinned-messages" *ngIf="pinnedMessages().length > 0">
+      <h4>📌 Pinned Messages</h4>
+      <div *ngFor="let message of pinnedMessages()"
+           class="message-wrapper pinned"
+           [attr.data-message-id]="message.messageId">
+           <div [ngClass]="getMessageClass(message.senderId)">
+            <div class="message-content" [ngClass]="{ 'hate-speech': message.isHateSpeech, 'no-hate-speech': !message.isHateSpeech }">
+            <strong>{{ message.senderId === currentUserId ? 'You' : getUserName(message.senderId) }}:</strong>
+            <p>{{ message.content }}</p>
+            <div class="message-status" *ngIf="message.senderId === currentUserId">
+              <span *ngIf="message.status === 'SENT'" title="Sent">✓</span>
+              <span *ngIf="message.status === 'DELIVERED'" title="Delivered">✓✓</span>
+              <span *ngIf="message.status === 'READ'" title="Seen">✓✓ <small>Seen</small></span>
+            </div>
+          </div>
+        </div>
+        <div class="message-actions">
+          <i class="fa-solid fa-pen-to-square edit-icon" (click)="editMessage(message)"></i>
+          <i class="fa-solid fa-trash delete-icon" (click)="deleteMessage(message)"></i>
+          <i class="fa-solid fa-thumbtack pin-icon pinned" (click)="togglePinMessage(message)"></i>
+        </div>
+      </div>
+
+      <div class="see-all-pinned" *ngIf="pinnedMessages().length > 0">
+        <button (click)="togglePinnedMessagesDropdown()">See all pinned messages</button>
+        <div *ngIf="isPinnedMessagesDropdownOpen" class="pinned-messages-dropdown">
+          <ul>
+            <li *ngFor="let message of pinnedMessages()">
+              <strong>{{ message.senderId === currentUserId ? 'You' : getUserName(message.senderId) }}:</strong>
+              <p>{{ message.content }}</p>
+              <div class="message-status" *ngIf="message.senderId === currentUserId">
+                <span *ngIf="message.status === 'SENT'">✓ Sent</span>
+                <span *ngIf="message.status === 'DELIVERED'">✓✓ Delivered</span>
+                <span *ngIf="message.status === 'READ'">✓✓ Seen</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="message-box" *ngIf="selectedConversation">
+      <div class="messages" #messageContainer>
+        <div *ngFor="let message of unpinnedMessages()"
+             class="message-wrapper"
+             [attr.data-message-id]="message.messageId">
+          <div [ngClass]="getMessageClass(message.senderId)">
+            <div class="message-content" [ngClass]="{ 'hate-speech': message.isHateSpeech, 'no-hate-speech': !message.isHateSpeech }">
+              <strong>{{ message.senderId === currentUserId ? 'You' : getUserName(message.senderId) }}:</strong>
+              <p>{{ message.content }}</p>
+              <div class="message-status" *ngIf="message.senderId === currentUserId">
+                <span *ngIf="message.status === 'SENT'" title="Sent">✓</span>
+                <span *ngIf="message.status === 'DELIVERED'" title="Delivered">✓✓</span>
+                <span *ngIf="message.status === 'READ'" title="Seen">✓✓ <small>Seen</small></span>
+              </div>
+              <span *ngIf="message.isHateSpeech" class="hate-speech-status">
+                ⚠️ Warning: This message contains hate speech and violates our community guidelines.
+              </span>
+            </div>
+          </div>
+          <div class="message-actions">
+            <i class="fa-solid fa-pen-to-square edit-icon" (click)="editMessage(message)"></i>
+            <i class="fa-solid fa-trash delete-icon" (click)="deleteMessage(message)"></i>
+            <i class="fa-solid fa-thumbtack pin-icon" [ngClass]="{'pinned': message.isPinned}" (click)="togglePinMessage(message)"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="send-message">
+        <div class="emoji-picker-container">
+          <button (click)="showEmojiPicker = !showEmojiPicker">
+            <i class="fa-regular fa-face-smile"></i>
+          </button>
+
+          <div class="emoji-wrapper" *ngIf="showEmojiPicker">
+            <emoji-mart
+              set="apple"
+              [style]="{ width: '100%', maxHeight: '400px' }"
+              (emojiSelect)="addEmoji($event)">
+            </emoji-mart>
+          </div>
+        </div>
+
+        <textarea [(ngModel)]="newMessage" placeholder="Type your message..." *ngIf="selectedConversation"></textarea>
+        <button *ngIf="!editMode && selectedConversation"
+                (click)="sendMessage(newMessage)"
+                [disabled]="!newMessage || !newMessage.trim()">Send</button>
+        <button *ngIf="editMode" (click)="saveEditedMessage()">Save</button>
+        <button *ngIf="editMode" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="conversation-list">
+    <h3>Conversations</h3>
+    <ul>
+      <li *ngFor="let conversation of userConversations"
+          [class.active]="selectedConversation?.conversationId === conversation.conversationId">
+        <div class="conversation-info" (click)="selectConversation(conversation)">
+          <span class="conversation-type">
+            {{ conversation.participants.length > 2 ? '👥' : '👤' }}
+          </span>
+          {{ getConversationDisplayName(conversation) }}
+          <span class="unread-badge" *ngIf="getUnreadCount(conversation) > 0">
+            {{ getUnreadCount(conversation) }}
+          </span>
+        </div>
+
+        <div class="conversation-actions">
+          <i class="fa-solid fa-pen-to-square edit-icon"
+             title="Rename"
+             (click)="triggerRenameConversation($event, conversation)"></i>
+          <i class="fa-solid fa-trash delete-icon"
+             title="Delete"
+             (click)="triggerDeleteConversation($event, conversation)"></i>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="custom-modal" *ngIf="isRenameDialogOpen">
+    <div class="modal-content">
+      <h3>Rename Conversation</h3>
+      <input type="text" [(ngModel)]="newConversationName" />
+      <div class="modal-actions">
+        <button (click)="confirmRenameConversation()">Save</button>
+        <button (click)="cancelRenameConversation()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="custom-modal" *ngIf="isDeleteMessageConfirmationOpen">
+    <div class="modal-content">
+      <h3>Confirm Delete</h3>
+      <p>Are you sure you want to delete this message?</p>
+      <div class="modal-actions">
+        <button (click)="confirmDeleteMessage()">Yes</button>
+        <button (click)="cancelDeleteMessage()">No</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary-dialog" *ngIf="isDialogOpen">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <h3>Conversation Summary</h3>
+        <button class="close-btn" (click)="closeDialog()">×</button>
+      </div>
+      <div class="dialog-body">
+        <div [innerHTML]="formattedSummaryText"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

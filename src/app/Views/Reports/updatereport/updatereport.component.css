@@ -1,0 +1,84 @@
+/* Update Report Container */
+.update-report-container {
+    position: fixed; /* Ensures it stays in place relative to the viewport */
+    top: 50%; /* Moves the top edge to the middle of the screen */
+    left: 50%; /* Moves the left edge to the middle of the screen */
+    transform: translate(-50%, -50%); /* Centers the popup */
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 400px; /* Adjust width as needed */
+    max-width: 90%; /* Ensures it doesn't overflow on small screens */
+}
+
+h2 {
+    font-size: 24px;
+    color: #2A5D89; /* Dark blue for the title */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Form Styling */
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 16px;
+    color: #2A5D89; /* Dark blue for labels */
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+textarea {
+    resize: vertical; /* Allows vertical resizing */
+    min-height: 100px; /* Sets a minimum height */
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* Space between buttons */
+    margin-top: 20px;
+}
+
+/* Button Styling */
+button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="button"] {
+    background-color: #6c757d; /* Gray for Cancel button */
+    color: white;
+}
+
+button[type="button"]:hover {
+    background-color: #5a6268; /* Darker gray on hover */
+}
+
+button[type="submit"] {
+    background-color: #007bff; /* Blue for Update button */
+    color: white;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

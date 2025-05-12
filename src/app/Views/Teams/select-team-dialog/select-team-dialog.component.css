@@ -1,0 +1,22 @@
+.loading-spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .loading-spinner mat-spinner {
+    margin-bottom: 10px;
+  }
+  
+  .no-teams {
+    padding: 20px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  
+  mat-selection-list {
+    max-height: 300px;
+    overflow: auto;
+  }

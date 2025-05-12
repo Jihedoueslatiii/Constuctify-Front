@@ -1,0 +1,25 @@
+<app-bar></app-bar>
+<div class="container">
+     <!-- Bouton pour ajouter un employé -->
+ <button class="btn edit" (click)="openAddEmployerForm()">Add Employer</button>
+    <h2 class="title">Add Team</h2>
+ 
+    <form (ngSubmit)="addTeam()">
+      <div class="form-group">
+        <label for="teamName">Team Name :</label>
+        <input type="text" id="teamName" [(ngModel)]="team.teamName" name="name" required>
+      </div>
+  
+      <button type="submit" class="btn submit">Save</button>
+    </form>
+
+    <button mat-raised-button color="accent" (click)="suggestTeamName()">
+      Suggest a team name with AI
+    </button>
+    
+    <div *ngIf="suggestedName" class="mt-2">
+      <strong>Suggestion :</strong> {{ suggestedName }}
+    </div>
+    
+
+  </div>

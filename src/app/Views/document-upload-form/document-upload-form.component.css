@@ -1,0 +1,102 @@
+.document-upload-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.document-upload-modal .modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 500px; /* Adjust width as needed */
+  max-width: 90%;
+}
+
+.document-upload-modal h3 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.document-upload-modal .form-group {
+  margin-bottom: 20px;
+}
+
+.document-upload-modal label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-weight: 500;
+}
+
+.document-upload-modal input[type="text"],
+.document-upload-modal select,
+.document-upload-modal textarea,
+.document-upload-modal input[type="file"] {
+  width: calc(100% - 22px); /* Account for padding and border */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.document-upload-modal input[type="text"]:focus,
+.document-upload-modal select:focus,
+.document-upload-modal textarea:focus,
+.document-upload-modal input[type="file"]:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.document-upload-modal textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.document-upload-modal button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.document-upload-modal button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  margin-right: 10px;
+}
+
+.document-upload-modal button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.document-upload-modal button[type="button"] {
+  background-color: #ddd;
+  color: #333;
+}
+
+.document-upload-modal button[type="button"]:hover {
+  background-color: #ccc;
+}
+
+
+/* document-upload-form.component.css */
+.error-message {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 5px;
+}

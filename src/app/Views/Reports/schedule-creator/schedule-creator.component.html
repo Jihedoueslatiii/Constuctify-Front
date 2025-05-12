@@ -1,0 +1,40 @@
+<!-- schedule-creator.component.html -->
+<app-bar> </app-bar>
+<div class="scheduling-mode-toggle">
+    <button (click)="toggleSchedulingMode()">
+      Switch to {{ useNaturalLanguage ? 'Manual' : 'Natural Language' }} Scheduling
+    </button>
+  </div>
+  
+  <div *ngIf="!useNaturalLanguage">
+    <!-- Existing manual scheduling form -->
+    <form [formGroup]="form" (ngSubmit)="onSubmitManual()">
+      <div>
+        <label>Command:</label>
+        <input formControlName="command" placeholder="e.g., '0 9 * * 1-5' for weekdays at 9am">
+      </div>
+      <div>
+        <label>Recipients (comma separated):</label>
+        <input formControlName="recipients">
+      </div>
+      <button type="submit">Create Schedule</button>
+      <button type="button" (click)="cancel.emit()">Cancel</button>
+    </form>
+  </div>
+  
+  <div *ngIf="useNaturalLanguage">
+    <!-- New NLP scheduling form -->
+    <form [formGroup]="nlpForm" (ngSubmit)="onSubmitNlp()">
+      <div>
+        <label>Schedule Command:</label>
+        <textarea formControlName="nlpCommand" 
+                  placeholder="e.g., 'Email this report every Monday at 9am'"></textarea>
+      </div>
+      <div>
+        <label>Additional Recipients (comma separated):</label>
+        <input formControlName="nlpRecipients">
+      </div>
+      <button type="submit">Create Schedule</button>
+      <button type="button" (click)="cancel.emit()">Cancel</button>
+    </form>
+  </div>

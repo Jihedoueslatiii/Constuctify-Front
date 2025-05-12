@@ -1,0 +1,101 @@
+form {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background: linear-gradient(to bottom right, #f0f4ff, #ffffff);
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+  }
+  
+  input,
+  select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+    background-color: #fff;
+    font-size: 16px;
+    transition: border 0.3s ease;
+  }
+  
+  input:focus,
+  select:focus {
+    border-color: #4f46e5;
+    outline: none;
+  }
+  
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4f46e5;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+  }
+  
+  button:disabled {
+    background-color: #bcbcbc;
+    cursor: not-allowed;
+  }
+  
+  button:hover:not(:disabled) {
+    background-color: #3730a3;
+  }
+  
+  /* Center the result box at the top of the page */
+  .result-box {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background: #e0e7ff;
+    border-left: 4px solid #4f46e5;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    margin-top: 20px;
+    position: absolute; /* Makes it position relative to the parent */
+    top: 50px; /* Adjust the top position */
+    left: 50%;
+    transform: translateX(-50%); /* Centers it horizontally */
+  }
+  
+  .result-box p {
+    font-size: 18px;
+    color: #1f2937;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 640px) {
+    form {
+      padding: 20px;
+      margin: 20px;
+    }
+  
+    button {
+      font-size: 15px;
+    }
+  
+    .result-box p {
+      font-size: 16px; /* Smaller font size for smaller screens */
+    }
+  }
+  

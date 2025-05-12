@@ -1,0 +1,226 @@
+/* Conteneur principal */
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  /* Titre */
+  .title {
+    text-align: center;
+    font-size: 24px;
+    color: #2A5D89;
+    margin-bottom: 20px;
+  }
+  
+  /* Liste des utilisateurs */
+  .user-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacement entre les cartes */
+  }
+  
+  /* Carte utilisateur */
+  .user-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+  }
+  
+  .user-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Informations utilisateur */
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .user-field {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .label {
+    font-weight: bold;
+    color: #1E3A5F;
+  }
+  
+  .value {
+    color: #333;
+  }
+  
+  /* Actions utilisateur */
+  .user-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Boutons */
+  .btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+  }
+  
+  .edit {
+    background: #28a745;
+    color: white;
+  }
+  
+  .edit:hover {
+    background: #218838;
+  }
+  
+  .delete {
+    background: #dc3545;
+    color: white;
+  }
+  
+  .delete:hover {
+    background: #c82333;
+  }
+  /* Conteneur principal */
+  .container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  /* Barre de recherche */
+  .search-bar {
+    margin-bottom: 20px;
+  }
+  
+  .search-bar label {
+    margin-right: 10px;
+    font-weight: bold;
+    color: #2A5D89;
+  }
+  
+  .search-bar select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  /* Liste des utilisateurs */
+  .user-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .user-card {
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .user-field {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .label {
+    font-weight: bold;
+    color: #1E3A5F;
+  }
+  
+  .value {
+    color: #333;
+  }
+  /* Override Angular Material's default snackbar styles */
+  .mat-snack-bar-container {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    left: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    z-index: 9999 !important;
+  }
+  
+  .cdk-overlay-container {
+    z-index: 9999 !important;
+    position: fixed !important;
+  }
+  
+  
+  /* Custom styling for the snackbar */
+  .confirmation-snackbar {
+    background-color: #ffcc00; /* Yellow background */
+    color: black; /* Black text */
+  }
+  
+  .success-snackbar {
+    background-color: #4caf50; /* Green background */
+    color: white; /* White text */
+  }
+  
+  .error-snackbar {
+    background-color: #ff4444; /* Red background */
+    color: white; /* White text */
+  }
+  .status-free {
+    color: green;
+    font-weight: bold;
+  }
+  .status-busy {
+    color: red;
+    font-weight: bold;
+  }
+  /* Barre de recherche centrée */
+.search-bar {
+    display: flex;
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center;
+    margin-bottom: 1px;
+  }
+  
+  .search-bar label {
+    margin-right: 10px;
+    font-weight: bold;
+    color: #2A5D89;
+  }
+  
+  .search-bar input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 200px; /* Fixer une largeur de champ pour l'input */
+  }
+  
+  .search-bar select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }

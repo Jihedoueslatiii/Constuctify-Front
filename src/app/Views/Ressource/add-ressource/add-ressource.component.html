@@ -1,0 +1,41 @@
+<app-bar></app-bar>
+
+<div class="container">
+  <h2 class="title">Ajouter une Ressource</h2>
+
+  <form (ngSubmit)="addRessource()" #ressourceForm="ngForm">
+    <div class="form-group">
+      <label for="nom">Nom de la ressource :</label>
+      <input type="text" id="nom" [(ngModel)]="ressource.nomRessource" name="nomRessource" required>
+      <div *ngIf="ressourceForm.controls['nomRessource']?.invalid && ressourceForm.controls['nomRessource']?.touched">
+        <small class="text-danger">Le nom de la ressource est requis.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="nombre">Nombre :</label>
+      <input type="number" id="nombre" [(ngModel)]="ressource.nombreRessource" name="nombreRessource" required min="1">
+      <div *ngIf="ressourceForm.controls['nombreRessource']?.invalid && ressourceForm.controls['nombreRessource']?.touched">
+        <small class="text-danger">Le nombre doit être supérieur à 0.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="type">Type :</label>
+      <input type="text" id="type" [(ngModel)]="ressource.typesRessource" name="typesRessource" required>
+      <div *ngIf="ressourceForm.controls['typesRessource']?.invalid && ressourceForm.controls['typesRessource']?.touched">
+        <small class="text-danger">Le type est requis.</small>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="cost">Coût :</label>
+      <input type="number" id="cost" [(ngModel)]="ressource.cost" name="cost" required min="1">
+      <div *ngIf="ressourceForm.controls['cost']?.invalid && ressourceForm.controls['cost']?.touched">
+        <small class="text-danger">Le coût doit être supérieur à 0.</small>
+      </div>
+    </div>
+
+    <button type="submit" class="btn submit" [disabled]="ressourceForm.invalid">Ajouter</button>
+  </form>
+</div>

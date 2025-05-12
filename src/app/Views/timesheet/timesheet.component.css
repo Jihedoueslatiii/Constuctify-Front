@@ -1,0 +1,166 @@
+/* General container styling */
+.timesheet-container {
+  margin-left: 250px; /* Adjust for sidebar */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: calc(100% - 250px); /* Adjust for sidebar */
+  background-color: #f8f9fa; /* Light background for the entire container */
+  min-height: 100vh; /* Full height */
+}
+
+/* Form styling */
+.timesheet-form {
+  width: 100%;
+  max-width: 600px;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.timesheet-form h3 {
+  margin-bottom: 20px;
+  font-size: 26px;
+  color: #2c3e50; /* Dark blue-gray for headings */
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #34495e; /* Darker text for labels */
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  background-color: #f9f9f9; /* Light background for inputs */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #007bff; /* Blue border on focus */
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2); /* Subtle glow effect */
+}
+
+textarea {
+  resize: vertical; /* Allow vertical resizing */
+  min-height: 100px;
+}
+
+/* Button styling */
+.submit-button,
+.export-button {
+  padding: 12px 24px;
+  background-color: #007bff; /* Primary blue */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover,
+.export-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.export-button {
+  background-color: #28a745; /* Green for export button */
+  margin-bottom: 20px;
+}
+
+.export-button:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+/* Table styling */
+.timesheet-list {
+  width: 100%;
+  max-width: 800px;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.timesheet-list h3 {
+  margin-bottom: 20px;
+  font-size: 26px;
+  color: #2c3e50; /* Dark blue-gray for headings */
+  text-align: center;
+}
+
+#timesheet-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#timesheet-table th,
+#timesheet-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+#timesheet-table th {
+  background-color: #007bff; /* Blue header */
+  color: white;
+  font-weight: 600;
+}
+
+#timesheet-table tr:nth-child(even) {
+  background-color: #f9f9f9; /* Alternate row color */
+}
+
+#timesheet-table tr:hover {
+  background-color: #f1f1f1; /* Hover effect */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .timesheet-container {
+    margin-left: 0;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .timesheet-form,
+  .timesheet-list {
+    padding: 15px;
+  }
+
+  .timesheet-form h3,
+  .timesheet-list h3 {
+    font-size: 22px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 10px;
+  }
+
+  .submit-button,
+  .export-button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}

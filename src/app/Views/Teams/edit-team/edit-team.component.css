@@ -1,0 +1,355 @@
+/* Conteneur principal */
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  /* Titre */
+  .title {
+    text-align: center;
+    font-size: 24px;
+    color: #2A5D89;
+    margin-bottom: 20px;
+  }
+  
+  /* Liste des utilisateurs */
+  .user-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacement entre les cartes */
+  }
+  
+  /* Carte utilisateur */
+  .user-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+  }
+  
+  .user-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Informations utilisateur */
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .user-field {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .label {
+    font-weight: bold;
+    color: #1E3A5F;
+  }
+  
+  .value {
+    color: #333;
+  }
+  
+  /* Actions utilisateur */
+  .user-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Boutons */
+  .btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+  }
+  
+  .edit {
+    background: #28a745;
+    color: white;
+  }
+  
+  .edit:hover {
+    background: #218838;
+  }
+  
+  .delete {
+    background: #dc3545;
+    color: white;
+  }
+  
+  .delete:hover {
+    background: #c82333;
+  }
+  /* Conteneur principal */
+  .container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  /* Barre de recherche */
+  .search-bar {
+    margin-bottom: 20px;
+  }
+  
+  .search-bar label {
+    margin-right: 10px;
+    font-weight: bold;
+    color: #2A5D89;
+  }
+  
+  .search-bar select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  /* Liste des utilisateurs */
+  .user-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .user-card {
+    padding: 15px;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .user-field {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .label {
+    font-weight: bold;
+    color: #1E3A5F;
+  }
+  
+  .value {
+    color: #333;
+  }
+  /* Liste des équipes */
+.team-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espacement entre les équipes */
+  }
+  
+  /* Carte de l'équipe */
+  .team-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(208, 255, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    margin-bottom: 20px; /* Espacement entre les cartes */
+  }
+  
+  /* Hover effet pour la carte de l'équipe */
+  .team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Informations sur l'équipe */
+  .team-info {
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e9ecef;
+  }
+  
+  /* Graphique de l'équipe (exemple d'espace réservé pour les graphiques) */
+  .team-graphic {
+    margin-top: 15px;
+    height: 300px; /* Hauteur du graphique, tu peux l'ajuster selon tes besoins */
+    background-color: #f0f0f0; /* Couleur de fond de l'espace réservé pour le graphique */
+    border-radius: 8px;
+  }
+  
+  /* Nom de l'équipe */
+  .team-name {
+    text-align: center;
+    font-size: 17px;
+    color: #5a3dea;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 570;
+    margin-bottom: 10px;
+    text-transform: capitalize;
+    padding: 5px;
+  }
+  
+  /* Actions des utilisateurs */
+  .user-card {
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Autres styles pour les utilisateurs */
+  .user-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-field {
+    margin-bottom: 8px;
+  }
+  
+  .user-field .label {
+    font-weight: bold;
+    color: #1E3A5F;
+  }
+  
+  .user-field .value {
+    color: #3c3c45;
+  }
+  .btn.edit {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  .save-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  mat-icon, mat-spinner {
+    font-size: 24px; /* Ajuste la taille de l'icône et du spinner */
+  }
+  /* Flexbox layout for the team field */
+.team-field {
+    display: flex;
+    align-items: center; /* Vertically center items */
+    gap: 10px; /* Add spacing between items */
+  }
+  
+  /* Style for the input wrapper */
+  .input-wrapper {
+    display: flex;
+    align-items: center; /* Vertically center items */
+    gap: 10px; /* Add spacing between input and button */
+    flex-grow: 1; /* Allow the input to take up remaining space */
+  }
+  
+  /* Style for the team name input */
+  .team-name-input {
+    flex-grow: 1; /* Allow the input to take up remaining space */
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  /* Style for the save button */
+  .save-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    transition: background-color 0.3s;
+  }
+  
+  .save-button:disabled {
+    background-color: #cccccc; /* Gray background when disabled */
+    cursor: not-allowed;
+  }
+  
+  .save-button:hover:not(:disabled) {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+
+  .delete-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #dc3545; /* Red background */
+    color: white; /* White text */
+    transition: background-color 0.3s;
+}
+
+.delete-button:disabled {
+    background-color: #cccccc; /* Gray background when disabled */
+    cursor: not-allowed;
+}
+
+.delete-button:hover:not(:disabled) {
+    background-color: #c82333; /* Darker red on hover */
+}
+
+  
+  /* Style for the mat-spinner */
+  .mat-spinner {
+    margin: 0 auto; /* Center the spinner */
+  }
+  .toast-error {
+    background-color: #f44336 !important;
+    color: #fff !important;
+  }
+  
+  /* Changer la couleur de fond pour les succès */
+  .toast-success {
+    background-color: #4caf50 !important;
+    color: #fff !important;
+  }
+  
+  /* Personnaliser l'apparence des toasts */
+  .toast {
+    font-size: 16px;
+    border-radius: 10px;
+    padding: 12px 20px;
+  }
+  
+  /* Positionnement du toast à droite */
+  .toast-top-right {
+    top: 10px !important;  /* Ajustez cette valeur si nécessaire */
+    right: 10px !important;  /* Ajustez cette valeur si nécessaire */
+    left: auto;
+  }
+  
+  

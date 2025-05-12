@@ -1,0 +1,66 @@
+<div class="document-upload-modal">
+  <div class="modal-content">
+      <h3>Upload Document</h3>
+      <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" id="title" formControlName="title" required>
+              <div *ngIf="uploadForm.get('title')?.invalid && (uploadForm.get('title')?.dirty || uploadForm.get('title')?.touched)" class="error-message">
+                  <div *ngIf="uploadForm.get('title')?.errors?.['required']">Title is required.</div>
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="type">Type</label>
+              <select id="type" formControlName="type" required>
+                  <option value="PDF">PDF</option>
+                  <option value="DOCX">DOCX</option>
+                  <option value="TXT">TXT</option>
+                  <option value="JPG">JPG</option>
+                  <option value="PNG">PNG</option>
+                  <option value="GIF">GIF</option>
+                  <option value="OTHER">OTHER</option>
+              </select>
+              <div *ngIf="uploadForm.get('type')?.invalid && (uploadForm.get('type')?.dirty || uploadForm.get('type')?.touched)" class="error-message">
+                  <div *ngIf="uploadForm.get('type')?.errors?.['required']">Type is required.</div>
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="status">Status</label>
+              <select id="status" formControlName="status" required>
+                  <option value="DRAFT">DRAFT</option>
+                  <option value="APPROVED">APPROVED</option>
+                  <option value="PENDING">PENDING</option>
+              </select>
+              <div *ngIf="uploadForm.get('status')?.invalid && (uploadForm.get('status')?.dirty || uploadForm.get('status')?.touched)" class="error-message">
+                  <div *ngIf="uploadForm.get('status')?.errors?.['required']">Status is required.</div>
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="tags">Tags (comma-separated)</label>
+              <input type="text" id="tags" formControlName="tags" required>
+              <div *ngIf="uploadForm.get('tags')?.invalid && (uploadForm.get('tags')?.dirty || uploadForm.get('tags')?.touched)" class="error-message">
+                  <div *ngIf="uploadForm.get('tags')?.errors?.['required']">Tags are required.</div>
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="description">Description</label>
+              <textarea id="description" formControlName="description" required></textarea>
+              <div *ngIf="uploadForm.get('description')?.invalid && (uploadForm.get('description')?.dirty || uploadForm.get('description')?.touched)" class="error-message">
+                  <div *ngIf="uploadForm.get('description')?.errors?.['required']">Description is required.</div>
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="file">File</label>
+              <input type="file" id="file" (change)="onFileChange($event)" required>
+              <div *ngIf="uploadForm.get('file')?.invalid && (uploadForm.get('file')?.dirty || uploadForm.get('file')?.touched)" class="error-message">
+                  <div *ngIf="uploadForm.get('file')?.errors?.['required']">File is required.</div>
+              </div>
+              <span *ngIf="editingDocument && editingDocument.storagePath">
+                  Current File: {{ getFileName(editingDocument.storagePath) }}
+              </span>
+          </div>
+          <button type="submit" [disabled]="uploadForm.invalid">Upload</button>
+          <button type="button" (click)="onCancel()">Cancel</button>
+      </form>
+  </div>
+</div>

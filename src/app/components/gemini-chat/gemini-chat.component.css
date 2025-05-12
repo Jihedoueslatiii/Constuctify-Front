@@ -1,0 +1,208 @@
+/* Modern, attractive styling for Gemini Chat */
+.gemini-chat-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    padding: 20px;
+    font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  /* Card styling with a more premium feel */
+  .gemini-chat-card {
+    width: 100%;
+    max-width: 650px;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 35px;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 6px 12px rgba(76, 81, 191, 0.04);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    text-align: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+  
+  .gemini-chat-card h2 {
+    margin-bottom: 1.5rem;
+    background: linear-gradient(90deg, #4c51bf, #6366f1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -0.5px;
+  }
+  
+  /* Input field with floating label effect */
+  .input-container {
+    position: relative;
+    margin-bottom: 25px;
+    width: 100%; /* Ensure full width */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+  }
+  
+  .input-field {
+    width: 100%; /* Take full width of container */
+    padding: 18px 20px;
+    font-size: 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    transition: all 0.3s;
+    background-color: #f8fafc;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+    text-align: left; /* Align text to the left inside input */
+    display: block; /* Ensure proper block display */
+    margin: 0 auto; /* Center the input if needed */
+  }
+  
+  .input-field::placeholder {
+    color: #a0aec0;
+    transition: opacity 0.3s;
+  }
+  
+  .input-field:focus::placeholder {
+    opacity: 0.5;
+  }
+  
+  /* Modern button styling */
+  .send-button {
+    width: 100%;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #4c51bf 0%, #6366f1 100%);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
+  }
+  
+  .send-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(99, 102, 241, 0.25);
+  }
+  
+  .send-button:active {
+    transform: translateY(0);
+  }
+  
+  .send-button:disabled {
+    background: linear-gradient(135deg, #a5a8e0 0%, #bec1f3 100%);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  /* Loading indicator animation */
+  .loading-indicator {
+    margin: 25px auto;
+    padding: 12px;
+    color: #6366f1;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .loading-dots {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .dot {
+    width: 8px;
+    height: 8px;
+    background-color: #6366f1;
+    border-radius: 50%;
+    animation: dot-bounce 1.4s infinite ease-in-out;
+  }
+  
+  .dot:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .dot:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  
+  @keyframes dot-bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+  }
+  
+  /* Response card with improved visual design */
+  .response-card {
+    margin-top: 30px;
+    padding: 25px;
+    background-color: #f8fafc;
+    border-radius: 16px;
+    border-left: 4px solid #6366f1;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    text-align: left;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .response-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, #4c51bf, #6366f1);
+    border-radius: 4px 0 0 4px;
+  }
+  
+  .response-title {
+    font-weight: 700;
+    font-size: 18px;
+    color: #2d3748;
+    margin-bottom: 12px;
+    display: block;
+  }
+  
+  .response-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #4a5568;
+    white-space: pre-line;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .gemini-chat-card {
+      padding: 25px 20px;
+    }
+    
+    .response-card {
+      padding: 20px 15px;
+    }
+  }
+  
+  /* Custom scrollbar for the response */
+  .response-text::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .response-text::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .response-text::-webkit-scrollbar-thumb {
+    background: #c7d2fe;
+    border-radius: 10px;
+  }
+  
+  .response-text::-webkit-scrollbar-thumb:hover {
+    background: #a5b4fc;
+  }

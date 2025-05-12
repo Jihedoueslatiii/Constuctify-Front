@@ -1,0 +1,60 @@
+<app-bar></app-bar>
+
+<div class="container">
+    <h2 class="title">Liste des Ressources</h2>
+    <div class="send-report-container">
+      <input 
+          type="email" 
+          [(ngModel)]="destinataire" 
+          placeholder="Entrez l'email du destinataire" 
+          required 
+          class="form-control" 
+      />
+      <button (click)="sendReport(destinataire)" class="btn send-report">Envoyer le rapport</button>
+    </div>
+    <div class="send-sms-container">
+      <input 
+          type="text" 
+          [(ngModel)]="telephone" 
+          placeholder="Entrez le numéro de téléphone" 
+          required 
+          class="form-control" 
+      />
+      <button (click)="sendsms(telephone)" class="btn send-sms">
+        Envoyer SMS
+      </button>
+    </div>
+    <table class="resource-table">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Nombre</th>
+          <th>Type</th>
+          <th>Cost</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ressource of listRessource | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+          <td>{{ ressource.nomRessource }}</td>
+          <td>{{ ressource.nombreRessource }}</td>
+          <td>{{ ressource.typesRessource }}</td>
+          <td>{{ ressource.cost }}</td>
+          <td>
+            <button class="btn edit" [routerLink]="['/UpdateRessource', ressource.idRessource]">Modifier</button>
+            <button *ngIf="!ressource.idProjet" class="btn assign" [routerLink]="['/assign', ressource.idRessource]">
+              Affecter au projet
+            </button>
+            <button class="btn delete" (click)="deleteRessource(ressource.idRessource); refreshPage()">Supprimer</button>
+            <button class="btn edit" [routerLink]="['/detailressource', ressource.idRessource]">Détail Ressource</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <pagination-controls
+        (pageChange)="currentPage = $event"
+        previousLabel="Précédent"
+        nextLabel="Suivant">
+    </pagination-controls>
+    

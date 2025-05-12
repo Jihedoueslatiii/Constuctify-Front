@@ -1,0 +1,148 @@
+<app-client-navbar></app-client-navbar>
+<div class="main-content">
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h2 class="text-3xl font-semibold">📁 Project Management</h2>
+      <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#projectModal" (click)="createProject()">
+        Add Project
+      </button>
+    </div>
+
+    <!-- Project Form (Conditional) -->
+    <div *ngIf="isEditing && selectedProject" class="project-form">
+      <h3 class="form-title">{{ selectedProject.idProjet ? 'Edit Project' : 'Add New Project' }}</h3>
+      <form (ngSubmit)="saveProject()">
+        <div class="form-group">
+          <label for="nomProjet">Project Name</label>
+          <input
+            type="text"
+            id="nomProjet"
+            [(ngModel)]="selectedProject.nomProjet"
+            name="nomProjet"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="descriptionProjet">Description</label>
+          <textarea
+            id="descriptionProjet"
+            [(ngModel)]="selectedProject.descriptionProjet"
+            name="descriptionProjet"
+            required
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="dateDebut">Start Date</label>
+          <input
+            type="date"
+            id="dateDebut"
+            [(ngModel)]="selectedProject.dateDebut"
+            name="dateDebut"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="dateFin">End Date</label>
+          <input
+            type="date"
+            id="dateFin"
+            [(ngModel)]="selectedProject.dateFin"
+            name="dateFin"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="etatProjet">Status</label>
+          <select
+            id="etatProjet"
+            [(ngModel)]="selectedProject.etatProjet"
+            name="etatProjet"
+            required
+          >
+            <option value="PLANIFIE">Planned</option>
+            <option value="EN_COURS">In Progress</option>
+            <option value="TERMINE">Completed</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-save">💾 Save</button>
+          <button type="button" (click)="cancelEdit()" class="btn btn-cancel">❌ Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Marketing Content -->
+    <div class="marketing-content">
+      <h3 class="section-title">🏗️ Why Choose Us for Your Construction Projects?</h3>
+      <div class="marketing-cards">
+        <!-- Card 1 -->
+        <div class="marketing-card">
+          <div class="card-icon">📐</div>
+          <h4 class="card-title">Expert Planning</h4>
+          <p class="card-description">
+            Our team of experts ensures every project is meticulously planned, from concept to completion.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="marketing-card">
+          <div class="card-icon">🏗️</div>
+          <h4 class="card-title">Quality Construction</h4>
+          <p class="card-description">
+            We use the best materials and techniques to deliver durable and high-quality construction.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="marketing-card">
+          <div class="card-icon">⏱️</div>
+          <h4 class="card-title">On-Time Delivery</h4>
+          <p class="card-description">
+            We pride ourselves on completing projects on schedule, every time.
+          </p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="marketing-card">
+          <div class="card-icon">💰</div>
+          <h4 class="card-title">Cost-Effective Solutions</h4>
+          <p class="card-description">
+            Get the best value for your investment with our competitive pricing and efficient processes.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="testimonials">
+      <h3 class="section-title">🌟 What Our Clients Say</h3>
+      <div class="testimonial-cards">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            "The team delivered our project on time and within budget. Highly recommended!"
+          </p>
+          <p class="testimonial-author">- John Doe, ABC Construction</p>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card">
+          <p class="testimonial-text">
+            "Excellent communication and quality work. We will definitely work with them again."
+          </p>
+          <p class="testimonial-author">- Jane Smith, XYZ Builders</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="cta">
+      <h3 class="cta-title">Ready to Start Your Next Project?</h3>
+      <p class="cta-description">
+        Contact us today to discuss your construction needs and get a free consultation.
+      </p>
+      <button class="btn btn-cta">📞 Contact Us</button>
+    </div>
+  </div>
+</div>

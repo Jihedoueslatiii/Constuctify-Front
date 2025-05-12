@@ -1,0 +1,184 @@
+/* General Container Styling */
+.kanban-container {
+  padding: 40px 30px;
+  margin-left: 250px; /* Adjust this value according to your sidebar width */
+  margin-right: 50px;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #cfcdd8, #a0b6ff);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Kanban Board Layout */
+.kanban-board {
+  display: flex;
+  gap: 25px;
+  margin-top: 30px;
+  justify-content: space-between;
+}
+
+/* Column Styles */
+.kanban-column {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.kanban-column:hover {
+  transform: scale(1.02);
+}
+
+/* Header Styles */
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.column-header h3 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #4a4a4a;
+  margin: 0;
+}
+
+/* WIP Limit Section */
+.wip-limit {
+  font-size: 0.9rem;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: #777;
+}
+
+.limit-controls button {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.limit-controls button:hover {
+  background-color: #0056b3;
+}
+
+/* Project List */
+.project-list {
+  min-height: 100px;
+  padding: 15px;
+  background-color: #f0f4f7;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.project-list:hover {
+  background-color: #e3e9f1;
+}
+
+/* Project Card Styling */
+.project-card {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: grab;
+  transition: all 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Project Card Handle */
+.project-card-handle {
+  cursor: move;
+  color: #888;
+}
+
+/* Project Info */
+.project-card h4 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.project-dates {
+  margin: 5px 0;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.project-desc {
+  margin: 10px 0;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+.project-id {
+  color: #888;
+  font-size: 0.8rem;
+}
+
+/* Project Actions Button */
+.project-actions button {
+  padding: 8px 15px;
+  margin-right: 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.project-actions button:hover {
+  background-color: #218838;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  color: #bbb;
+  font-style: italic;
+  font-size: 1rem;
+}
+
+/* Over Limit Indicator */
+.over-limit {
+  border: 3px solid #e74c3c;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+/* Navigation Controls */
+.navigation-controls {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.navigation-controls button {
+  padding: 12px 30px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease;
+}
+
+.navigation-controls button:hover {
+  background-color: #5a6268;
+}

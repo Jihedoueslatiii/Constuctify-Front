@@ -1,0 +1,146 @@
+<app-bar>  </app-bar>
+<!doctype html>
+<div class="kanban-container">
+  <h2>Project Kanban Board</h2>
+
+  <!-- Board Controls -->
+  <div class="board-controls">
+    <button (click)="loadProjects()" class="refresh-btn">Refresh Board</button>
+  </div>
+
+  <!-- Kanban Board -->
+  <div class="kanban-board">
+    <!-- Planned Column -->
+    <div class="kanban-column">
+      <div class="column-header" [ngClass]="{'over-limit': isOverLimit.planned}">
+        <h3>Planned</h3>
+        <div class="wip-limit">
+          <span>WIP: {{plannedProjects.length}}/{{wipLimits.planned}}</span>
+          <div class="limit-controls">
+            <button (click)="decreaseWipLimit('planned')">-</button>
+            <button (click)="increaseWipLimit('planned')">+</button>
+          </div>
+        </div>
+      </div>
+      <div
+        cdkDropList
+        #plannedList="cdkDropList"
+        [cdkDropListData]="plannedProjects"
+        [cdkDropListConnectedTo]="[inProgressList]"
+        class="project-list"
+        id="plannedList"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div class="project-card" *ngFor="let project of plannedProjects" cdkDrag>
+          <div class="project-card-handle" cdkDragHandle>
+            <i class="fas fa-grip-lines"></i>
+          </div>
+          <h4>{{project.nomProjet}}</h4>
+          <p class="project-dates">
+            {{project.dateDebut | date:'shortDate'}} - {{project.dateFin | date:'shortDate'}}
+          </p>
+          <p class="project-desc">
+            {{project.descriptionProjet | slice:0:60}}{{project.descriptionProjet.length > 60 ? '...' : ''}}
+          </p>
+          <div class="project-id">ID: {{project.idProjet}}</div>
+          <div class="project-actions">
+            <button (click)="viewProjectDetails(project)">View Details</button>
+            <button (click)="viewProjectTasks(project.idProjet)">View Tasks</button>
+          </div>
+        </div>
+        <div *ngIf="plannedProjects.length === 0" class="empty-state">
+          No planned projects.
+        </div>
+      </div>
+    </div>
+
+    <!-- In Progress Column -->
+    <div class="kanban-column">
+      <div class="column-header" [ngClass]="{'over-limit': isOverLimit.inProgress}">
+        <h3>In Progress</h3>
+        <div class="wip-limit">
+          <span>WIP: {{inProgressProjects.length}}/{{wipLimits.inProgress}}</span>
+          <div class="limit-controls">
+            <button (click)="decreaseWipLimit('inProgress')">-</button>
+            <button (click)="increaseWipLimit('inProgress')">+</button>
+          </div>
+        </div>
+      </div>
+      <div
+        cdkDropList
+        #inProgressList="cdkDropList"
+        [cdkDropListData]="inProgressProjects"
+        [cdkDropListConnectedTo]="[plannedList, completedList]"
+        class="project-list"
+        id="inProgressList"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div class="project-card" *ngFor="let project of inProgressProjects" cdkDrag>
+          <div class="project-card-handle" cdkDragHandle>
+            <i class="fas fa-grip-lines"></i>
+          </div>
+          <h4>{{project.nomProjet}}</h4>
+          <p class="project-dates">
+            {{project.dateDebut | date:'shortDate'}} - {{project.dateFin | date:'shortDate'}}
+          </p>
+          <p class="project-desc">
+            {{project.descriptionProjet | slice:0:60}}{{project.descriptionProjet.length > 60 ? '...' : ''}}
+          </p>
+          <div class="project-id">ID: {{project.idProjet}}</div>
+          <div class="project-actions">
+            <button (click)="viewProjectDetails(project)">View Details</button>
+            <button (click)="viewProjectTasks(project.idProjet)">View Tasks</button>
+          </div>
+        </div>
+        <div *ngIf="inProgressProjects.length === 0" class="empty-state">
+          No projects in progress.
+        </div>
+      </div>
+    </div>
+
+    <!-- Completed Column -->
+    <div class="kanban-column">
+      <div class="column-header">
+        <h3>Completed</h3>
+        <div class="wip-limit">
+          <span>Total: {{completedProjects.length}}</span>
+        </div>
+      </div>
+      <div
+        cdkDropList
+        #completedList="cdkDropList"
+        [cdkDropListData]="completedProjects"
+        [cdkDropListConnectedTo]="[inProgressList]"
+        class="project-list"
+        id="completedList"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div class="project-card" *ngFor="let project of completedProjects" cdkDrag>
+          <div class="project-card-handle" cdkDragHandle>
+            <i class="fas fa-grip-lines"></i>
+          </div>
+          <h4>{{project.nomProjet}}</h4>
+          <p class="project-dates">
+            {{project.dateDebut | date:'shortDate'}} - {{project.dateFin | date:'shortDate'}}
+          </p>
+          <p class="project-desc">
+            {{project.descriptionProjet | slice:0:60}}{{project.descriptionProjet.length > 60 ? '...' : ''}}
+          </p>
+          <div class="project-id">ID: {{project.idProjet}}</div>
+          <div class="project-actions">
+            <button (click)="viewProjectDetails(project)">View Details</button>
+            <button (click)="viewProjectTasks(project.idProjet)">View Tasks</button>
+          </div>
+        </div>
+        <div *ngIf="completedProjects.length === 0" class="empty-state">
+          No completed projects.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Button -->
+  <div class="navigation-controls">
+    <button (click)="goToProjects()">Back to Projects</button>
+  </div>
+</div>

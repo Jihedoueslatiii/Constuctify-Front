@@ -1,0 +1,95 @@
+<app-bar> </app-bar>
+
+<div *ngIf="isLoading; else content">
+  <p>Loading supplier stats...</p>
+</div>
+
+<ng-template #content>
+  <div *ngIf="errorMessage; else stats">
+    <p class="error">{{ errorMessage }}</p>
+  </div>
+
+  <ng-template #stats>
+    <div *ngIf="supplierStats">
+      <!-- Dashboard Title and Export Button -->
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">Supplier Performance Dashboard</h1>
+        <div class="buttons">
+          <button class="btn export" (click)="exportDashboardAsPDF()">
+            <svg class="svgIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 4V20M4 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Dashboard container -->
+      <div class="dashboard" id="dashboard">
+        <!-- Row 1 -->
+        <div class="dashboard-row">
+          <!-- Scatter Chart Section -->
+          <section class="chart-section">
+            <h2 class="chart-title">Supplier Reliability vs. Contract Value</h2>
+            <div class="chart-container">
+              <canvas baseChart
+                      [type]="'scatter'"
+                      [data]="chartData"
+                      [options]="chartOptions">
+              </canvas>
+            </div>
+          </section>
+
+          <!-- Pie Chart Section -->
+          <section class="chart-section">
+            <h2 class="chart-title">Supplier Status Distribution</h2>
+            <div class="chart-container">
+              <canvas baseChart
+                      [type]="'pie'"
+                      [data]="pieChartData"
+                      [options]="pieChartOptions">
+              </canvas>
+            </div>
+          </section>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="dashboard-row">
+          <!-- Bar Chart Section -->
+          <section class="chart-section">
+            <h2 class="chart-title">Last added suppliers</h2>
+            <div class="chart-container">
+              <canvas baseChart
+                      [type]="'bar'"
+                      [data]="barChartData"
+                      [options]="barChartOptions">
+              </canvas>
+            </div>
+          </section>
+
+          <!-- Leaderboard Section -->
+          <section class="chart-section">
+            <h2 class="chart-title">Top 5 Suppliers by Reliability Score</h2>
+            <article class="leaderboard">
+              <header>
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 511.999 511.999" style="enable-background:new 0 0 511.999 511.999;" xml:space="preserve" class="leaderboard__icon">
+                  <!-- SVG Path (same as provided) -->
+                </svg>
+                <h1 class="leaderboard__title">
+                  <span class="leaderboard__title--top">Top 5</span>
+                  <span class="leaderboard__title--bottom">Suppliers</span>
+                </h1>
+              </header>
+              <main class="leaderboard__profiles">
+                <article *ngFor="let supplier of top5Suppliers" class="leaderboard__profile">
+                  <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="{{ supplier.name }}" class="leaderboard__picture">
+                  <span class="leaderboard__name">{{ supplier.name }}</span>
+                  <span class="leaderboard__value">{{ supplier.reliabilityScore }}<span>Score</span></span>
+                </article>
+              </main>
+            </article>
+          </section>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</ng-template>

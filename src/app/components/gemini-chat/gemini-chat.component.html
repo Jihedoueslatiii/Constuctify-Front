@@ -1,0 +1,42 @@
+<app-bar>  </app-bar>
+<div class="gemini-chat-container">
+    <div class="gemini-chat-card">
+      <h2 class="text-4xl font-extrabold mb-8 text-center">Gemini AI Chat</h2>
+      
+      <!-- User input with improved container -->
+      <div class="input-container">
+        <input
+          [(ngModel)]="prompt"
+          placeholder="Ask Gemini something..."
+          class="input-field"
+          [disabled]="isLoading"
+        />
+      </div>
+      
+      <!-- Enhanced send button -->
+      <button
+        (click)="askGemini()"
+        class="send-button"
+        [disabled]="isLoading"
+      >
+        <span *ngIf="!isLoading">🔮</span>
+        {{ isLoading ? 'Processing...' : 'Send to Gemini' }}
+      </button>
+      
+      <!-- Animated loading indicator -->
+      <div *ngIf="isLoading" class="loading-indicator">
+        <span>Consulting the AI</span>
+        <div class="loading-dots">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+      
+      <!-- Redesigned response card -->
+      <div *ngIf="response" class="response-card">
+        <strong class="response-title">Gemini's Response:</strong>
+        <p class="response-text">{{ response }}</p>
+      </div>
+    </div>
+  </div>

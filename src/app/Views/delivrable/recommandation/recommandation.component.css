@@ -1,0 +1,77 @@
+.reco-container {
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .reco-title {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 24px;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 25px;
+  }
+  
+  .btn {
+    padding: 10px 25px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .btn.primary {
+    background-color: #1976d2;
+    color: white;
+  }
+  
+  .btn.primary:hover {
+    background-color: #125ca1;
+  }
+  
+  .btn.success {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .btn.success:hover {
+    background-color: #218838;
+  }
+  
+  .status {
+    text-align: center;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .status.loading {
+    color: #ffa500;
+  }
+  
+  .status.error {
+    color: #d9534f;
+  }
+  
+  .output-box {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    white-space: pre-wrap;
+    border-radius: 8px;
+    font-size: 15px;
+    line-height: 1.6;
+  }

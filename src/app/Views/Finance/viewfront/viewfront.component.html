@@ -1,0 +1,44 @@
+<app-client-navbar></app-client-navbar>
+
+<div class="container">
+  <h2 class="title">Liste Budget</h2>
+
+  <button class="btn export" (click)="exportAsPDF()">Exporter en PDF</button>
+
+  <div id="pdfContainer">
+    <div class="card-container">
+      <div
+        class="card"
+        *ngFor="let finance of listFinance | paginate: { itemsPerPage: 5, currentPage: page }"
+      >
+        <div class="card-header">
+          <h3>{{ finance.description }}</h3>
+        </div>
+        <div class="card-body">
+          <p>
+            <strong>Date de création du projet :</strong>
+            {{ getRandomDate() | date: 'dd/MM/yyyy' }}
+          </p>
+
+          <p><strong>Coût :</strong> {{ finance.cost }} TND</p>
+          <p><strong>Autres dépenses :</strong> {{ finance.otherExpenses }} TND</p>
+
+          <p><strong>Prix :</strong>
+            <span *ngIf="finance.roi < 1">
+              {{ finance.budget }} TND
+            </span>
+            <span *ngIf="finance.roi >= 1">
+              {{ finance.budget + finance.roi }} TND
+            </span>
+          </p>
+
+          <button class="btn btn-success" (click)="validerProjet(finance.financeId)">
+            ✅ Valider
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+</div>

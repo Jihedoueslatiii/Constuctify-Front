@@ -1,0 +1,698 @@
+/* Base reset and fonts */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #eef2f9;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Messenger Layout with Grid */
+.messenger {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-areas: "active-users conversation-container conversation-list";
+  gap: 20px;
+  height: 90vh;
+  width: 100%;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  border: 1px solid #d6dbe5;
+}
+
+/* Left Section: Active Users */
+.active-users {
+  grid-area: active-users;
+  background: #ffffff;
+  padding: 20px;
+  overflow-y: auto;
+  border-right: 1px solid #dde3eb;
+}
+
+/* Center Section: Conversation */
+.conversation-container {
+  grid-area: conversation-container;
+  padding: 20px;
+  background: #f5f7fa;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 12px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.03);
+  position: relative;
+}
+
+/* Right Section: Conversations List */
+.conversation-list {
+  grid-area: conversation-list;
+  background: #ffffff;
+  padding: 20px;
+  overflow-y: auto;
+  border-left: 1px solid #dde3eb;
+}
+
+/* Sidebar List Items */
+.active-users li, .conversation-list li {
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #f8fafc;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+  font-family: 'Roboto', sans-serif;
+}
+
+.active-users li:hover, .conversation-list li:hover {
+  background: #e3f2ff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Green dot indicator before user names */
+.user-status .status-indicator::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #4caf50; /* Green color */
+  margin-right: 10px;
+}
+
+/* Message Display */
+.messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  max-height: calc(100vh - 250px);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.03);
+  padding-bottom: 70px;
+}
+
+/* Pinned Message Styling */
+.pinned {
+  background-color: #f4f4f4;
+  border-left: 4px solid #007bff;
+}
+
+.pinned .pin-icon {
+  color: yellow; /* Pin icon turns yellow when pinned */
+}
+
+/* Make sure the pinned message stays at the top of the conversation */
+.messages {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.message-wrapper.pinned {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #f9f9f9;
+}
+
+/* Regular (Unpinned) Messages */
+.message-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+/* Message Actions */
+.message-actions {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.outgoing-message + .message-actions {
+  margin-left: 5px;
+}
+
+.incoming-message + .message-actions {
+  margin-right: 5px;
+}
+
+/* Outgoing and Incoming Messages */
+.outgoing-message {
+  background: linear-gradient(135deg, #009688, #4db6ac);
+  color: white;
+  border-radius: 20px;
+  padding: 12px;
+  max-width: 70%;
+  text-align: right;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.incoming-message {
+  background-color: #eef1f6;
+  color: #333;
+  border-radius: 20px;
+  padding: 12px;
+  max-width: 70%;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Send Message */
+.send-message {
+  display: flex;
+  gap: 10px;
+  padding: 15px;
+  background: #fff;
+  border-top: 1px solid #dde3eb;
+  border-radius: 12px;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  background-color: #ffffff;
+}
+
+.send-message textarea {
+  width: 100%;
+  height: 50px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccd3db;
+  font-size: 14px;
+  background: #ffffff;
+}
+
+.send-message button {
+  padding: 10px 15px;
+  background: linear-gradient(135deg, #009688, #4db6ac);
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.send-message button:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #4db6ac, #009688);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .messenger {
+    grid-template-columns: 1fr; /* Stack sections vertically */
+    grid-template-areas:
+      "active-users"
+      "conversation-container"
+      "conversation-list";
+  }
+
+  .active-users, .conversation-list, .conversation-container {
+    width: 100%; /* Ensure all sections take up full width */
+  }
+
+  .send-message {
+    flex-direction: column; /* Stack send message form elements vertically */
+  }
+}
+
+/* Green dot style */
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgb(11, 117, 11);
+  margin-right: 8px;
+}
+/* Pinned Section */
+.pinned-messages {
+  background-color: #fffbe6;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.pinned-messages a {
+  color: #007bff;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.pinned-messages a:hover {
+  text-decoration: underline;
+}
+
+.pinned-messages-list {
+  margin-top: 10px;
+}
+
+.pinned-messages-list .message-wrapper {
+  background-color: #f9f9f9;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-left: 4px solid #007bff;
+}
+
+.pinned-messages-list .message-actions {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.pinned-messages-list .message-wrapper .pin-icon.pinned {
+  color: yellow;
+}
+
+/* Keep pinned messages floating at the top */
+.message-wrapper.pinned {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #f9f9f9;
+  border-left: 4px solid #007bff;
+}
+.emoji-picker-container {
+  position: relative;
+  display: inline-block;
+}
+
+.emoji-wrapper {
+  position: absolute;
+  bottom: 50px;
+  right: 0;
+  z-index: 999;
+  width: 320px;
+  max-height: 400px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+.emoji-picker-container {
+  position: relative;
+  display: inline-block;
+}
+
+::ng-deep emoji-mart .emoji-mart-scroll {
+  overflow-y: auto;
+  max-height: 300px;
+  z-index: 9999; /* Ensure it’s on top */
+  pointer-events: auto;
+}
+
+
+
+
+.conversation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.header-main {
+  flex: 1;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Summarize Button */
+.summarize-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: background-color 0.3s;
+}
+
+.summarize-btn:hover {
+  background-color: #45a049;
+}
+
+.summarize-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Summary Dialog */
+.summary-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.dialog-content {
+  background-color: white;
+  border-radius: 5px;
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #f1f1f1;
+  border-bottom: 1px solid #ddd;
+}
+
+.dialog-header h3 {
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #555;
+}
+
+.dialog-body {
+  padding: 20px;
+  overflow-y: auto;
+  max-height: calc(80vh - 60px);
+  line-height: 1.5;
+}
+/* Add to your component's CSS */
+.mention-container {
+  position: relative;
+  width: 100%;
+}
+
+.mention-dropdown {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.mention-dropdown div {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.mention-dropdown div:hover,
+.mention-dropdown .highlighted {
+  background-color: #f0f0f0;
+}
+
+/* Style for mentions in messages */
+.message-content {
+  white-space: pre-wrap;
+}
+
+.mention {
+  color: #4285f4;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.mention:hover {
+  text-decoration: underline;
+}
+
+
+.message-status {
+  font-size: 0.8em;
+  color: #666;
+  text-align: right;
+  margin-top: 4px;
+}
+
+/* For dark mode compatibility */
+.dark-mode .message-status {
+  color: #aaa;
+}
+
+
+/* Message Status Indicators */
+.message-status {
+  font-size: 0.8em;
+  color: #666;
+  text-align: right;
+  margin-top: 4px;
+}
+
+.message-status span {
+  cursor: help; /* Shows "?" cursor on hover */
+}
+
+/* User avatars */
+.user-avatar, .message-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 8px;
+  object-fit: cover;
+}
+
+/* Unread count badge */
+.unread-badge {
+  background-color: #007bff;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.7em;
+  margin-left: 5px;
+}
+
+/* Message content layout */
+.message-content {
+  flex: 1;
+}
+
+/* Dark mode compatibility */
+.dark-mode .message-status {
+  color: #aaa;
+}
+
+
+
+.conversation-type {
+  margin-right: 8px;
+  font-size: 1.1em;
+}
+
+/* Different styling for group vs private */
+.conversation-list li {
+  padding: 8px 12px;
+}
+.conversation-list li:hover {
+  background: #f5f5f5;
+}
+
+.conversation-type-icon {
+  margin-right: 8px;
+}
+
+.participant-count {
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 4px;
+}
+
+
+.conversation-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.conversation-item {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.conversation-actions {
+  display: flex;
+  gap: 10px;
+  margin-left: 10px;
+}
+
+.conversation-actions i {
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.conversation-actions i:hover {
+  opacity: 1;
+}
+
+.edit-icon {
+  color: #4a89dc;
+}
+
+.delete-icon {
+  color: #e9573f;
+}
+
+
+.conversation-actions {
+  display: inline-flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.edit-icon, .delete-icon {
+  cursor: pointer;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.edit-icon:hover, .delete-icon:hover {
+  color: #000;
+}
+
+/* Base styles for the modal container */
+.custom-modal {
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Styles for the modal content area */
+.custom-modal .modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  max-width: 500px; /* Limit maximum width */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Style for the modal header */
+.custom-modal .modal-content h3 {
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+/* Style for the modal paragraph (for delete confirmation) */
+.custom-modal .modal-content p {
+  color: #555;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Style for the input field (for rename) */
+.custom-modal .modal-content input[type="text"] {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: calc(100% - 22px); /* Adjust for padding and border */
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+/* Style for the modal actions (buttons) */
+.custom-modal .modal-content .modal-actions {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+  gap: 10px; /* Space between buttons */
+}
+
+/* Style for the buttons */
+.custom-modal .modal-content .modal-actions button {
+  background-color: #007bff; /* Primary blue color */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Style for the "Yes" or "Save" button */
+.custom-modal .modal-content .modal-actions button:first-child {
+  background-color: #28a745; /* Success green color */
+}
+
+/* Style for the "No" or "Cancel" button */
+.custom-modal .modal-content .modal-actions button:last-child {
+  background-color: #dc3545; /* Danger red color */
+}
+
+/* Hover effect for buttons */
+.custom-modal .modal-content .modal-actions button:hover {
+  opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .custom-modal .modal-content {
+    width: 95%;
+    margin: 30% auto;
+  }
+}

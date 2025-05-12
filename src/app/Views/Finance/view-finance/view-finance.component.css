@@ -1,0 +1,102 @@
+/* Conteneur principal */
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Titre */
+.title {
+    text-align: center;
+    font-size: 24px;
+    color: #2A5D89;
+    margin-bottom: 20px;
+}
+
+/* Conteneur des cartes */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Carte */
+.card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 20px;
+    flex: 1 1 calc(30% - 20px); /* Ajustez la taille en fonction de votre mise en page */
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* En-tête de la carte */
+.card-header {
+    margin-bottom: 10px;
+}
+
+/* Corps de la carte */
+.card-body {
+    margin-bottom: 10px;
+}
+
+/* Pied de la carte */
+.card-footer {
+    text-align: right;
+}
+
+/* Boutons */
+.btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.edit {
+    background: #28a745;
+    color: white;
+}
+
+.edit:hover {
+    background: #218838;
+}
+
+.delete {
+    background: #dc3545;
+    color: white;
+    margin-left: 5px;
+}
+
+.delete:hover {
+    background: #c82333;
+}
+.btn.calculate {
+    background: #007bff; /* Couleur de fond */
+    color: white;        /* Couleur du texte */
+    padding: 10px 20px; /* Espacement interne */
+    margin-bottom: 20px; /* Espace en bas */
+    border: none;       /* Pas de bordure */
+    border-radius: 4px; /* Coins arrondis */
+    cursor: pointer;    /* Curseur sur le bouton */
+    transition: background 0.3s; /* Transition de couleur au survol */
+}
+
+.btn.calculate:hover {
+    background: #0056b3; /* Couleur au survol */
+}
+.validated {
+    border-left: 5px solid green;
+    background-color: #e0f9e0; /* vert pâle pour l’arrière-plan */
+}
+

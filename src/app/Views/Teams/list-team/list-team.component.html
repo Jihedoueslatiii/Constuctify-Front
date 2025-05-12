@@ -1,0 +1,67 @@
+<app-bar></app-bar>
+<div class="container">
+  <h2 class="title">List of Teams</h2>
+  <button mat-icon-button [routerLink]="['/edit-team']">
+    <mat-icon>edit</mat-icon>
+  </button>
+
+  <!-- Liste des équipes -->
+  <div class="team-list">
+    <div *ngFor="let team of teams" class="team-card">
+      <div class="team-info">
+        <div class="team-field">
+          <span class="label">Team Name :</span>
+          <span class="team-name">{{ team.teamName }}</span>
+        </div>
+
+        <!-- Notation par étoiles -->
+        <div class="team-field">
+          <span class="label">Rating :</span>
+          <app-star-rating
+            [rating]="userRatings[team.id] || 0"
+            (ratingChange)="addRating(team.id, $event)">
+          </app-star-rating>
+          <span class="average-rating">(Average: {{ averageRatings[team.id] || 'No ratings yet' }})</span>
+        </div>
+      </div>
+
+      <div class="team-actions">
+        <h4>Employers :</h4>
+        <div *ngFor="let user of teamUsers[team.id] ?? []" class="user-card">
+          <div class="user-info">
+            <div class="user-field">
+              <span class="label">Firstname :</span>
+              <span class="value">{{ user.firstname }}</span>
+            </div>
+            <div class="user-field">
+              <span class="label">Lastname :</span>
+              <span class="value">{{ user.lastname }}</span>
+            </div>
+            <div class="user-field">
+              <span class="label">Email :</span>
+              <span class="value">{{ user.email }}</span>
+            </div>
+            <div class="user-field">
+              <span class="label">Phone :</span>
+              <span class="value">{{ user.phone }}</span>
+            </div>
+            <div class="user-field">
+              <span class="label">Role :</span>
+              <span class="value">{{ user.role }}</span>
+            </div>
+          </div>
+          <button mat-button color="warn" (click)="removeUser(team.id, user.id)">
+            <mat-icon>person_remove</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <mat-paginator [length]="totalTeams"
+                 [pageSize]="pageSize"
+                 [pageSizeOptions]="[5, 10, 20]"
+                 (page)="onPageChange($event)">
+  </mat-paginator>
+</div>

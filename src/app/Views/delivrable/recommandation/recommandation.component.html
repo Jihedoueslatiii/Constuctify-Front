@@ -1,0 +1,23 @@
+<app-bar> </app-bar>
+<div class="reco-container">
+    <h2 class="reco-title">Génération de recommandations</h2>
+  
+    <!-- Boutons d'action -->
+    <div class="button-group">
+      <button class="btn primary" (click)="runReco()" [disabled]="loading">
+        <i class="fas fa-cogs"></i> Lancer
+      </button>
+  
+      <button class="btn secondary" (click)="downloadPDF()" [disabled]="!output">
+    <i class="fas fa-download"></i> Télécharger PDF
+  </button>
+
+    </div>
+  
+    <!-- Affichage des états -->
+    <div *ngIf="loading" class="status loading">⏳ Chargement des recommandations...</div>
+    <div *ngIf="error" class="status error">{{ error }}</div>
+  
+    <!-- Affichage du résultat -->
+    <pre *ngIf="output" class="output-box">{{ output }}</pre>
+  </div>

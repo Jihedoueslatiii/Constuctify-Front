@@ -1,0 +1,105 @@
+/* Container for the Gantt chart */
+.gantt-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full height of the viewport */
+  padding: 20px 20px 20px 270px; /* Adjust left padding to account for sidebar */
+  box-sizing: border-box;
+  background-color: #f5f5f5;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Heading */
+.gantt-container h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+}
+
+/* Controls (buttons) */
+.gantt-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Space between buttons */
+  margin-bottom: 20px;
+}
+
+.gantt-controls button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.gantt-controls button:hover {
+  background-color: #0056b3;
+}
+
+/* Gantt chart area */
+.gantt-chart {
+  flex: 1; /* Take up remaining space */
+  overflow-x: auto; /* Horizontal scroll for small screens */
+  overflow-y: hidden; /* Prevent vertical scroll */
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Add colors to the Gantt chart bars */
+.gantt-chart .gantt_task_line {
+  background-color: #4caf50; /* Green for tasks */
+  border-color: #388e3c; /* Darker green for borders */
+}
+
+.gantt-chart .gantt_task_progress {
+  background-color: #81c784; /* Light green for progress */
+}
+
+/* No tasks message */
+.no-tasks-message {
+  text-align: center;
+  color: #888;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .gantt-container {
+    padding-left: 20px; /* Remove sidebar padding on small screens */
+  }
+
+  .gantt-controls {
+    flex-direction: column; /* Stack buttons vertically on small screens */
+    align-items: center;
+  }
+
+  .gantt-controls button {
+    width: 100%; /* Full-width buttons on small screens */
+    margin-bottom: 10px;
+  }
+
+  .gantt-container h2 {
+    font-size: 20px; /* Smaller heading on small screens */
+  }
+}
+.shining-title {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(90deg, #0f0f0f, #e4e8e9, #7e99b7); /* Gradient background */
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s linear infinite;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}

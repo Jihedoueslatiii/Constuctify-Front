@@ -1,0 +1,55 @@
+<div class="container mt-4">
+  <div class="language-selector mb-4">
+    <h3>View Reports In:</h3>
+    <div class="btn-group">
+      <button *ngFor="let lang of availableLanguages"
+              class="btn btn-outline-primary"
+              [class.active]="lang.code === currentLanguage"
+              (click)="changeLanguage(lang.code)">
+        {{ lang.name }} ({{ lang.code | uppercase }})
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="text-center my-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p>Loading reports...</p>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <div *ngIf="reports.length > 0; else noReports" class="row">
+      <div *ngFor="let report of reports" class="col-md-4 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ report?.title || 'Untitled Report' }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              {{ report?.reportType || 'Unknown type' }} • 
+              <span [ngClass]="{
+                'text-warning': report?.status === 'PENDING',
+                'text-success': report?.status === 'COMPLETED',
+                'text-danger': report?.status === 'FAILED',
+                'text-secondary': report?.status === 'ARCHIVED'
+              }">
+                {{ report?.status || 'UNKNOWN' }}
+              </span>
+            </h6>
+            <p class="card-text">{{ report?.description || 'No description available' }}</p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">
+              Last updated: {{ (report?.lastUpdated | date:'mediumDate') || 'Date not available' }}
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noReports>
+      <div class="alert alert-info">
+        No reports available in {{ getLanguageName(currentLanguage) }}
+      </div>
+    </ng-template>
+  </div>
+</div>

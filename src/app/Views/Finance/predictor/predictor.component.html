@@ -1,0 +1,79 @@
+<app-bar></app-bar>
+<div class="container">
+  <h1 class="title">Analyse de Dépassement de Budget</h1>
+  
+  <button (click)="runPrediction()" class="btn btn-primary calculate">
+    Exécuter le script Python
+  </button>
+
+  <div class="results-section">
+    <div class="card output-card" *ngIf="output">
+      <h3>Résultats bruts</h3>
+      <pre>{{ output }}</pre>
+    </div>
+
+    <div class="summary-card" *ngIf="depasseBudgetTreeCount > 0">
+      <h3>Synthèse</h3>
+      <div class="alert alert-warning">
+        <strong>{{ depasseBudgetTreeCount }}</strong> projet(s) sur {{ totalProjects/2 }} dépassent le budget
+      </div>
+      <a href="http://localhost:8087/Finance/api/python/pdf" target="_blank" class="btn btn-download">
+        <i class="icon-download"></i> Télécharger le rapport complet
+      </a>
+    </div>
+  </div>
+
+  <div class="visualizations">
+    <h2 class="section-title">Visualisations des données</h2>
+    
+    <div class="chart-grid">
+      <!-- Graphique Circulaire -->
+      <div class="chart-card">
+        <h3><i class="icon-chart-pie"></i> Répartition budget</h3>
+        <div class="chart-wrapper">
+          <canvas baseChart
+                  [data]="doughnutChartData"
+                  [options]="doughnutChartOptions"
+                  [type]="'doughnut'">
+          </canvas>
+        </div>
+      </div>
+
+      <!-- Graphique Barres -->
+      <div class="chart-card">
+        <h3><i class="icon-chart-bar"></i> Coût vs Budget</h3>
+        <div class="chart-wrapper">
+          <canvas baseChart
+                  [data]="barChartData"
+                  [options]="barChartOptions"
+                  [type]="'bar'">
+          </canvas>
+        </div>
+      </div>
+
+      <!-- Graphique Radar -->
+      <div class="chart-card">
+        <h3><i class="icon-chart-radar"></i> Analyse multidimensionnelle</h3>
+        <div class="chart-wrapper">
+          <canvas baseChart
+                  [data]="radarChartData"
+                  [options]="radarChartOptions"
+                  [type]="'radar'">
+          </canvas>
+        </div>
+      </div>
+
+      <!-- Graphique Ligne -->
+      <div class="chart-card">
+        <h3><i class="icon-chart-line"></i> Évolution des dépenses</h3>
+        <div class="chart-wrapper">
+          <canvas baseChart
+                  [data]="lineChartData"
+                  [options]="lineChartOptions"
+                  [type]="'line'">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,567 @@
+/* folder-list.component.css */
+
+/* Container */
+.folder-container {
+  padding: 24px;
+  max-width: 1000px;
+  margin: 20px auto;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sections */
+.section {
+  margin-bottom: 32px;
+}
+
+.section h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 16px;
+}
+
+/* Folder List */
+.folder-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.folder-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.folder-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.folder-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.folder-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.folder-icon i {
+  font-size: 20px;
+  color: #ffa940; /* Folder icon color */
+}
+
+.folder-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333333;
+  margin: 0;
+}
+
+.folder-header button {
+  background-color: transparent;
+  color: #ff4d4f;
+  border: none;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.folder-header button:hover {
+  color: #ff7875;
+}
+
+.folder-body {
+  text-align: center;
+}
+
+.folder-body button {
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.folder-body button:hover {
+  background-color: #40a9ff;
+}
+
+/* General Documents Section */
+.document-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.document-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+
+
+.document-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.document-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.document-header i {
+  font-size: 20px;
+  color: #1890ff; /* File icon color */
+}
+
+.document-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333333;
+  margin: 0;
+}
+
+.document-body p {
+  font-size: 14px;
+  color: #555555;
+  margin: 8px 0;
+}
+
+.document-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.document-actions button {
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.document-actions button:hover {
+  background-color: #40a9ff;
+}
+
+/* Add Folder/Document Buttons */
+.add-folder, .add-document {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add-folder button, .add-document button {
+  background-color: #52c41a;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-folder button:hover, .add-document button:hover {
+  background-color: #73d13d;
+}
+
+/* Recent Files Table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  color: #333333;
+  padding: 12px;
+  text-align: left;
+}
+
+.table td {
+  padding: 12px;
+  color: #555555;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.table tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Tag Styling */
+.tag {
+  background-color: #1890ff;
+  color: white;
+  padding: 4px 8px;
+  margin-right: 4px;
+  border-radius: 4px;
+  font-size: 12px;
+  display: inline-block;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal form {
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  width: 320px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.modal label {
+  display: block;
+  font-size: 14px;
+  color: #333333;
+  margin-bottom: 8px;
+}
+
+.modal input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.modal button {
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-right: 8px;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal button:hover {
+  background-color: #40a9ff;
+}
+
+.modal button[type="button"] {
+  background-color: #f5f5f5;
+  color: #333333;
+}
+
+.modal button[type="button"]:hover {
+  background-color: #e0e0e0;
+}
+
+/* --- Modal Styles --- */
+.document-upload-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  max-width: 90%;
+}
+
+.modal-content h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* --- Form Group Styles --- */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* --- Toggle Options --- */
+.toggle-options {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.toggle-options label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #555;
+}
+
+/* --- Error Messages --- */
+.error-message {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* --- Buttons --- */
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+button[type="button"] {
+  background-color: #6c757d;
+  color: white;
+  margin-left: 10px;
+}
+
+button[type="button"]:hover {
+  background-color: #5a6268;
+}
+
+
+.confirmation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.confirmation-modal .modal-content {
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  text-align: center;
+}
+
+.confirmation-modal h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.confirmation-modal p {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 24px;
+}
+
+.confirmation-modal .modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+.confirmation-modal button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.confirmation-modal button:first-child {
+  background-color: #ff4d4f;
+  color: white;
+}
+
+.confirmation-modal button:first-child:hover {
+  background-color: #ff7875;
+}
+
+.confirmation-modal button:last-child {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.confirmation-modal button:last-child:hover {
+  background-color: #e0e0e0;
+}
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8); /* Darker overlay for better focus on the document */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal content */
+.modal-content {
+  background-color: transparent; /* Remove background color */
+  width: 90%;
+  height: 90%;
+  max-width: 1000px;
+  max-height: 800px;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Ensure images and iframes take up the full space */
+img, iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Ensure the content fits within the container */
+}
+
+/* Style for text content */
+pre {
+  background-color: #fff; /* White background for text */
+  padding: 16px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap; /* Preserve line breaks and wrap text */
+}
+/* Add this to your CSS file */
+.clickable-title {
+  cursor: pointer;
+  color: #1890ff; /* Blue color to indicate it's clickable */
+  text-decoration: underline; /* Underline to indicate it's clickable */
+}
+
+.clickable-title:hover {
+  color: #40a9ff; /* Lighter blue on hover */
+}
+
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination-controls button {
+  padding: 8px 12px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.pagination-controls span {
+  margin: 0 10px;
+}

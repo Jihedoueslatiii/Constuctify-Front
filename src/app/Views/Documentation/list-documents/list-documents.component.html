@@ -1,0 +1,292 @@
+<app-bar></app-bar>
+<div class="folder-container">
+  <!-- Folders Section -->
+  <div class="section">
+    <h2>Folders</h2>
+    <div class="folder-list">
+      <div *ngFor="let folder of folders" class="folder-card">
+        <div class="folder-header">
+          <div class="folder-icon">
+            <i class="fas fa-folder"></i>
+            <h3>{{ folder.name }}</h3>
+          </div>
+          <button (click)="openConfirmationModal(folder.folderId, 'folder')">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+        <div class="folder-body">
+          <button (click)="goToFolder(folder.folderId)">
+            <i class="fas fa-eye"></i> View Files
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="add-folder">
+      <button (click)="openFolderForm()">
+        <i class="fas fa-plus"></i> Add Folder
+      </button>
+    </div>
+  </div>
+
+<!-- General Documents Section -->
+<div class="section">
+  <h2>General Documents</h2>
+  <div class="document-list">
+    <!-- Display Metadata Cards -->
+    <div *ngFor="let document of generalDocuments" class="document-card">
+      <div class="document-header">
+        <i class="fas fa-file"></i>
+        <h3>{{ document.title }}</h3>
+      </div>
+      <div class="document-body">
+        <p><strong>Type:</strong> {{ document.type }}</p>
+        <p><strong>Status:</strong> {{ document.status }}</p>
+        <p><strong>Tags: </strong>
+          <span *ngFor="let tag of document.tags" class="tag">{{ tag }}</span>
+        </p>
+        <p><strong>Description:</strong> {{ document.description }}</p>
+        <p *ngIf="document.file"><strong>File:</strong> {{ document.file.name }}</p>
+
+      </div>
+      <!-- Document Card Actions -->
+      <div class="document-actions">
+        <button (click)="viewDocument(document)" title="View">
+          <i class="fas fa-eye"></i>
+        </button>
+        <button (click)="openEditDocumentForm(document)" title="Edit">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button (click)="openConfirmationModal(document.documentId, 'document')" title="Delete">
+          <i class="fas fa-trash"></i>
+        </button>
+        <button *ngIf="!document.file" (click)="createDocumentWithEditor(document)" title="Add Content">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="add-document">
+    <button (click)="openDocumentForm()">
+      <i class="fas fa-plus"></i> Add Document
+    </button>
+  </div>
+</div>
+
+  <!-- Recent Files Section -->
+  <!-- Recent Files Section -->
+<div class="section">
+  <h2>Recent Files</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Tags</th>
+        <th>Version</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let file of recentFiles">
+        <td>
+          <i class="fas fa-file"></i>
+          <!-- Make the document title clickable -->
+          <span class="clickable-title" (click)="viewDocument(file)">
+            {{ file.name }}
+          </span>
+        </td>
+        <td>{{ file.date }}</td>
+        <td>
+          <span *ngFor="let tag of file.tags" class="tag">{{ tag }}</span>
+        </td>
+        <td>{{ file.version }}</td>
+        <td>{{ file.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+  <!-- Add Folder Modal -->
+  <div *ngIf="isFolderFormOpen" class="modal">
+    <form (ngSubmit)="addFolder()">
+      <label for="folderName">Folder Name</label>
+      <input type="text" id="folderName" [(ngModel)]="newFolderName" name="folderName" required />
+      <button type="submit">
+        <i class="fas fa-check"></i> Create Folder
+      </button>
+      <button type="button" (click)="closeFolderForm()">
+        <i class="fas fa-times"></i> Cancel
+      </button>
+    </form>
+  </div>
+
+  <!-- Add Document Modal -->
+  <div *ngIf="isDocumentFormOpen" class="modal">
+    <form [formGroup]="uploadForm" (ngSubmit)="onSubmit()">
+      <!-- Metadata Fields -->
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" formControlName="title" required />
+        <div *ngIf="uploadForm.get('title')?.invalid && (uploadForm.get('title')?.dirty || uploadForm.get('title')?.touched)" class="error-message">
+          <div *ngIf="uploadForm.get('title')?.errors?.['required']">Title is required.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="type">Type</label>
+        <select id="type" formControlName="type" required>
+          <option value="PDF">PDF</option>
+          <option value="DOCX">DOCX</option>
+          <option value="TXT">TXT</option>
+          <option value="OTHER">OTHER</option>
+        </select>
+        <div *ngIf="uploadForm.get('type')?.invalid && (uploadForm.get('type')?.dirty || uploadForm.get('type')?.touched)" class="error-message">
+          <div *ngIf="uploadForm.get('type')?.errors?.['required']">Type is required.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select id="status" formControlName="status" required>
+            <option value="DRAFT">DRAFT</option>
+            <option value="APPROVED">APPROVED</option>
+            <option value="PENDING_APPROVAL">PENDING_APPROVAL</option>
+            <option value="REJECTED">REJECTED</option>
+        </select>
+        <div *ngIf="uploadForm.get('status')?.invalid && (uploadForm.get('status')?.dirty || uploadForm.get('status')?.touched)" class="error-message">
+          <div *ngIf="uploadForm.get('status')?.errors?.['required']">Status is required.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="tags">Tags (comma-separated)</label>
+        <input type="text" id="tags" formControlName="tags" required />
+        <div *ngIf="uploadForm.get('tags')?.invalid && (uploadForm.get('tags')?.dirty || uploadForm.get('tags')?.touched)" class="error-message">
+          <div *ngIf="uploadForm.get('tags')?.errors?.['required']">Tags are required.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" formControlName="description" required></textarea>
+        <div *ngIf="uploadForm.get('description')?.invalid && (uploadForm.get('description')?.dirty || uploadForm.get('description')?.touched)" class="error-message">
+          <div *ngIf="uploadForm.get('description')?.errors?.['required']">Description is required.</div>
+        </div>
+      </div>
+
+      <!-- File Upload -->
+      <div class="form-group">
+        <label for="file">File</label>
+        <input type="file" id="file" (change)="onFileChange($event)" />
+      </div>
+
+      <!-- Submit and Cancel Buttons -->
+      <button type="submit" [disabled]="uploadForm.invalid">Save</button>
+      <button type="button" (click)="closeDocumentForm()">Cancel</button>
+    </form>
+  </div>
+
+  <!-- Edit Document Modal -->
+  <div *ngIf="isEditDocumentFormOpen" class="modal">
+    <form [formGroup]="editForm" (ngSubmit)="onEditSubmit()">
+      <!-- Metadata Fields -->
+      <div class="form-group">
+        <label for="edit-title">Title</label>
+        <input type="text" id="edit-title" formControlName="title" required />
+        <div *ngIf="editForm.get('title')?.invalid && (editForm.get('title')?.dirty || editForm.get('title')?.touched)" class="error-message">
+          <div *ngIf="editForm.get('title')?.errors?.['required']">Title is required.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="edit-type">Type</label>
+        <select id="edit-type" formControlName="type" required>
+          <option value="PDF">PDF</option>
+          <option value="DOCX">DOCX</option>
+          <option value="TXT">TXT</option>
+          <option value="OTHER">OTHER</option>
+        </select>
+        <div *ngIf="editForm.get('type')?.invalid && (editForm.get('type')?.dirty || editForm.get('type')?.touched)" class="error-message">
+          <div *ngIf="editForm.get('type')?.errors?.['required']">Type is required.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select id="status" formControlName="status" required>
+            <option value="DRAFT">DRAFT</option>
+            <option value="APPROVED">APPROVED</option>
+            <option value="PENDING_APPROVAL">PENDING_APPROVAL</option>
+            <option value="REJECTED">REJECTED</option>
+        </select>
+        <div *ngIf="editForm.get('status')?.invalid && (editForm.get('status')?.dirty || editForm.get('status')?.touched)" class="error-message">
+          <div *ngIf="editForm.get('status')?.errors?.['required']">Status is required.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="edit-tags">Tags (comma-separated)</label>
+        <input type="text" id="edit-tags" formControlName="tags" required />
+        <div *ngIf="editForm.get('tags')?.invalid && (editForm.get('tags')?.dirty || editForm.get('tags')?.touched)" class="error-message">
+          <div *ngIf="editForm.get('tags')?.errors?.['required']">Tags are required.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="edit-description">Description</label>
+        <textarea id="edit-description" formControlName="description" required></textarea>
+        <div *ngIf="editForm.get('description')?.invalid && (editForm.get('description')?.dirty || editForm.get('description')?.touched)" class="error-message">
+          <div *ngIf="editForm.get('description')?.errors?.['required']">Description is required.</div>
+        </div>
+      </div>
+
+      <!-- File Upload -->
+      <div class="form-group">
+        <label for="edit-file">File</label>
+        <input type="file" id="edit-file" (change)="onEditFileChange($event)" />
+      </div>
+
+      <!-- Submit and Cancel Buttons -->
+      <button type="submit" [disabled]="editForm.invalid">Save Changes</button>
+      <button type="button" (click)="closeEditDocumentForm()">Cancel</button>
+    </form>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div *ngIf="showConfirmationModal" class="confirmation-modal">
+    <div class="modal-content">
+      <h3>Are you sure?</h3>
+      <p>Do you really want to delete this item? This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button (click)="onConfirmDelete()">Yes, Delete</button>
+        <button (click)="onCancelDelete()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Document Viewer Modal -->
+  <div *ngIf="showDocumentViewer" class="modal-overlay" (click)="closeDocumentViewer($event)">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-body">
+        <h3>{{ documentToView?.title }}</h3>
+        <div *ngIf="documentType === 'JPG' || documentType === 'PNG' || documentType === 'GIF'">
+          <img [src]="documentUrl" alt="Document Image" style="width: 100%; height: auto; max-height: 80vh; object-fit: contain;" />
+        </div>
+        <div *ngIf="documentType === 'PDF'">
+          <iframe [src]="documentUrl" style="width: 100%; height: 80vh;"></iframe>
+        </div>
+        <div *ngIf="documentType === 'TXT'">
+          <pre>{{ documentToView?.content }}</pre>
+        </div>
+        <div *ngIf="documentType === 'DOCX'">
+          <p>DOCX files cannot be previewed directly. Please download the file to view it.</p>
+        </div>
+        <button (click)="closeDocumentViewer()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

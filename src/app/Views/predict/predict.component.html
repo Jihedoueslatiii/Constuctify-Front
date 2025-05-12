@@ -1,0 +1,50 @@
+<app-bar>  </app-bar>
+<form [formGroup]="predictForm" (ngSubmit)="submitForm()">
+    <label>
+      Project Theme:
+      <input type="text" formControlName="project_theme">
+    </label><br>
+  
+    <label>
+      Project Type:
+      <input type="text" formControlName="project_type">
+    </label><br>
+  
+    <label>
+      Budget:
+      <input type="number" formControlName="budget">
+    </label><br>
+  
+    <label>
+      Team Size:
+      <input type="number" formControlName="team_size">
+    </label><br>
+  
+    <label>
+      Contractor Quality:
+      <input type="text" formControlName="contractor_quality">
+    </label><br>
+  
+    <label>
+      Project Manager Level:
+      <input type="text" formControlName="project_manager_level">
+    </label><br>
+  
+    <label>
+      Start Date:
+      <input type="date" formControlName="start_date">
+    </label><br>
+  
+    <label>
+      End Date:
+      <input type="date" formControlName="end_date">
+    </label><br><br>
+  
+    <button type="submit" [disabled]="predictForm.invalid">Get Prediction</button>
+  </form>
+  
+  <div *ngIf="predictionResult !== null" class="result-box">
+    <p>Prediction Result: {{ predictionResult }}</p>
+  </div>
+    
+  

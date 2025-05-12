@@ -1,0 +1,56 @@
+/* schedule-creator.component.scss */
+.scheduling-mode-toggle {
+    margin-bottom: 20px;
+    
+    button {
+      background: #f0f0f0;
+      border: 1px solid #ddd;
+      padding: 5px 10px;
+      cursor: pointer;
+      
+      &:hover {
+        background: #e0e0e0;
+      }
+    }
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+    div {
+      display: flex;
+      flex-direction: column;
+      
+      label {
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      
+      input, textarea {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      
+      textarea {
+        min-height: 80px;
+      }
+    }
+    
+    button {
+      padding: 8px 15px;
+      margin-right: 10px;
+      
+      &[type="submit"] {
+        background: #4CAF50;
+        color: white;
+      }
+      
+      &[type="button"] {
+        background: #f44336;
+        color: white;
+      }
+    }
+  }

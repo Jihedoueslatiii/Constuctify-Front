@@ -1,0 +1,91 @@
+.editor-container {
+  display: flex;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 20px auto;
+  height: 90vh;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.editor-main {
+  flex: 1;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  margin-right: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.editor-sidebar {
+  width: 300px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-left: 1px solid #eaecef;
+  box-sizing: border-box;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-input {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #eaecef;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.sidebar-input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.sidebar-button {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.sidebar-button:last-child {
+  margin-bottom: 0;
+}
+
+.sidebar-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+.sidebar-button:active {
+  transform: translateY(0);
+}
+
+/* Optional: Add a subtle animation to the container */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.editor-container {
+  animation: fadeIn 0.5s ease-out;
+}

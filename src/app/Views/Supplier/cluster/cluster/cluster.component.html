@@ -1,0 +1,107 @@
+<app-bar> </app-bar>
+<div class="dashboard-container">
+    <div class="content-wrapper">
+      <header class="dashboard-header">
+        <div class="header-content">
+          <h1 class="dashboard-title">
+            <span class="title-icon">📊</span>
+            Supplier Intelligence Hub
+          </h1>
+          <p class="dashboard-subtitle">Smart clustering for strategic supplier management</p>
+        </div>
+        <button class="download-btn" (click)="exportCSV()">
+          <span class="btn-icon">↓</span>
+          Export Data
+        </button>
+      </header>
+  
+      <div *ngIf="error" class="error-notification">
+        ⚠️ {{ error }}
+      </div>
+  
+      <div class="main-content">
+        <div class="data-card">
+          <div class="card-header">
+            <h2 class="card-title">Supplier Clusters</h2>
+            <div class="card-badge">{{ clusters.length }} Suppliers</div>
+          </div>
+          
+          <div class="table-scroll-container">
+            <table class="modern-table">
+              <thead>
+                <tr>
+                  <th *ngFor="let key of clusters[0] | keyvalue" class="column-{{key.key}}">
+                    <div class="th-content">
+                      {{ formatKey(key.key) | titlecase }}
+                      <span class="sort-icon">↕️</span>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of clusters; let i = index" class="row-{{i % 3}}">
+                  <td *ngFor="let val of row | keyvalue" [class.highlight]="val.key === 'cluster'">
+                    <span class="cell-content">{{ val.value }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="card-footer">
+            <div class="color-key">
+              <div class="key-item" *ngFor="let cluster of getUniqueClusters()">
+                <span class="key-color" [style.background]="getClusterColor(cluster)"></span>
+                Cluster {{ cluster }}
+              </div>
+            </div>
+            <p class="card-description">
+              Supplier segments categorized by reliability, contract value, and industry performance.
+              <span class="emoji">✨</span>
+            </p>
+          </div>
+        </div>
+  
+        <div class="visualization-section">
+          <div class="viz-card viz-card-large">
+            <div class="viz-header">
+              <h3>Cluster Distribution</h3>
+              <div class="viz-actions">
+                <button class="viz-btn">📊</button>
+                <button class="viz-btn">⚙️</button>
+              </div>
+            </div>
+            <div class="chart-wrapper">
+              <canvas baseChart
+                      [data]="clusterBarChartData"
+                      [type]="'bar'"
+                      [options]="barChartOptions">
+              </canvas>
+            </div>
+            <div class="viz-footer">
+              <span class="stats-bubble">📌 {{ getTotalSuppliers() }} total suppliers analyzed</span>
+            </div>
+          </div>
+  
+          <div class="viz-card viz-card-small">
+            <div class="viz-header">
+              <h3>Industry Breakdown</h3>
+              <div class="viz-actions">
+                <button class="viz-btn">🔄</button>
+              </div>
+            </div>
+            <div class="chart-wrapper pie-wrapper">
+              <canvas baseChart
+                      [data]="industryPieChartData"
+                      [type]="'pie'"
+                      [options]="pieChartOptions">
+              </canvas>
+            </div>
+            <div class="viz-footer">
+              <span class="stats-bubble">🏷️ {{ getUniqueIndustries() }} industries</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

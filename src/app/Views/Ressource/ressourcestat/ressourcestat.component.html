@@ -1,0 +1,30 @@
+<app-bar></app-bar>
+
+<div class="stat-container">
+    <h2>Statistiques des Ressources</h2>
+    <canvas id="ressourceChart"></canvas>
+  
+    <!-- Message si aucune donnée disponible -->
+    <p *ngIf="!ressources || ressources.length === 0" class="no-data">
+      Aucune donnée disponible.
+    </p>
+  
+    <!-- Tableau des ressources -->
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Nombre</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ressource of ressources">
+            <td>{{ ressource.nomRessource }}</td>
+            <td>{{ ressource.nombreRessource }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

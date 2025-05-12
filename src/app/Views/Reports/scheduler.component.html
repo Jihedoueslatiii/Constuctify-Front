@@ -1,0 +1,31 @@
+<div class="scheduler-container">
+    <div class="sidebar">
+      <app-report-selector 
+        [reports]="availableReports"
+        (reportSelected)="handleReportSelected($event)">
+      </app-report-selector>
+    </div>
+  
+    <div class="main-content" *ngIf="selectedReport">
+      <div class="header">
+        <h2>Scheduling: {{selectedReport.title}}</h2>
+        <button mat-raised-button color="primary" 
+                (click)="isCreatingSchedule = true"
+                *ngIf="!isCreatingSchedule">
+          Create New Schedule
+        </button>
+      </div>
+  
+      <app-schedule-creator
+        *ngIf="isCreatingSchedule"
+        [report]="selectedReport"
+        (scheduleCreated)="handleScheduleCreated()"
+        (cancel)="isCreatingSchedule = false">
+      </app-schedule-creator>
+  
+      <app-schedule-list
+        [schedules]="activeSchedules"
+        (scheduleDeleted)="loadSchedulesForReport(selectedReport.idReport)">
+      </app-schedule-list>
+    </div>
+  </div>
