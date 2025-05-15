@@ -1,0 +1,59 @@
+<app-bar></app-bar>
+<div class="container">
+  <h2 class="title">User List</h2>
+
+  <div class="filters">
+    <label for="role">Filter by Role:</label>
+    <select id="role" [(ngModel)]="selectedRole" (change)="searchByRole()">
+      <option value="">All</option>
+      <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+    </select>
+  </div>
+
+  <div class="user-list">
+    <ng-container *ngFor="let user of filteredUsers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+      <div class="user-card">
+        <div class="user-info">
+          <div class="user-field">
+            <span class="label">Firstname :</span>
+            <span class="value">{{ user.firstname }}</span>
+          </div>
+          <div class="user-field">
+            <span class="label">Lastname :</span>
+            <span class="value">{{ user.lastname }}</span>
+          </div>
+          <div class="user-field">
+            <span class="label">Email :</span>
+            <span class="value">{{ user.email }}</span>
+          </div>
+          <div class="user-field">
+            <span class="label">Phone :</span>
+            <span class="value">{{ user.phone }}</span>
+          </div>
+          <div class="user-field">
+            <span class="label">Role :</span>
+            <span class="value">{{ user.role }}</span>
+          </div>
+          <div *ngIf="user.role === 'Employer'" class="user-field">
+            <span class="label">État :</span>
+            <span class="value" [ngStyle]="{'color': user.teamId ? 'red' : 'green'}">
+              {{ user.teamId ? '🔴 Busy' : '🟢 Available' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="user-actions">
+          <button class="btn edit" (click)="updateUser(user)">Update</button>
+          <button class="btn delete" (click)="deleteUser(user.id)">Delete</button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Pagination -->
+  <mat-paginator [length]="totalUsers"
+                 [pageSize]="itemsPerPage"
+                 [pageSizeOptions]="[5, 10, 20]"
+                 (page)="onPageChange($event)">
+  </mat-paginator>
+</div>

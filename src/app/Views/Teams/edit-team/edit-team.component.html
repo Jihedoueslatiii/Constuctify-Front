@@ -1,0 +1,75 @@
+<app-bar></app-bar>
+<div class="container">
+    <h2 class="title">Edit Teams Name</h2>
+  
+    <!-- Liste des équipes -->
+    <div class="team-list">
+      <div *ngFor="let team of teams" class="team-card">
+        <div class="team-info">
+          <!-- Label, input, and save button on the same line -->
+          <div class="team-field">
+            <label class="label">Team Name :</label>
+            <div class="input-wrapper">
+              <input 
+                type="text" 
+                [(ngModel)]="team.teamName" 
+                class="team-name-input" 
+                placeholder="Enter new team name" 
+              />
+              <button 
+                mat-raised-button 
+                color="primary" 
+                (click)="updateTeamName(team)"
+                class="save-button"
+                [disabled]="isSaving"
+              >
+                <mat-icon *ngIf="!isSaving">save</mat-icon>
+                <mat-spinner *ngIf="isSaving" diameter="20" color="accent" mode="indeterminate"></mat-spinner>
+              </button>
+
+              <button 
+                mat-raised-button 
+                color="warn" 
+                (click)="deleteTeam(team.id)"
+                class="delete-button"
+                [disabled]="isSaving"
+              >
+                <mat-icon *ngIf="!isSaving">delete</mat-icon>
+                <mat-spinner *ngIf="isSaving" diameter="20" color="accent" mode="indeterminate"></mat-spinner>
+              </button>
+
+
+            </div>
+          </div>
+        </div>
+  
+        <div class="team-actions">
+          <h4>Employers :</h4>
+          <div *ngFor="let user of teamUsers[team.id] ?? []" class="user-card">
+            <div class="user-info">
+              <div class="user-field">
+                <span class="label">Firstname :</span>
+                <span class="value">{{ user.firstname }}</span>
+              </div>
+              <div class="user-field">
+                <span class="label">Lastname :</span>
+                <span class="value">{{ user.lastname }}</span>
+              </div>
+              <div class="user-field">
+                <span class="label">Email :</span>
+                <span class="value">{{ user.email }}</span>
+              </div>
+              <div class="user-field">
+                <span class="label">Phone :</span>
+                <span class="value">{{ user.phone }}</span>
+              </div>
+              <div class="user-field">
+                <span class="label">Role :</span>
+                <span class="value">{{ user.role }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

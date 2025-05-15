@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProjectService } from 'src/app/project.service';
-import { Project } from 'src/app/project';
+import { ProjectService } from 'src/app/Views/service/project.service';
+import { Project } from 'src/app/Views/model/project';
 import { NgForm } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.css']
 })
-export class ProjectComponent implements OnInit {
+export class ProjectComponent2 implements OnInit {
   projects: Project[] = [];
   selectedProject: Project | null = null;
   isEditing: boolean = false;
@@ -44,7 +44,8 @@ export class ProjectComponent implements OnInit {
       descriptionProjet: '', 
       dateDebut: '', 
       dateFin: '', 
-      etatProjet: 'PLANIFIE'
+      etatProjet: 'PLANIFIE',
+      updatedAt: new Date() // Set the current date or any default value
     };
     this.isEditing = true;
   }
@@ -52,6 +53,28 @@ export class ProjectComponent implements OnInit {
   saveProject(): void {
     if (!this.selectedProject) return;
   
+    // Basic validation for required fields
+    if (!this.selectedProject.nomProjet || !this.selectedProject.descriptionProjet) {
+      alert('Please fill in all required fields (Project Name and Description).');
+      return;
+    }
+  
+    // Validate start and end dates
+    const startDate = new Date(this.selectedProject.dateDebut);
+    const endDate = new Date(this.selectedProject.dateFin);
+    
+    if (endDate <= startDate) {
+      alert('The end date must be later than the start date.');
+      return;
+    }
+  
+    // Validate project status (optional, depending on your logic)
+    if (!this.selectedProject.etatProjet) {
+      alert('Please select a project status.');
+      return;
+    }
+  
+    // Proceed with creating or updating the project
     if (this.selectedProject.idProjet === 0) {
       // For creating a new project
       this.projectService.createProject(this.selectedProject).subscribe({
@@ -80,6 +103,7 @@ export class ProjectComponent implements OnInit {
       });
     }
   }
+  
 
   cancelEdit(): void {
     this.resetForm();

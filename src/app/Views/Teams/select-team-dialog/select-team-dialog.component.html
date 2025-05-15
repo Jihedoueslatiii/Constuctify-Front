@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Select Team</h2>
+<mat-dialog-content>
+  <div *ngIf="isLoading" class="loading-spinner">
+    <mat-spinner diameter="50"></mat-spinner>
+    <span>Chargement des équipes...</span>
+  </div>
+
+  <mat-selection-list *ngIf="!isLoading">
+    <mat-list-option *ngFor="let team of teams" (click)="assignTeam(team.id)">
+      {{ team.teamName }}
+    </mat-list-option>
+  </mat-selection-list>
+
+  <div *ngIf="!isLoading && teams.length === 0" class="no-teams">
+    Aucune équipe disponible
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Cancel</button>
+</mat-dialog-actions>
