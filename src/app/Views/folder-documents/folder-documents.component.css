@@ -1,0 +1,352 @@
+/* Majestic Documents Container */
+.documents-container {
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  font-size: 2rem; /* INCREASED */
+}
+
+.documents-container h3 {
+  color: #2c3e50;
+  font-size: 2rem; /* INCREASED (was 1.8rem) */
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #e0e6ed;
+  letter-spacing: 0.5px;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #3498db, #2c3e50);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem; /* INCREASED */
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #2c3e50, #3498db);
+}
+
+.btn-primary i {
+  font-size: 1.1rem; /* INCREASED (was 1rem) */
+}
+
+/* Search Container */
+.search-container {
+  margin-bottom: 2rem;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid #e0e6ed;
+  border-radius: 8px;
+  font-size: 1.1rem; /* INCREASED (was 1rem) */
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.search-container input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+/* Search Results */
+.search-results {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.search-results h4 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-size: 1.4rem; /* INCREASED (was 1.2rem) */
+}
+
+.search-results ul {
+  list-style: none;
+  padding: 0;
+}
+
+.search-results li {
+  padding: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s ease;
+}
+
+.search-results li:hover {
+  background: #f8fafc;
+}
+
+.result-title {
+  font-weight: 600;
+  color: #3498db;
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem; /* INCREASED */
+}
+
+.result-content {
+  color: #7f8c8d;
+  margin: 0;
+  font-size: 1rem; /* INCREASED (was 0.9rem) */
+}
+
+/* Document List */
+.document-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.document-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.document-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.document-header {
+  padding: 1.5rem 1.5rem 1rem;
+  background: linear-gradient(to right, #f8f9fa, #ffffff);
+  border-bottom: 1px solid #e0e6ed;
+}
+
+.document-header h4 {
+  margin: 0 0 0.5rem;
+  color: #2c3e50;
+  font-size: 1.3rem; /* INCREASED (was 1.1rem) */
+  font-weight: 600;
+}
+
+.document-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  font-size: 1rem; /* INCREASED (was 0.85rem) */
+  color: #7f8c8d;
+}
+
+.type-label, .status-label {
+  font-weight: 500;
+  color: #95a5a6;
+}
+
+.type-value, .status-value {
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.document-body {
+  padding: 1rem 1.5rem;
+  color: #34495e;
+}
+
+.document-body p {
+  margin: 0.5rem 0;
+  font-size: 1rem; /* INCREASED (was 0.9rem) */
+}
+
+.document-body strong {
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.tags-value {
+  color: #3498db;
+  font-style: italic;
+}
+
+.document-actions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.btn-edit, .btn-delete {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem; /* INCREASED (was 0.85rem) */
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.btn-edit {
+  background: #f39c12;
+  color: white;
+}
+
+.btn-edit:hover {
+  background: #e67e22;
+  transform: translateY(-1px);
+}
+
+.btn-delete {
+  background: #e74c3c;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #c0392b;
+  transform: translateY(-1px);
+}
+
+.document-preview {
+  height: 80px;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.document-preview:hover {
+  background: #e2e8f0;
+}
+
+.file-type {
+  color: #7f8c8d;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 1rem; /* INCREASED (was 0.8rem) */
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow: auto;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+.modal-body h3 {
+  color: #2c3e50;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem; /* INCREASED */
+}
+
+.modal-body button {
+  margin-top: 1.5rem;
+  padding: 0.7rem 1.5rem;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1.1rem; /* INCREASED */
+}
+
+.modal-body button:hover {
+  background: #2980b9;
+  transform: translateY(-1px);
+}
+
+/* Upload Form and Contract Editor */
+.upload-form, .contract-editor {
+  background: white;
+  border-radius: 10px;
+  padding: 2rem;
+  margin-top: 2rem;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .documents-container {
+      padding: 1.5rem;
+      margin: 1rem;
+      font-size: 1.15rem; /* INCREASED */
+  }
+
+  .documents-container h3 {
+      font-size: 1.8rem; /* INCREASED */
+  }
+
+  .document-list {
+      grid-template-columns: 1fr;
+  }
+
+  .action-buttons {
+      flex-direction: column;
+  }
+
+  .search-container input {
+    font-size: 1.15rem; /* INCREASED */
+  }
+}

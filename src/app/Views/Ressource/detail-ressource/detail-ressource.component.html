@@ -1,0 +1,38 @@
+<app-bar></app-bar>
+
+<div class="container">
+    <h2 class="title">Détails de la Ressource</h2>
+  
+    <div *ngIf="ressourceDetails">
+      <p><strong>ID :</strong> {{ ressourceDetails.idRessource }}</p>
+      <p><strong>Nom :</strong> {{ ressourceDetails.nomRessource }}</p>
+      <p><strong>Nombre Disponible :</strong> {{ ressourceDetails.nombreRessource }}</p>
+      <p><strong>Type :</strong> {{ ressourceDetails.typesRessource }}</p>
+      <p><strong>Coût :</strong> {{ ressourceDetails.cost }} €</p>
+    </div>
+  
+    <h3>Projets affectés :</h3>
+  
+    <table *ngIf="projects && (projects | keyvalue).length > 0; else noProjects" class="styled-table">
+      <thead>
+        <tr>
+          <th>ID Projet</th>
+          <th>Ressources Affectées</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let project of projects | keyvalue">
+          <td>{{ project.key }}</td>
+          <td>{{ project.value }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <ng-template #noProjects>
+      <p class="no-data">Aucun projet n'est affecté à cette ressource.</p>
+    </ng-template>
+    <button class="back-button" (click)="goBack()">⬅ Retour</button>
+  </div>
+  
+
+  

@@ -1,0 +1,44 @@
+<app-bar></app-bar>
+
+<div class="container">
+  <h2 class="title">Mettre à jour une Finance</h2>
+
+  <form (ngSubmit)="updateFinance()" #financeForm="ngForm">
+    <div class="form-group">
+      <label for="description">Description :</label>
+      <input type="text" id="description" [(ngModel)]="Finance.description" name="description" required #description="ngModel">
+      <div *ngIf="description.invalid && (description.dirty || description.touched)" class="error">
+        <small *ngIf="description.errors?.['required']">La description est requise.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="budget">Budget :</label>
+      <input type="number" id="budget" [(ngModel)]="Finance.budget" name="budget" required min="0" #budget="ngModel">
+      <div *ngIf="budget.invalid && (budget.dirty || budget.touched)" class="error">
+        <small *ngIf="budget.errors?.['required']">Le budget est requis.</small>
+        <small *ngIf="budget.errors?.['min']">Le budget doit être supérieur ou égal à 0.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="otherExpenses">Autres Dépenses :</label>
+      <input type="number" id="otherExpenses" [(ngModel)]="Finance.otherExpenses" name="otherExpenses" required min="0" #otherExpenses="ngModel">
+      <div *ngIf="otherExpenses.invalid && (otherExpenses.dirty || otherExpenses.touched)" class="error">
+        <small *ngIf="otherExpenses.errors?.['required']">Les autres dépenses sont requises.</small>
+        <small *ngIf="otherExpenses.errors?.['min']">Les autres dépenses doivent être supérieures ou égales à 0.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="roi">Retour sur investissement (ROI) :</label>
+      <input type="number" id="roi" [(ngModel)]="Finance.roi" name="roi" required min="0" #roi="ngModel">
+      <div *ngIf="roi.invalid && (roi.dirty || roi.touched)" class="error">
+        <small *ngIf="roi.errors?.['required']">Le ROI est requis.</small>
+        <small *ngIf="roi.errors?.['min']">Le ROI doit être supérieur ou égal à 0.</small>
+      </div>
+    </div>
+
+    <button type="submit" class="btn submit" [disabled]="financeForm.invalid">Mettre à jour</button>
+  </form>
+</div>

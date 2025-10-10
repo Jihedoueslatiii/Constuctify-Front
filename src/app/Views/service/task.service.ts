@@ -7,7 +7,7 @@ import { Task } from 'src/app/Views/model/task.model'; // Ensure you have a Task
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = 'http://localhost:8089/project/api/tasks'; // Update with your backend URL
+  private apiUrl = 'http://localhost:8088/project/api/tasks'; // Update with your backend URL
 
   constructor(private http: HttpClient) {}
 

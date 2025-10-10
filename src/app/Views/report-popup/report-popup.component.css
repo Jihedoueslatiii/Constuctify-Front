@@ -1,0 +1,72 @@
+/* Popup Container */
+.popup-container {
+    position: fixed; /* Ensures it stays in place relative to the viewport */
+    top: 50%; /* Moves the top edge to the middle of the screen */
+    left: 50%; /* Moves the left edge to the middle of the screen */
+    transform: translate(-50%, -50%); /* Centers the popup */
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 300px; /* Adjust width as needed */
+    max-width: 90%; /* Ensures it doesn't overflow on small screens */
+}
+
+h2 {
+    font-size: 24px;
+    color: #2A5D89; /* Dark blue for the title */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Content Styling */
+div {
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 16px;
+    color: #333; /* Dark gray for text */
+    margin: 10px 0;
+}
+
+strong {
+    color: #2A5D89; /* Dark blue for labels */
+    font-weight: bold;
+}
+
+/* Button Container */
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* Space between buttons */
+}
+
+/* Button Styling */
+.btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary {
+    background-color: #6c757d; /* Gray for Cancel button */
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268; /* Darker gray on hover */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Blue for Add button */
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

@@ -1,0 +1,40 @@
+<app-bar></app-bar>
+
+<div class="container">
+  <h2>Affecter la Ressource au Projet</h2>
+  
+  <div class="form-group">
+    <label for="projectSelect">Choisissez un projet :</label>
+    <select
+      [(ngModel)]="selectedProjectId"
+      class="form-control"
+      name="projectSelect"
+      id="projectSelect"
+    >
+      <option value="" disabled>-- Sélectionner un projet --</option>
+      <option
+        *ngFor="let project of projects"
+        [value]="project.projectId"
+      >
+        {{ project.name }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Champ pour le nombre de ressources -->
+  <div class="form-group">
+    <label for="resourceCount">Nombre de ressources :</label>
+    <input
+      type="number"
+      [(ngModel)]="nombreRessource"
+      class="form-control"
+      id="resourceCount"
+      name="resourceCount"
+      placeholder="Entrez le nombre de ressources"
+      min="1"
+      required
+    />
+  </div>
+  
+  <button class="btn btn-primary" (click)="assignToProject()">Affecter</button>
+</div>

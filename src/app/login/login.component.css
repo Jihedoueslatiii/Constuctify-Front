@@ -58,6 +58,23 @@ h1 {
 h2 {
 	text-align: center;
 }
+mat-form-field, input {
+	width: 100%; /* Cette règle permet aux champs de prendre toute la largeur disponible */
+  }
+  
+  mat-form-field {
+	margin-bottom: -19px; /* Ajoute un peu d'espace en dessous des champs */
+  }
+  
+  
+  input {
+	background-color: #eee;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 100%;
+	font-size: 14px;
+  }  
 
 p {
 	font-size: 14px;
@@ -104,6 +121,17 @@ button.ghost {
 	border-color: #FFFFFF;
 }
 
+/* Ajoutez ceci dans votre fichier CSS global (styles.css ou styles.scss) */
+.success-snackbar {
+	background-color: #4caf50; /* Vert */
+	color: white;
+  }
+  
+  .error-snackbar {
+	background-color: #f44336; /* Rouge */
+	color: white;
+  }
+  
 form {
 	background-color: #FFFFFF;
 	display: flex;
@@ -284,3 +312,8 @@ footer a {
     color: #3c97bf;
     text-decoration: none;
 }
+.hidden {
+	display: none;
+  }
+
+  

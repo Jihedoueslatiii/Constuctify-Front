@@ -1,0 +1,14 @@
+<app-bar></app-bar>
+<div class="editor-container">
+  <div class="editor-main">
+    <editor
+      apiKey="9kd6iac5vefvz56p8iboz8q0g5gjkyp4k5o2ou1dudskix8d"
+      [init]="editorInit"
+      [(ngModel)]="editorContent"
+    ></editor>
+  </div>
+  <div class="editor-sidebar">
+    <button (click)="save()" class="sidebar-button">Save & Convert to PDF</button>
+    <button (click)="cancelEditor()" class="sidebar-button">Cancel</button>
+  </div>
+</div>

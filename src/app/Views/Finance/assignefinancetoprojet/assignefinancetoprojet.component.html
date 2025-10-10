@@ -1,0 +1,19 @@
+<app-bar></app-bar>
+
+<div class="container">
+    <h2 class="title">Assigner un Projet à une Finance</h2>
+  
+    <div class="form-group">
+        <label for="financeId">ID de la Finance :</label>
+        <input type="number" id="financeId" [(ngModel)]="financeId" placeholder="Entrez l'ID de la finance" required>
+    </div>
+  
+    <div class="form-group">
+        <label for="projectId">ID du Projet :</label>
+        <input type="number" id="projectId" [(ngModel)]="projectId" placeholder="Entrez l'ID du projet" required>
+    </div>
+  
+    <button class="btn" (click)="assignProject()">Assigner le Projet</button>
+  
+    <p class="message">{{ message }}</p>
+</div>

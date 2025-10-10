@@ -7,7 +7,7 @@ import { Project } from 'src/app/Views/model/project';  // Ensure you have a Pro
   providedIn: 'root'
 })
 export class ProjectService {
-  private apiUrl = 'http://localhost:8089/project/api/projets';  // Backend API URL
+  private apiUrl = 'http://localhost:8088/project/api/projets';  // Backend API URL
 
   constructor(private http: HttpClient) {}
 

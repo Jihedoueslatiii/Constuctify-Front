@@ -10,21 +10,37 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand page-scroll" href="#page-top">
-        <img src="assets/img/white-text.png" alt="Constructify Logo" style="height: 40px;"> <!-- Adjust the height if needed -->
+        <img src="assets/img/white-text.png" alt="Constructify Logo" style="height: 40px;">
       </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" class="page-scroll">Project</a></li>
-        <li><a href="#" class="page-scroll">Task</a></li>
-        <li><a href="#" class="page-scroll">Resource</a></li>
-        <li><a href="#" class="page-scroll">Finance</a></li>
-        <li><a href="#" class="page-scroll">Users</a></li>
-        <li><a href="#" class="page-scroll">Team</a></li>
+      <!-- LEFT SIDE NAV -->
+      <ul class="nav navbar-nav navbar-left">
+        <li><a href="/clientInterface/project" class="page-scroll">Project</a></li>
+        <li><a href="/ViewRessourceFront" class="page-scroll">Resource</a></li>
+        <li><a href="/viewfront" class="page-scroll">Finance</a></li>
         <li><a href="#" class="page-scroll">Deliverable</a></li>
         <li><a href="#" class="page-scroll">Documentation</a></li>
+      </ul>
+
+      <!-- RIGHT SIDE NAV -->
+      <ul class="nav navbar-nav navbar-right" *ngIf="loggedUser">
+        <li>
+          <a href="/listmessages">
+            <i class="fa fa-envelope"></i>
+          </a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-user"></span> {{ loggedUser.firstname }} {{ loggedUser.lastname }} <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Profile</a></li>
+            <li><a href="#" (click)="logout()">Logout</a></li>
+          </ul>
+        </li>
       </ul>
     </div>
     <!-- /.navbar-collapse -->

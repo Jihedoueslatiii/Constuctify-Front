@@ -1,0 +1,57 @@
+<app-bar></app-bar>
+
+<div class="container">
+    <h2 class="title">Liste Budget</h2>
+    <button class="btn export" (click)="exportAsExcel()">Exporter en Excel</button>
+
+    <button class="btn calculate" (click)="calculateTotalROI()">Calculation of Total Profit</button>
+    <p><strong>Total Profit:</strong> {{ totalROI }}</p> 
+    <button class="btn calculate" (click)="calculateTotalCost()">Calculation of Total Cost</button>
+    <div class="sms-section">
+        <input 
+          type="text" 
+          [(ngModel)]="numeroTelephone" 
+          placeholder="Ex: +21612345678" 
+          class="input-phone" 
+        />
+        <button class="btn sms" (click)="sendAlertSms()" [disabled]="!numeroTelephone.trim()">
+          📩 Envoyer une alerte SMS
+        </button>
+        
+        <!-- Messages de feedback -->
+        <div *ngIf="smsSent" class="alert success">
+          SMS envoyé avec succès !
+        </div>
+        <div *ngIf="smsError" class="alert error">
+          {{ smsError }}
+        </div>
+      </div>
+      
+    <div class="card-container">
+      <div 
+      class="card" 
+      *ngFor="let Finance of listFinance | paginate: { itemsPerPage: 5, currentPage: page }"
+      [ngClass]="{'validated': Finance.valider === 1}">
+                <div class="card-header">
+                <h3>{{ Finance.description }}</h3>
+            </div>
+            <div class="card-body">
+                <p><strong>Cost:</strong> {{ Finance.cost }}</p>
+                <p><strong>Budget:</strong> {{ Finance.budget }}</p>
+                <p><strong>Other Expenses:</strong> {{ Finance.otherExpenses }}</p>
+                <p><strong>Profit:</strong> {{ Finance.roi }}</p>
+            </div>
+            <div class="card-footer">
+                <button class="btn edit" [routerLink]="['/UpdateFinance', Finance.financeId]">Update</button>
+               
+                <button class="btn assign" [routerLink]="['/assignfinance']">
+                    Affecter au projet
+                  </button>
+                <button class="btn delete" (click)="deleteFinances(Finance.financeId)">Supprimer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination Control -->
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+</div>

@@ -1,0 +1,26 @@
+<app-client-navbar></app-client-navbar>
+
+<div class="container">
+    <h2 class="title">Liste des Ressources</h2>
+  
+    <table class="resource-table">
+      <thead>
+        <tr>
+         <th>Nom</th>
+          <th>Nombre</th>
+          <th>Type</th>
+          <th>cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ressource of listRessource">
+          <td>{{ ressource.nomRessource }}</td>
+          <td>{{ ressource.nombreRessource }}</td>
+          <td>{{ ressource.typesRessource }}</td>
+          <td>{{ ressource.cost }}</td>
+        
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

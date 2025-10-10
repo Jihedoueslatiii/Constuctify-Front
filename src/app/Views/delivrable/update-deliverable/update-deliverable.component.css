@@ -1,0 +1,90 @@
+.container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.title {
+    font-size: 24px;
+    color: #2A5D89;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #2A5D89;
+    box-shadow: 0 0 5px rgba(42, 93, 137, 0.5);
+    outline: none;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.error-message::before {
+    content: "⚠️ ";
+    margin-right: 5px;
+}
+
+input.ng-invalid.ng-touched, select.ng-invalid.ng-touched {
+    border: 1px solid red;
+    background-color: #ffefef;
+}
+
+.btn.submit {
+    width: 100%;
+    padding: 12px;
+    background: #28a745;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn.submit:hover {
+    background: #218838;
+}
+
+.btn.submit:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

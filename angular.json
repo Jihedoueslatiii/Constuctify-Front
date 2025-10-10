@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "temp": {
+    "constructifyFront": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,22 +13,16 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["frappe-gantt"],
-
-            "outputPath": "dist/temp",
+            "outputPath": "dist/constructify-front",
             "index": "src/index.html",
             "main": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "@angular/material/prebuilt-themes/pink-bluegrey.css",
-              "src/styles.css"
+              "@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "src/styles.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },
@@ -63,10 +57,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "temp:build:production"
+              "browserTarget": "constructifyFront:build:production"
             },
             "development": {
-              "browserTarget": "temp:build:development"
+              "browserTarget": "constructifyFront:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -74,23 +68,18 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "temp:build"
+            "browserTarget": "constructifyFront:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "@angular/material/prebuilt-themes/pink-bluegrey.css",
+              "@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -100,6 +89,7 @@
     }
   },
   "cli": {
-    "analytics": "169eb2d5-6d19-4b06-a39f-875ed4216682"
-  }
+    "analytics": "6becaeea-c102-4942-90cd-05df16fe4731"
+  },
+  "defaultProject": "constructifyFront"
 }

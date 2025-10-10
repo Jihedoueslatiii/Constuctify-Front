@@ -1,0 +1,41 @@
+<app-bar></app-bar>
+
+<div class="container">
+  <h2 class="title">Liste des Projets Disponibles</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nom</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let project of projects">
+        <td>{{ project.projectId }}</td>
+        <td>{{ project.name }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <h2 class="title">Ajouter un Budget</h2>
+
+  <form (ngSubmit)="addFinance()">
+    <div class="form-group">
+      <label>Budget</label>
+      <input type="number" [(ngModel)]="Finance.budget" name="budget" required min="0" class="form-control">
+
+      <label>Autres Dépenses</label>
+      <input type="number" [(ngModel)]="Finance.otherExpenses" name="otherExpenses" required min="0" class="form-control">
+
+      <label>Description</label>
+      <input type="text" [(ngModel)]="Finance.description" name="description" required class="form-control">
+
+      <label>ID du Projet à assigner</label>
+      <input type="number" [(ngModel)]="projectId" name="projectId" required min="1" class="form-control">
+    </div>
+
+    <button type="submit" class="btn submit">Ajouter</button>
+  </form>
+</div>
